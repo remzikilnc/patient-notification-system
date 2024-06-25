@@ -47,7 +47,7 @@ export default function LeftSidebarNavigations({navigations}) {
                     ) : (
                         <li className="mt-1">
                             <Link href={navigation.href}
-                                  className={classNames(activePathName === navigation.activePathName ? "bg-white text-primary" : "bg-white text-white hover:text-primary transition-all delay-75", "text-xs p-3 font-semibold group flex w-full items-center !outline-0")}>
+                                  className={classNames(activePathName === navigation.activePathName ? "bg-white text-primary" : "hover:bg-white text-white hover:text-primary transition-all delay-75", "rounded text-xs p-3 font-semibold group flex w-full items-center !outline-0")}>
                                 {navigation.icon ? <span className="relative z-10">{navigation.icon}</span> : null}
                                 <span className="relative z-10">{navigation.title}</span>
                             </Link>

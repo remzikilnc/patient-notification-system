@@ -4,6 +4,11 @@ import LeftSidebar from "@/components/left-sidebar";
 
 const navigations = [
     {
+        title: "Dashboard",
+        href: "/",
+        activePathName: "/",
+    },
+    {
         title: "Patients",
         subMenu: [
             {
