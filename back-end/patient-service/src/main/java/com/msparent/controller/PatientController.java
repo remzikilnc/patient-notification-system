@@ -25,7 +25,7 @@ public class PatientController {
     private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
 
-    @GetMapping
+/*    @GetMapping
     public Page<Patient> getPatients(
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
@@ -33,8 +33,18 @@ public class PatientController {
     ) {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageLimit);
         return patientService.searchPatients(search, pageable);
-    }
+    }*/
 
+    @GetMapping
+    public Page<Patient> getPatients(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "surname", required = false) String surname,
+            @RequestParam(value = "age", required = false) Integer age,
+            @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
+            @RequestParam(value = "pageLimit", defaultValue = "10") int pageLimit) {
+        Pageable pageable = PageRequest.of(pageNumber, pageLimit);
+        return patientService.searchPatients(name, surname, age, pageable);
+    }
 
     @GetMapping("/{id}")
     public PatientResponse getPatient(@PathVariable Long id) {

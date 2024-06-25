@@ -19,10 +19,13 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-   public Page<Patient> searchPatients(String searchTerm, Pageable pageable) {
+/*    public Page<Patient> searchPatients(String searchTerm, Pageable pageable) {
         return patientRepository.search(searchTerm, pageable);
-    }
+    }*/
 
+    public Page<Patient> searchPatients(String name, String surname, Integer age, Pageable pageable) {
+        return patientRepository.findPatientsByCriteria(name, surname, age, pageable);
+    }
 
     public Patient getPatient(Long id) {
         return patientRepository.findById(id).orElse(null);
