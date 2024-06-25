@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import Header from "@/components/header";
 import LeftSidebar from "@/components/left-sidebar";
 import LeftSidebarNavigations from "@/components/left-sidebar/navigations";
+import LeftSidebarMobile from "@/components/left-sidebar/mobile";
 
 const navigations = [
     {
@@ -28,9 +29,11 @@ const navigations = [
 const Layout = ({children}) => {
     return (
         <Fragment>
-            <Header>
-                <LeftSidebarNavigations navigations={navigations}/>
-            </Header>
+            <header className="flex justify-between items-center w-full h-16 border-passiveBorder border-b">
+                <LeftSidebarMobile>
+                    <LeftSidebarNavigations navigations={navigations}/>
+                </LeftSidebarMobile>
+            </header>
             <main>
                 <LeftSidebar>
                     <LeftSidebarNavigations navigations={navigations}/>
