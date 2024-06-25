@@ -3,6 +3,8 @@ package com.msparent.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Data
@@ -10,6 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "patient_table")
 public class Patient {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +22,9 @@ public class Patient {
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
+
+    @Temporal(TemporalType.DATE)
+    private LocalDate birthdate;
 
     @ElementCollection(targetClass = NotificationType.class)
     @CollectionTable(name = "patient_notification_types",
@@ -35,4 +41,8 @@ public class Patient {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Contact> contact;
+
+    public int getAge() {
+        return Period.between(this.birthdate, LocalDate.now()).getYears();
+    }
 }
