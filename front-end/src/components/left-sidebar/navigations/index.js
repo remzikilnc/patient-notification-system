@@ -17,7 +17,8 @@ export default function LeftSidebarNavigations({navigations}) {
     };
 
     return (
-        <>
+        <nav className="flex-1 relative">
+            <ul className="pb-8 rounded">
             {navigations.map((navigation, index) => (
                 <Fragment key={"nav-group-" + index}>
                     {navigation.subMenu && navigation.subMenu.length > 0 ? (
@@ -55,6 +56,7 @@ export default function LeftSidebarNavigations({navigations}) {
                     )}
                 </Fragment>
             ))}
-        </>
+            </ul>
+        </nav>
     );
 }

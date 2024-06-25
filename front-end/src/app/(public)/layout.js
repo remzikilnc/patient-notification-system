@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import Header from "@/components/header";
 import LeftSidebar from "@/components/left-sidebar";
+import LeftSidebarNavigations from "@/components/left-sidebar/navigations";
 
 const navigations = [
     {
@@ -27,12 +28,18 @@ const navigations = [
 const Layout = ({children}) => {
     return (
         <Fragment>
-            <Header/>
-            <LeftSidebar navigations={navigations}/>
-            <main className="flex justify-center items-center w-full">
-                <div className="sm:grid sm:grid-cols-12 col-span-12 w-full flex px-4 sm:px-0">
-                    <div className="h-full w-full sm:col-span-10 sm:col-start-2 flex sm:grid">
-                        {children}
+            <Header>
+                <LeftSidebarNavigations navigations={navigations}/>
+            </Header>
+            <main>
+                <LeftSidebar>
+                    <LeftSidebarNavigations navigations={navigations}/>
+                </LeftSidebar>
+                <div className="flex justify-center items-center w-full md:pl-64">
+                    <div className="md:grid md:grid-cols-12 col-span-12 w-full flex px-4 md:px-0">
+                        <div className="h-full w-full md:col-span-10 md:col-start-2 flex md:grid">
+                            {children}
+                        </div>
                     </div>
                 </div>
             </main>
