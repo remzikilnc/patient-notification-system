@@ -46,7 +46,7 @@ export default function PatientTable() {
     return (
         <Fragment>
             <div className="mb-1 z-10">
-                <PatientTableFilter/>
+                <PatientTableFilter filters={filters} setFilters={setFilters} modelsDefaultFilterValues={modelsDefaultFilterValues}/>
             </div>
             <div className="relative">
                 {selectedData.length > 0 && (
@@ -63,9 +63,13 @@ export default function PatientTable() {
 }
 
 const modelsDefaultFilterValues = {
-/*    filter: {
+    filter: {
         name: "",
-    },*/
+        search: "",
+        ageFrom: "",
+        ageTo: "",
+        gender: ""
+    },
     sort: {
         id: "asc",
     },
@@ -76,7 +80,9 @@ const modelsDefaultFilterValues = {
 const tableColumns = [
     {id: "id", label: "ID", sortable: true, type: "text"},
     {id: "name", label: "Name", sortable: true, type: "text"},
-    {id: "surname", label: "Surname", sortable: false, type: "text"},
+    {id: "surname", label: "Surname", sortable: true, type: "text"},
+    {id: "birthdate", label: "Birth Date", sortable: true, type: "date"},
+    {id: "age", label: "Age", sortable: false, type: "number"},
     {id: "gender", label: "Gender", sortable: false, type: "text"},
     {id: "actions", label: "Actions", type: "actions", endpoint: "/patients"},
 ];
