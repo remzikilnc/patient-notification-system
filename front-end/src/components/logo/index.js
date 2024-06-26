@@ -1,9 +1,7 @@
 import React from "react";
 import Link from "next/link";
+import {classNames} from "@/lib/functions/classNames";
 
-const classNames = (...classes) => {
-    return classes.filter(Boolean).join(' ');
-}
 export const Logo = ({className}) => {
 
     return (

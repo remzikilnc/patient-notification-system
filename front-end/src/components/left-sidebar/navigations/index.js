@@ -5,10 +5,9 @@ import Link from "next/link";
 import {Disclosure, DisclosureButton, DisclosurePanel} from "@headlessui/react";
 import {usePathname} from "next/navigation";
 import {UILinkButton} from "@/components/ui/link/button";
+import {classNames} from "@/lib/functions/classNames";
 
-const classNames = (...classes) => {
-    return classes.filter(Boolean).join(' ');
-}
+
 export default function LeftSidebarNavigations({navigations}) {
     const activePathName = usePathname();
 
