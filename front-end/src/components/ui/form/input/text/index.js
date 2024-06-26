@@ -7,11 +7,7 @@ export default function UIFormInputText({type = "text", className = "", isFocuse
       <input
         {...props}
         type={type}
-        className={
-          " border-gray-300 focus:border-themeSecondary focus:ring-primary" +
-          `rounded shadow-sm block w-full bg-white h-[40px] ${error ? "border-red-600" : ""}` +
-          className
-        }
+        className={`border-gray-300 focus:border-secondary focus:ring-primary rounded-md shadow-sm block w-full bg-white h-[40px] ${error ? "border-red-600" : ""}` + className}
       />
       {error && <UIFormInputError className="mt-2" message={error} />}
     </Fragment>
