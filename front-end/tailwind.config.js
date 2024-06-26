@@ -10,7 +10,8 @@ module.exports = {
             colors: {
                 /*Theme*/
                 primary: "#1a1f8f",
-                secondary: "#444591",
+                secondary: "#1f26be",
+                tertiary: "#077ac2",
 
                 /*Text*/
                 passiveText: "#282828",
@@ -18,6 +19,7 @@ module.exports = {
                 darkPassiveText: "#9ca3af",
 
                 /*Border*/
+                primaryBorder: "#252a98",
                 passiveBorder: "#dedede",
             }
 
