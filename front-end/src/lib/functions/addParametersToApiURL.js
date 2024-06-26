@@ -1,35 +1,17 @@
-import {JsonApiParams} from "@/lib/json-api-params/main";
 export function addParametersToApiURL(paramsObj) {
-    let apiParams = new JsonApiParams();
-
+    let query = [];
     for (const [key, value] of Object.entries(paramsObj)) {
-        if (value) {
-            if (key === "filter") {
-                for (const [filterKey, filterValue] of Object.entries(value)) {
-                    if (filterValue) {
-                        apiParams.addFilter(filterKey, filterValue);
-                    }
-                }
+        if (Array.isArray(value)) {
+            value.forEach(item => {
+                query.push(`${key}=${encodeURIComponent(item)}`);
+            });
+        } else if (typeof value === 'object') {
+            for (const [subKey, subValue] of Object.entries(value)) {
+                query.push(`${subKey}=${encodeURIComponent(subValue)}`);
             }
-            if (key === "sort") {
-                for (const [sortKey, sortValue] of Object.entries(value)) {
-                    if (sortValue) {
-                        apiParams.addSort(sortKey, sortValue);
-                    }
-                }
-            }
-            if (key === "include" && value) {
-                apiParams.addInclude(value);
-            }
-            if (key === "pageLimit" && value) {
-                apiParams.addPageLimit(value);
-            }
-            if (key === "pageNumber" && value) {
-                apiParams.addCustomParam({page: {number: value}});
-            }
+        } else {
+            query.push(`${key}=${encodeURIComponent(value)}`);
         }
     }
-
-    let queryString = apiParams.getQueryString({encode: false});
-    return queryString ? "?" + queryString : "";
+    return query.length > 0 ? '?' + query.join('&') : '';
 }
