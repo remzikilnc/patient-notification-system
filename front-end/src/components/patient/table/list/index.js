@@ -100,7 +100,7 @@ const PatientTableList = ({title, icon, pagination, selectedData, setSelectedDat
                     </div>
                 </div>
             </div>
-            {/* <UITablePagination paginationMeta={pagination?.meta} filters={filters} setFilters={setFilters} />*/}
+             <UITablePagination filters={filters} setFilters={setFilters} />
         </Fragment>
     );
 };
