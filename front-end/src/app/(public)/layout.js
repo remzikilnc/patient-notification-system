@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import Header from "@/components/header";
 import LeftSidebar from "@/components/left-sidebar";
 import LeftSidebarNavigations from "@/components/left-sidebar/navigations";
 import LeftSidebarMobile from "@/components/left-sidebar/mobile";
@@ -29,7 +28,7 @@ const navigations = [
 const Layout = ({children}) => {
     return (
         <Fragment>
-            <header className="flex justify-between items-center w-full h-16 border-passiveBorder border-b">
+            <header className="flex justify-between items-center w-full h-16 border-passiveBorder border-b md:border-none">
                 <LeftSidebarMobile>
                     <LeftSidebarNavigations navigations={navigations}/>
                 </LeftSidebarMobile>
@@ -39,10 +38,8 @@ const Layout = ({children}) => {
                     <LeftSidebarNavigations navigations={navigations}/>
                 </LeftSidebar>
                 <div className="flex justify-center items-center w-full md:pl-64">
-                    <div className="md:grid md:grid-cols-12 col-span-12 w-full flex px-4 md:px-0">
-                        <div className="h-full w-full md:col-span-10 md:col-start-2 flex md:grid">
-                            {children}
-                        </div>
+                    <div className="w-full px-6 my-6 md:px-12">
+                        {children}
                     </div>
                 </div>
             </main>
