@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import forms from "@tailwindcss/forms";
 module.exports = {
     content: [
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -15,7 +16,8 @@ module.exports = {
 
                 /*Text*/
                 passiveText: "#282828",
-                activeText: "#111111",
+                default: "#131313",
+                activeText: "#070707",
                 darkPassiveText: "#9ca3af",
 
                 /*Border*/
@@ -25,5 +27,5 @@ module.exports = {
 
         },
     },
-    plugins: [],
+    plugins: [forms],
 };
