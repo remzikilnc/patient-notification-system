@@ -6,6 +6,8 @@ import PatientTableFilter from "@/components/patient/table/filter";
 import UIButtonDanger from "@/components/ui/button/danger";
 import fetchServer from "@/lib/fetch-server";
 import UITableLoading from "@/components/ui/table/loading";
+import PatientTableList from "@/components/patient/table/list";
+import {MdVerifiedUser} from "react-icons/md";
 
 export default function PatientTable() {
     const [selectedData, setSelectedData] = useState([]);
@@ -54,7 +56,7 @@ export default function PatientTable() {
                         </div>
                     </div>
                 )}
-                {modelPagination ? <>table</> : <UITableLoading />}
+                {modelPagination ? <PatientTableList title="News" icon={MdVerifiedUser} columns={tableColumns} pagination={modelPagination} setFilters={setFilters} filters={filters} setSelectedData={setSelectedData} selectedData={selectedData}/> : <UITableLoading />}
             </div>
         </Fragment>
     );
@@ -71,6 +73,13 @@ const modelsDefaultFilterValues = {
     pageLimit: 10,
 };
 
+const tableColumns = [
+    {id: "id", label: "ID", sortable: true, type: "text"},
+    {id: "name", label: "Name", sortable: false, type: "text"},
+    {id: "surname", label: "Surname", sortable: false, type: "text"},
+    {id: "gender", label: "Gender", sortable: false, type: "text"},
+    {id: "actions", label: "Actions", type: "actions", endpoint: "/patients"},
+];
 
 async function deleteModel(modalId) {
     return fetchServer({method: "DELETE", endpoint:`/patients/${modalId}`});
