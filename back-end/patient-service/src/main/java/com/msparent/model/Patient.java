@@ -39,7 +39,6 @@ public class Patient {
 
     @ManyToMany
     @JoinTable(name = "patients_contact", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
-    @JsonManagedReference
     private List<Contact> contacts;
 
     public int getAge() {
