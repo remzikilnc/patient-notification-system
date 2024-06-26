@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,15 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
 
         patientQuery.where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
 
-        patientQuery.orderBy(criteriaBuilder.desc(patientRoot.get("id")));
+        List<Order> orders = new ArrayList<>();
+        for (Sort.Order order : pageable.getSort()) {
+            if (order.isAscending()) {
+                orders.add(criteriaBuilder.asc(patientRoot.get(order.getProperty())));
+            } else {
+                orders.add(criteriaBuilder.desc(patientRoot.get(order.getProperty())));
+            }
+        }
+        patientQuery.orderBy(orders);
 
         TypedQuery<Patient> query = entityManager.createQuery(patientQuery);
         query.setFirstResult((int) pageable.getOffset());

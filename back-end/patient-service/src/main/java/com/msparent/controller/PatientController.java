@@ -2,6 +2,7 @@ package com.msparent.controller;
 
 import com.msparent.dto.PatientRequest;
 import com.msparent.dto.PatientResponse;
+import com.msparent.dto.PatientSearchCriteria;
 import com.msparent.mapper.PatientMapper;
 import com.msparent.model.Patient;
 import com.msparent.repository.PatientRepository;
@@ -10,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import jakarta.ws.rs.NotFoundException;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
@@ -36,18 +38,14 @@ public class PatientController {
     }*/
 
     @GetMapping
-    public Page<Patient> getPatients(
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "surname", required = false) String surname,
-            @RequestParam(value = "age", required = false) Integer age,
-            @RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
-            @RequestParam(value = "pageLimit", defaultValue = "10") int pageLimit) {
-        Pageable pageable = PageRequest.of(pageNumber, pageLimit);
-        return patientService.searchPatients(name, surname, age, pageable);
+    public Page<Patient> index(PatientSearchCriteria criteria) {
+        Sort.Direction direction = Sort.Direction.fromString(criteria.getSort()[1]);
+        Pageable pageable = PageRequest.of(criteria.getPageNumber() - 1, criteria.getPageLimit(), Sort.by(direction, criteria.getSort()[0]));
+        return patientService.searchPatients(criteria, pageable);
     }
 
     @GetMapping("/{id}")
-    public PatientResponse getPatient(@PathVariable Long id) {
+    public PatientResponse show(@PathVariable Long id) {
         Patient patient = patientService.getPatient(id);
 
         if (patient == null) {
@@ -59,9 +57,10 @@ public class PatientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PatientResponse createOwner(@Valid @RequestBody PatientRequest patientRequest) {
+    public PatientResponse store(@Valid @RequestBody PatientRequest patientRequest) {
         Patient patient = patientMapper.mapToEntity(new Patient(), patientRequest);
         Patient savedPatient = patientRepository.save(patient);
         return patientMapper.mapToResponse(savedPatient);
     }
+
 }

@@ -1,5 +1,6 @@
 package com.msparent.service;
 
+import com.msparent.dto.PatientSearchCriteria;
 import com.msparent.model.Patient;
 import com.msparent.repository.PatientRepository;
 import com.msparent.repository.PatientRepositoryImpl;
@@ -23,8 +24,16 @@ public class PatientService {
         return patientRepository.search(searchTerm, pageable);
     }*/
 
-    public Page<Patient> searchPatients(String name, String surname, Integer age, Pageable pageable) {
-        return patientRepository.findPatientsByCriteria(name, surname, age, pageable);
+    public Page<Patient> searchPatients(PatientSearchCriteria criteria, Pageable pageable) {
+        return patientRepository.searchCriteria(
+                criteria.getSearch(),
+                criteria.getName(),
+                criteria.getSurname(),
+                criteria.getAgeFrom(),
+                criteria.getAgeTo(),
+                criteria.getGender(),
+                pageable
+        );
     }
 
     public Patient getPatient(Long id) {
