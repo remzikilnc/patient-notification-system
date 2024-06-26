@@ -13,12 +13,12 @@ export const useFetchData = (endpoint, defaultFilters = {}) => {
 
     const query = addParametersToApiURL(debouncedFilters);
     const queryUrl = `/${endpoint}${query}`;
+    const fetcher = async url => {
+        const res = await fetchServer({method: "GET", endpoint: url});
+        return await res.json();
+    };
 
-    const {data: fetchedData, error, mutate} = useSWR(queryUrl, function () {
-            fetchServer({method: "GET", endpoint: queryUrl}).then(r => r.json());
-        }
-        , {revalidateOnFocus: false, dedupingInterval: 32000});
-
+    const {data: fetchedData, error, mutate} = useSWR(queryUrl, fetcher, {revalidateOnFocus: false, dedupingInterval: 32000});
     const debouncedSetFilters = useCallback(debounce(setDebouncedFilters, 300), []);
 
     useEffect(() => {
