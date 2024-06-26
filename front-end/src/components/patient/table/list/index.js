@@ -3,13 +3,14 @@ import {AiOutlineArrowDown} from "react-icons/ai";
 import UITableNotFound from "@/components/ui/table/not-found";
 import UITableCell from "@/components/ui/table/cell";
 import {updateNestedFilters} from "@/lib/functions/update-nested-filters";
+import UITablePagination from "@/components/ui/table/pagination";
 
 const PatientTableList = ({title, icon, pagination, selectedData, setSelectedData, filters, setFilters, columns}) => {
     const checkbox = useRef();
     const [checked, setChecked] = useState(false);
     const [indeterminate, setIndeterminate] = useState(false);
 
-    const data = pagination.content;
+    const data = pagination.data;
 
     useLayoutEffect(() => {
         const isIndeterminate = selectedData.length > 0 && selectedData.length < data.length;
@@ -100,7 +101,7 @@ const PatientTableList = ({title, icon, pagination, selectedData, setSelectedDat
                     </div>
                 </div>
             </div>
-             <UITablePagination filters={filters} setFilters={setFilters} />
+            <UITablePagination paginationMeta={pagination?.meta} filters={filters} setFilters={setFilters} />
         </Fragment>
     );
 };
