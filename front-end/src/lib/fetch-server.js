@@ -10,10 +10,15 @@ async function fetchServer({method = "GET", endpoint = "test", body = "", header
             body: body || undefined,
         });
 
-        if (response.ok) {
-            return response;
+        if (!response.ok) {
+            throw response;
         }
+
+        return response;
     } catch (error) {
+        if (error instanceof Response) {
+            return  error;
+        }
         throw new Error("Failed to fetch data from the server", {cause: error});
     }
 }
