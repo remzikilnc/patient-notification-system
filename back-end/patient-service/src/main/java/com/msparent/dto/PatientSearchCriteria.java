@@ -13,7 +13,7 @@ public class PatientSearchCriteria {
     private Gender gender;
     //private LocalDate bornBefore;
     //private LocalDate bornAfter;
-    private int pageNumber = 0;
+    private int pageNumber = 1;
     private int pageLimit = 10;
     private String[] sort = {"id", "desc"};
 }

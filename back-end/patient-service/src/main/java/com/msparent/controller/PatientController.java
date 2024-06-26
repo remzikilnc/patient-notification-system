@@ -3,6 +3,7 @@ package com.msparent.controller;
 import com.msparent.dto.PatientRequest;
 import com.msparent.dto.PatientResponse;
 import com.msparent.dto.PatientSearchCriteria;
+import com.msparent.dto.ResponseWrapper;
 import com.msparent.mapper.PatientMapper;
 import com.msparent.model.Patient;
 import com.msparent.repository.PatientRepository;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/patients")
@@ -38,10 +41,22 @@ public class PatientController {
     }*/
 
     @GetMapping
-    public Page<Patient> index(PatientSearchCriteria criteria) {
+    public ResponseWrapper<List<Patient>> index(PatientSearchCriteria criteria) {
         Sort.Direction direction = Sort.Direction.fromString(criteria.getSort()[1]);
         Pageable pageable = PageRequest.of(criteria.getPageNumber() - 1, criteria.getPageLimit(), Sort.by(direction, criteria.getSort()[0]));
-        return patientService.searchPatients(criteria, pageable);
+        Page<Patient> page = patientService.searchPatients(criteria, pageable);
+
+        ResponseWrapper.Meta meta = new ResponseWrapper.Meta(
+                page.getTotalPages(),
+                page.getNumber() + 1,
+                page.getTotalElements(),
+                page.isFirst(),
+                page.isLast(),
+                page.getSize(),
+                page.isEmpty()
+        );
+
+        return new ResponseWrapper<>(meta, page.getContent());
     }
 
     @GetMapping("/{id}")
