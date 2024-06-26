@@ -1,7 +1,12 @@
 export function addParametersToApiURL(paramsObj) {
     let query = [];
+
     for (const [key, value] of Object.entries(paramsObj)) {
-        if (Array.isArray(value)) {
+        if (key === 'sort' && typeof value === 'object') {
+            for (const [sortKey, sortValue] of Object.entries(value)) {
+                query.push(`${key}=${sortKey},${sortValue}`);
+            }
+        } else if (Array.isArray(value)) {
             value.forEach(item => {
                 query.push(`${key}=${encodeURIComponent(item)}`);
             });
@@ -13,5 +18,6 @@ export function addParametersToApiURL(paramsObj) {
             query.push(`${key}=${encodeURIComponent(value)}`);
         }
     }
+
     return query.length > 0 ? '?' + query.join('&') : '';
 }
