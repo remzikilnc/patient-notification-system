@@ -30,5 +30,5 @@ public class PatientResponse {
 
     private List<NotificationType> notificationTypes;
     private List<String> identifiers;
-    private List<Contact> contact;
+    private List<Contact> contacts;
 }

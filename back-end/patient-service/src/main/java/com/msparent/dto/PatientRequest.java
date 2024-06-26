@@ -39,5 +39,5 @@ public class PatientRequest {
 
     private List<String> identifiers;
 
-    private List<Contact> contact;
+    private List<Contact> contacts;
 }
