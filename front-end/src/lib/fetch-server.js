@@ -1,4 +1,4 @@
-async function fetchServer({method = "GET", endpoint, body = "", headers}) {
+async function fetchServer({method = "GET", endpoint = "test", body = "", headers}) {
     try {
         const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_API_URL + endpoint.toString(), {
             method: method,
