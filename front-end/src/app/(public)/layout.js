@@ -39,7 +39,9 @@ const Layout = ({children}) => {
                 </LeftSidebar>
                 <div className="flex justify-center items-center w-full md:pl-64">
                     <div className="w-full px-6 my-6 md:px-12">
+                        <div className="sm:flex sm:flex-col md:border p-0 md:p-6 rounded-xl">
                         {children}
+                        </div>
                     </div>
                 </div>
             </main>
