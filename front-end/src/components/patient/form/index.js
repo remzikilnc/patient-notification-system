@@ -72,7 +72,7 @@ const PatientForm = ({model = null}) => {
     };
 
     return (
-        <form className="space-y-8 p-1 divide-y divide-passiveBorder overflow-hidden" onSubmit={submit}>
+        <form className="space-y-8 p-1 overflow-hidden" onSubmit={submit}>
             <div className="space-y-8">
                 <div>
                     <h3 className="text-xl font-semibold dark:text-themeHoverText">{model ? `Edit ${model.name} ${model.surname}` : "Create Patient"}</h3>
@@ -133,11 +133,8 @@ const PatientForm = ({model = null}) => {
                         </div>
                     </div>
                     {model &&
-                        <div className="pt-5">
-                            <h4 className="text-md font-semibold dark:text-themeHoverText">Contacts</h4>
-                            <PatientFormContacts contacts={contacts} setContacts={setContacts} addRowText="Add Contact"
-                                                 handleSaveContact={handleSaveContact}/>
-                        </div>
+                        <PatientFormContacts contacts={contacts} setContacts={setContacts} addRowText="Add Contact"
+                                             handleSaveContact={handleSaveContact}/>
                     }
                 </div>
             </div>

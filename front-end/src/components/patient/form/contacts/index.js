@@ -19,52 +19,36 @@ const PatientFormContacts = ({contacts, handleSaveContact, addRowText}) => {
 
     return (
         <Fragment>
+            <div className="flex justify-between pt-5">
+                <h4 className="text-md font-semibold dark:text-themeHoverText">Contacts</h4>
+                <UIButtonPrimary type="button" onClick={handleAddClick}>{addRowText}</UIButtonPrimary>
+            </div>
+
             <div className="overflow-x-auto">
                 <div className="inline-block min-w-full py-2 align-middle">
-                    <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                        <table className="min-w-full divide-y-2 divide-gray-300 ">
-                            <thead className="bg-gray-50 ">
+                    <div className="overflow-hidden rounded-md border border-passiveBorder">
+                        <table className="min-w-full">
+                        <thead className="bg-gray-100">
                             <tr>
                                 <th scope="col"
-                                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900  sm:pl-6">
-                                    <a href="#" className="group inline-flex">
-                                        Name
-                                    </a>
+                                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 cursor-default">
+                                    Name
                                 </th>
-                                <th scope="col"
-                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    <a href="#" className="group inline-flex">
-                                        Surname
-                                    </a>
+                                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Surname
                                 </th>
-                                <th scope="col"
-                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    <a href="#" className="group inline-flex">
-                                        Type
-                                    </a>
+                                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Type
                                 </th>
-                                <th scope="col"
-                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    <a href="#" className="group inline-flex">
-                                        E-mail
-                                    </a>
+                                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    E-mail
                                 </th>
-                                <th scope="col"
-                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    <a href="#" className="group inline-flex">
-                                        Phone
-                                    </a>
+                                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Phone
                                 </th>
-                                <th scope="col"
-                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    <a href="#" className="group inline-flex">
-                                        Contact Preference
-                                    </a>
+                                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                    Contact Preference
                                 </th>
-                                <th scope="col"
-                                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                    <a href="#" className="group inline-flex"></a>
-                                </th>
+                                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
                             </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200 bg-white">
@@ -80,16 +64,15 @@ const PatientFormContacts = ({contacts, handleSaveContact, addRowText}) => {
                                         <button
                                             type="button"
                                             onClick={handleEditClick.bind(this, contact)}
-                                            className="text-white mr-4 p-1 bg-primary rounded hover:bg-secondary md:text-sm text-xs"
+                                            className="text-white mr-4 p-1 bg-primary rounded hover:bg-secondary md:text-sm text-xs min-w-12"
                                         >
                                             Edit
                                         </button>
-                                        <button
-                                            type="button"
+                                        <button type="button"
                                             onClick={e => {
                                                 console.log(contact.id);
                                             }}
-                                            className="bg-red-600 p-1 text-white rounded hover:bg-red-700 md:text-sm text-xs"
+                                            className="bg-red-600 p-1 text-white rounded hover:bg-red-700 md:text-sm text-xs min-w-12"
                                         >
                                             Delete
                                         </button>
@@ -98,11 +81,11 @@ const PatientFormContacts = ({contacts, handleSaveContact, addRowText}) => {
                             ))}
                             </tbody>
                         </table>
-                        <UIButtonPrimary className="w-full justify-center py-4 focus:!ring-0 focus:!ring-offset-0" type="button" onClick={handleAddClick}>{addRowText}</UIButtonPrimary>
                     </div>
                 </div>
             </div>
-            <PatientContactModal setIsOpen={setShowModal} isOpen={showModal} contact={contact} handleSaveContact={handleSaveContact}/>
+            <PatientContactModal setIsOpen={setShowModal} isOpen={showModal} contact={contact}
+                                 handleSaveContact={handleSaveContact}/>
         </Fragment>
     );
 };
