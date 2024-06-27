@@ -23,7 +23,7 @@ const PatientForm = ({model = null}) => {
     const [selectedGender, setSelectedGender] = useState(model?.gender || 'MALE');
     const [selectedNotificationTypes, setSelectedNotificationTypes] = useState(model?.notificationTypes || []);
     const [contacts, setContacts] = useState(model?.contacts || []);
-    const [identifiers, setIdentifiers] = useState(model.identifiers || []);
+    const [identifiers, setIdentifiers] = useState(model?.identifiers || []);
 
     const submit = async event => {
         event.preventDefault();
