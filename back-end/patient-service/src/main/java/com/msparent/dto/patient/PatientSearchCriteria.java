@@ -1,4 +1,4 @@
-package com.msparent.dto;
+package com.msparent.dto.patient;
 
 import com.msparent.model.Gender;
 import lombok.Data;
@@ -11,6 +11,7 @@ public class PatientSearchCriteria {
     private Integer ageFrom;
     private Integer ageTo;
     private Gender gender;
+    private boolean contacts;
     //private LocalDate bornBefore;
     //private LocalDate bornAfter;
     private int pageNumber = 1;
