@@ -131,7 +131,7 @@ export default function PatientTableFilter({filters, setFilters, modelsDefaultFi
                                         <UIFormInputSearchWithIcon
                                             id="search-surname"
                                             name="search-surname"
-                                            value={filters.filter.name}
+                                            value={filters.filter.surname}
                                             Icon={BiRename}
                                             placeholder="Surname"
                                             handleChange={e => handleFilterChange("filter", "surname", e.target.value)}

@@ -37,7 +37,7 @@ const PatientTableList = ({title, icon, pagination, selectedData, setSelectedDat
         <Fragment>
             <div className="overflow-x-auto ">
                 <div className="inline-block min-w-full align-middle">
-                    <div className="overflow-hidden border border-passiveBorder rounded-md">
+                    <div className="overflow-hidden border border-passiveBorder rounded-md rounded-b-none">
                         <div className="relative">
                             <table className="min-w-full table-fixed">
                                 <thead className="bg-primary text-sm text-white">

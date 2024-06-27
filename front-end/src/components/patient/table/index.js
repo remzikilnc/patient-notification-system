@@ -13,7 +13,7 @@ export default function PatientTable() {
     const [selectedData, setSelectedData] = useState([]);
     const {filters, setFilters, data: modelPagination, error, mutate} = useFetchData("patients", modelsDefaultFilterValues);
     async function handleAction(actionType) {
-        let updatedModelData = [...modelPagination.content];
+        let updatedModelData = [...modelPagination.data];
         for (const model of selectedData) {
             try {
                 let response;
