@@ -8,10 +8,10 @@ function SensitiveDataCell({ label, data, className }) {
     };
 
     const censorData = (data) => {
-        if (isVisible || data.length <= 3) {
+        if (data === null || data === undefined || isVisible || data?.length <= 3) {
             return data;
         }
-        return `${data.substring(0, 3)}${'*'.repeat(data.length - 3)}`;
+        return `${data?.substring(0, 3)}${'******'}`;
     };
 
     return (

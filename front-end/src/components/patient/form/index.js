@@ -11,12 +11,13 @@ import UIFormInputSelectableWithIcon from "@/components/ui/form/input/selectable
 import UIFormInputDatePickerRanged from "@/components/ui/form/input/date-picker/ranged";
 import UIFormInputDatePicker from "@/components/ui/form/input/date-picker";
 import PatientFormContacts from "@/components/patient/form/contacts";
+import fetchServer from "@/lib/fetch-server";
 
 const PatientForm = ({model = null}) => {
+    const router = useRouter()
     const {handleSubmit, errors, setErrors} = useForm();
     const [selectedGender, setSelectedGender] = useState(model?.gender || 'MALE');
-    const router = useRouter();
-
+    const [contacts, setContacts] = useState(model?.contacts || []);
     const submit = async event => {
         const commonParams = {
             event,
@@ -37,8 +38,24 @@ const PatientForm = ({model = null}) => {
         }
     };
 
+    const handleSaveContact = (contact) => {
+        if (contact.id) {
+             fetchServer({
+                method: "PUT",
+                endpoint: `/patients/${model.id}/contacts/${contact.id}`,
+                body: JSON.stringify(contact)
+            }).then(data => data.json()).then(data => {setContacts(contacts.map(c => c?.id === data?.id ? data : c))})
+        } else {
+           fetchServer({
+                method: "POST",
+                endpoint: `/patients/${model.id}/contacts`,
+                body: JSON.stringify(contact)
+            }).then(data => data.json()).then(data => {setContacts([...contacts, data])})
+        }
+    };
+
     return (
-        <form className="space-y-8 divide-y divide-passiveBorder" onSubmit={submit}>
+        <form className="space-y-8 p-1 divide-y divide-passiveBorder overflow-hidden" onSubmit={submit}>
             <div className="space-y-8">
                 <div>
                     <h3 className="text-xl font-semibold dark:text-themeHoverText">{model ? `Edit ${model.name}` : "Create Patient"}</h3>
@@ -96,10 +113,12 @@ const PatientForm = ({model = null}) => {
                             </div>
                         </div>
                     </div>
-                    <div className="pt-5">
-                        <h4 className="text-md font-semibold dark:text-themeHoverText">Contacts</h4>
-                        <PatientFormContacts contacts={model?.contacts} addRowText="Add New Contact"/>
-                    </div>
+                    {model &&
+                        <div className="pt-5">
+                            <h4 className="text-md font-semibold dark:text-themeHoverText">Contacts</h4>
+                            <PatientFormContacts contacts={contacts} setContacts={setContacts} addRowText="Add Contact" handleSaveContact={handleSaveContact}/>
+                        </div>
+                    }
                 </div>
             </div>
 
