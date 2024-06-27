@@ -1,19 +1,20 @@
 package com.msparent.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class ResponseWrapper<T> {
     private Meta meta;
     private T data;
 
+    // Meta class
     @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
+    @Builder
     public static class Meta {
         private int last_page;
         private int current_page;
@@ -23,5 +24,4 @@ public class ResponseWrapper<T> {
         private int size;
         private boolean empty;
     }
-
 }
