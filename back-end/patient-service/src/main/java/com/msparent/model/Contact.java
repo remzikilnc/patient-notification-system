@@ -20,8 +20,19 @@ public class Contact {
     private String surname;
     private String email;
     private String phoneNumber;
+    private String address;
+    private String city;
+    private String state;
+    private String zip;
+    private String country;
+    private String relationship;
+    private String notes;
+    private String contactType;
+    private String contactMethod;
 
     @JsonBackReference
-    @ManyToMany(mappedBy = "contacts")
-    private List<Patient> patients;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 }
+

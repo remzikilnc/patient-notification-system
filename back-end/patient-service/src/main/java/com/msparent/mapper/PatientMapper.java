@@ -1,7 +1,7 @@
 package com.msparent.mapper;
 
-import com.msparent.dto.PatientRequest;
-import com.msparent.dto.PatientResponse;
+import com.msparent.dto.patient.PatientRequest;
+import com.msparent.dto.patient.PatientResponse;
 import com.msparent.model.Patient;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +33,19 @@ public class PatientMapper implements Mapper<PatientRequest, Patient, PatientRes
                 .gender(patient.getGender())
                 .notificationTypes(patient.getNotificationTypes())
                 .identifiers(patient.getIdentifiers())
+                .build();
+    }
+
+    public PatientResponse mapToResponseWithContacts(Patient patient) {
+        return PatientResponse.builder()
+                .id(patient.getId())
+                .name(patient.getName())
+                .surname(patient.getSurname())
+                .birthdate(patient.getBirthdate())
+                .age(patient.getAge())
+                .gender(patient.getGender())
+                .notificationTypes(patient.getNotificationTypes())
+                .identifiers(patient.getIdentifiers())
                 .contacts(patient.getContacts())
                 .build();
     }
@@ -44,4 +57,9 @@ public class PatientMapper implements Mapper<PatientRequest, Patient, PatientRes
                 .collect(Collectors.toList());
     }
 
+    public List<PatientResponse> mapToResponseWithContacts(List<Patient> patients) {
+        return patients.stream()
+                .map(this::mapToResponseWithContacts)
+                .collect(Collectors.toList());
+    }
 }

@@ -37,8 +37,9 @@ public class Patient {
     @Column(name = "identifier", nullable = true)
     private List<String> identifiers;
 
-    @ManyToMany
-    @JoinTable(name = "patients_contact", joinColumns = @JoinColumn(name = "patient_id"), inverseJoinColumns = @JoinColumn(name = "contact_id"))
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Contact> contacts;
 
     public int getAge() {
