@@ -4,6 +4,7 @@ import com.msparent.dto.patient.PatientSearchCriteria;
 import com.msparent.model.Contact;
 import com.msparent.model.Patient;
 import com.msparent.repository.PatientRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,10 @@ public class PatientService {
         return patientRepository.findById(id).orElse(null);
     }
 
+    public Patient updatePatient(Patient patient) {
+        return patientRepository.save(patient);
+    }
+
     public void deletePatientById(Long id) {
         patientRepository.deleteById(id);
     }
@@ -50,8 +55,14 @@ public class PatientService {
         return patientRepository.existsById(id);
     }
 
+    @Transactional
     public void addContact(Patient patient, Contact savedContact) {
         patient.getContacts().add(savedContact);
+        patientRepository.save(patient);
+    }
+
+    public void removeContact(Patient patient, Contact contact) {
+        patient.getContacts().remove(contact);
         patientRepository.save(patient);
     }
 }
