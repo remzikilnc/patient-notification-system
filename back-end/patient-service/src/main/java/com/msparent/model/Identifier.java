@@ -2,6 +2,7 @@ package com.msparent.model;
 
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
+import java.util.Objects;
 
 @Getter
 @Embeddable

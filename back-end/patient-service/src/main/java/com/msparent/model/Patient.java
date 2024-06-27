@@ -3,10 +3,14 @@ package com.msparent.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -14,9 +18,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "patients")
+@Audited
 public class Patient {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String surname;
@@ -33,9 +38,10 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     private List<NotificationType> notificationTypes;
 
+    @Audited(targetAuditMode = RelationTargetAuditMode.AUDITED)
     @ElementCollection
     @CollectionTable(name = "patient_identifiers", joinColumns = @JoinColumn(name = "patient_id"))
-    private List<Identifier> identifiers;
+    private Set<Identifier> identifiers;
 
 
 

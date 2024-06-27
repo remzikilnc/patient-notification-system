@@ -3,8 +3,7 @@ package com.msparent.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
+import org.hibernate.envers.Audited;
 
 @Data
 @Builder
@@ -12,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "contacts")
+@Audited
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -41,7 +42,7 @@ public class PatientRequest {
 
     private List<NotificationType> notificationTypes;
 
-    private List<Identifier> identifiers;
+    private Set<Identifier> identifiers;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Contact> contacts;
