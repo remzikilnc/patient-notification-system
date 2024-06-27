@@ -43,13 +43,13 @@ const PatientContactModal = ({contact = {},errors, isOpen, setIsOpen, handleSave
                                         </div>
                                     </div>
                                     <div>
-                                        <UIFormLabel htmlFor="description" className="!font-medium" label="Description"/>
+                                        <UIFormLabel htmlFor="notes" className="!font-medium" label="Notes"/>
                                         <div className="mt-1">
                                             <UIFormInputTextArea
-                                                id="description"
-                                                name="description"
-                                                defaultValue={contact?.note}
-                                                error={errors?.note}
+                                                id="notes"
+                                                name="notes"
+                                                defaultValue={contact?.notes}
+                                                error={errors?.notes}
                                                 rows={3}
                                                 desc="Write a few sentences about this contact."
                                             />
@@ -73,3 +73,19 @@ const PatientContactModal = ({contact = {},errors, isOpen, setIsOpen, handleSave
 };
 
 export default PatientContactModal;
+
+/*
+private String name;
+private String surname;
+private String email;
+private String phoneNumber;
+private String address;
+private String city;
+private String state;
+private String zip;
+private String country;
+private String relationship;
+private String notes;
+private String contactType;
+private String contactMethod;
+*/

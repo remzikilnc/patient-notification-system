@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import useForm from "@/lib/useForm";
 import UIFormLabel from "@/components/ui/form/label";
@@ -12,15 +12,30 @@ import UIFormInputDatePickerRanged from "@/components/ui/form/input/date-picker/
 import UIFormInputDatePicker from "@/components/ui/form/input/date-picker";
 import PatientFormContacts from "@/components/patient/form/contacts";
 import fetchServer from "@/lib/fetch-server";
+import FormInputSelectableMultiple from "@/components/ui/form/input/selectable/multiple";
+
+const notificationTypes = [{label: "SMS", value: "SMS"}, {label: "E-Mail", value: "EMAIL"}]
 
 const PatientForm = ({model = null}) => {
     const router = useRouter()
     const {handleSubmit, errors, setErrors} = useForm();
     const [selectedGender, setSelectedGender] = useState(model?.gender || 'MALE');
+    const [selectedNotificationTypes, setSelectedNotificationTypes] = useState(model?.notificationTypes || []);
     const [contacts, setContacts] = useState(model?.contacts || []);
     const submit = async event => {
+        event.preventDefault();
+
+        const formObj = {
+            name: event.target.name.value,
+            surname: event.target.surname.value,
+            gender: selectedGender,
+            birthdate: event.target.birthdate.value,
+            notificationTypes: selectedNotificationTypes,
+            identifiers: []
+        };
+
         const commonParams = {
-            event,
+            formObj,
             onSuccess: data => {
                 if (!model) {
                     router.push(`/patients/${data?.id}`);
@@ -33,8 +48,10 @@ const PatientForm = ({model = null}) => {
 
         if (model) {
             await handleSubmit({...commonParams, endPoint: `patients/${model.id}`, method: "PUT"});
+            router.refresh();
         } else {
             await handleSubmit({...commonParams, endPoint: "patients"});
+            router.refresh();
         }
     };
 
@@ -58,7 +75,7 @@ const PatientForm = ({model = null}) => {
         <form className="space-y-8 p-1 divide-y divide-passiveBorder overflow-hidden" onSubmit={submit}>
             <div className="space-y-8">
                 <div>
-                    <h3 className="text-xl font-semibold dark:text-themeHoverText">{model ? `Edit ${model.name}` : "Create Patient"}</h3>
+                    <h3 className="text-xl font-semibold dark:text-themeHoverText">{model ? `Edit ${model.name} ${model.surname}` : "Create Patient"}</h3>
                 </div>
                 <div className="col-span-3">
                     <div className="grid grid-cols-1 gap-y-4 gap-x-4 border-b border-passiveBorder pb-5">
@@ -86,18 +103,20 @@ const PatientForm = ({model = null}) => {
                                     data={["MALE", "FEMALE"]}
                                     selectedValue={selectedGender}
                                     setSelectedValue={setSelectedGender}
-                                />
-                                <UIFormInputText
-                                    className="hidden"
-                                    id="gender"
-                                    name="gender"
-                                    defaultValue={selectedGender}
                                     error={errors?.gender}
-                                    required
-                                    isFocused
-                                    autoComplete="gender"
                                 />
                             </div>
+                        </div>
+                        <div>
+                            <UIFormLabel htmlFor="notificationTypes" className="!font-medium" label="Notification Type"/>
+                            <FormInputSelectableMultiple
+                                data={notificationTypes}
+                                onChange={(data) => setSelectedNotificationTypes(data)}
+                                initialState={notificationTypes.filter(nt => selectedNotificationTypes.includes(nt.value))}
+                                hasSelectAll={false}
+                                error={errors?.notificationTypes}
+                                disableSearch
+                            />
                         </div>
                         <div>
                             <UIFormLabel htmlFor="description" className="!font-medium" label="Description"/>
@@ -116,7 +135,8 @@ const PatientForm = ({model = null}) => {
                     {model &&
                         <div className="pt-5">
                             <h4 className="text-md font-semibold dark:text-themeHoverText">Contacts</h4>
-                            <PatientFormContacts contacts={contacts} setContacts={setContacts} addRowText="Add Contact" handleSaveContact={handleSaveContact}/>
+                            <PatientFormContacts contacts={contacts} setContacts={setContacts} addRowText="Add Contact"
+                                                 handleSaveContact={handleSaveContact}/>
                         </div>
                     }
                 </div>

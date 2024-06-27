@@ -3,16 +3,13 @@ import fetchServer from "@/lib/fetch-server";
 const useForm = () => {
     const [errors, setErrors] = useState(null);
 
-    const handleSubmit = async ({ event, endPoint, onSuccess, onError, method = "POST" }) => {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const data = Object.fromEntries(formData);
-
+    const handleSubmit = async ({ formData,formObj, endPoint, onSuccess, onError, method = "POST" }) => {
+        const body = formData ? JSON.stringify(Object.fromEntries(formData)) : JSON.stringify(formObj);
         try {
             const response = await fetchServer({
                 method,
                 endpoint: `/${endPoint}`,
-                body: JSON.stringify(data),
+                body: body,
             });
 
             const responseData = await response.json();
