@@ -1,20 +1,15 @@
-package com.msparent.model;
+package com.msparent.dto.contact;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "contacts")
-public class Contact {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ContactResponse {
     private Long id;
     private String name;
     private String surname;
@@ -28,10 +23,5 @@ public class Contact {
     private String notes;
     private String contactType;
     private String contactMethod;
-
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
 }
 

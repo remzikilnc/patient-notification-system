@@ -23,7 +23,6 @@ public class ContactMapper implements Mapper<ContactRequest, Contact, ContactRes
         contact.setCity(request.getCity());
         contact.setState(request.getState());
         contact.setZip(request.getZip());
-        contact.setCountry(request.getCountry());
         contact.setRelationship(request.getRelationship());
         contact.setNotes(request.getNotes());
         contact.setContactType(request.getContactType());
@@ -43,7 +42,6 @@ public class ContactMapper implements Mapper<ContactRequest, Contact, ContactRes
                 .city(contact.getCity())
                 .state(contact.getState())
                 .zip(contact.getZip())
-                .country(contact.getCountry())
                 .relationship(contact.getRelationship())
                 .notes(contact.getNotes())
                 .contactType(contact.getContactType())
