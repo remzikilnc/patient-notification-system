@@ -1,16 +1,19 @@
 package com.msparent.controller;
 
-import com.msparent.dto.PatientRequest;
-import com.msparent.dto.PatientResponse;
-import com.msparent.dto.PatientSearchCriteria;
+import com.msparent.dto.contact.ContactRequest;
+import com.msparent.dto.contact.ContactResponse;
+import com.msparent.dto.patient.PatientRequest;
+import com.msparent.dto.patient.PatientResponse;
+import com.msparent.dto.patient.PatientSearchCriteria;
 import com.msparent.dto.ResponseWrapper;
+import com.msparent.mapper.ContactMapper;
 import com.msparent.mapper.PatientMapper;
+import com.msparent.model.Contact;
 import com.msparent.model.Patient;
-import com.msparent.repository.PatientRepository;
+import com.msparent.service.ContactService;
 import com.msparent.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import jakarta.ws.rs.NotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -28,8 +31,9 @@ import java.util.List;
 public class PatientController {
 
     private final PatientService patientService;
-    private final PatientRepository patientRepository;
     private final PatientMapper patientMapper;
+    private final ContactMapper contactMapper;
+    private final ContactService contactService;
 
 /*    @GetMapping
     public Page<Patient> getPatients(
@@ -42,49 +46,72 @@ public class PatientController {
     }*/
 
     @GetMapping
-    public ResponseWrapper<List<Patient>> index(PatientSearchCriteria criteria) {
+    public ResponseWrapper<List<PatientResponse>> index(PatientSearchCriteria criteria) {
         Sort.Direction direction = Sort.Direction.fromString(criteria.getSort()[1]);
         Pageable pageable = PageRequest.of(criteria.getPageNumber() - 1, criteria.getPageLimit(), Sort.by(direction, criteria.getSort()[0]));
         Page<Patient> page = patientService.searchPatients(criteria, pageable);
 
-        ResponseWrapper.Meta meta = new ResponseWrapper.Meta(
-                page.getTotalPages(),
-                page.getNumber() + 1,
-                page.getTotalElements(),
-                page.isFirst(),
-                page.isLast(),
-                page.getSize(),
-                page.isEmpty()
-        );
+        ResponseWrapper.Meta meta = ResponseWrapper.Meta.builder()
+                .last_page(page.getTotalPages())
+                .current_page(page.getNumber() + 1)
+                .totalElements(page.getTotalElements())
+                .first(page.isFirst())
+                .last(page.isLast())
+                .size(page.getSize())
+                .empty(page.isEmpty())
+                .build();
 
-        return new ResponseWrapper<>(meta, page.getContent());
+        List<PatientResponse> patientResponses;
+        if (criteria.isContacts())  patientResponses = patientMapper.mapToResponseWithContacts(page.getContent());
+        else patientResponses = patientMapper.mapToResponse(page.getContent());
+        return new ResponseWrapper<>(meta, patientResponses);
     }
 
     @GetMapping("/{id}")
-    public PatientResponse show(@PathVariable Long id) {
+    public PatientResponse show(@PathVariable Long id, @RequestParam(value = "contacts", required = false, defaultValue = "false") boolean contacts) {
         Patient patient = patientService.getPatient(id);
 
         if (patient == null) {
-            throw new NotFoundException("Patient not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
+        }
+
+        if (contacts) {
+            return patientMapper.mapToResponseWithContacts(patient);
         }
 
         return patientMapper.mapToResponse(patient);
+    }
+
+    @PostMapping("/{id}/contacts")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ContactResponse storeContact(@PathVariable Long id, @Valid @RequestBody ContactRequest contactRequest) {
+        Patient patient = patientService.getPatient(id);
+
+        if (patient == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
+        }
+
+        Contact contact = contactMapper.mapToEntity(new Contact(), contactRequest);
+        Contact savedContact = contactService.createContact(contact);
+        patientService.addContact(patient, savedContact);
+
+        return contactMapper.mapToResponse(contact);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PatientResponse store(@Valid @RequestBody PatientRequest patientRequest) {
         Patient patient = patientMapper.mapToEntity(new Patient(), patientRequest);
-        Patient savedPatient = patientRepository.save(patient);
+        Patient savedPatient = patientService.createPatient(patient);
         return patientMapper.mapToResponse(savedPatient);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        if (!patientRepository.existsById(id)) {
+    public void destroy(@PathVariable Long id) {
+        if (!patientService.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
         }
-        patientRepository.deleteById(id);
+        patientService.deletePatientById(id);
     }
 }
