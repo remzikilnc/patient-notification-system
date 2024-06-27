@@ -6,6 +6,7 @@ import com.msparent.model.Patient;
 import com.msparent.repository.PatientRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final RabbitTemplate rabbitTemplate;
 
     /*    public Page<Patient> searchPatients(String searchTerm, Pageable pageable) {
         return patientRepository.search(searchTerm, pageable);
@@ -36,7 +38,9 @@ public class PatientService {
         );
     }
     public Patient createPatient(Patient patient) {
-        return patientRepository.save(patient);
+        Patient savedPatient = patientRepository.save(patient);
+        sendPatientCreatedMessage(savedPatient.getId().toString());
+        return savedPatient;
     }
 
     public Patient getPatient(Long id) {
@@ -64,5 +68,10 @@ public class PatientService {
     public void removeContact(Patient patient, Contact contact) {
         patient.getContacts().remove(contact);
         patientRepository.save(patient);
+    }
+
+    private void sendPatientCreatedMessage(String patientId) {
+        rabbitTemplate.convertAndSend("patientQueue", patientId);
+        System.out.println("Patient created message sent to RabbitMQ: " + patientId);
     }
 }
