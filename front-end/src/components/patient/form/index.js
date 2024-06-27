@@ -13,6 +13,7 @@ import UIFormInputDatePicker from "@/components/ui/form/input/date-picker";
 import PatientFormContacts from "@/components/patient/form/contacts";
 import fetchServer from "@/lib/fetch-server";
 import FormInputSelectableMultiple from "@/components/ui/form/input/selectable/multiple";
+import UIFormInputKeyValue from "@/components/ui/form/input/key-value";
 
 const notificationTypes = [{label: "SMS", value: "SMS"}, {label: "E-Mail", value: "EMAIL"}]
 
@@ -22,6 +23,7 @@ const PatientForm = ({model = null}) => {
     const [selectedGender, setSelectedGender] = useState(model?.gender || 'MALE');
     const [selectedNotificationTypes, setSelectedNotificationTypes] = useState(model?.notificationTypes || []);
     const [contacts, setContacts] = useState(model?.contacts || []);
+    const [identifiers, setIdentifiers] = useState([]);
     const submit = async event => {
         event.preventDefault();
 
@@ -71,6 +73,29 @@ const PatientForm = ({model = null}) => {
         }
     };
 
+    const handleDeleteContact = (contact) => {
+        fetchServer({
+            method: "DELETE",
+            endpoint: `/patients/${model.id}/contacts/${contact.id}`,
+        }).then((res) => res.ok ? setContacts(contacts.filter(c => c.id !== contact.id)) : console.error(res))
+    };
+
+    const handleIdentifierChange = (index, event) => {
+        const values = [...identifiers];
+        values[index][event.target.name] = event.target.value;
+        setIdentifiers(values);
+    };
+
+    const handleAddIdentifier = () => {
+        setIdentifiers([...identifiers, { type: '', value: '' }]);
+    };
+
+    const handleRemoveIdentifier = (index) => {
+        const values = [...identifiers];
+        values.splice(index, 1);
+        setIdentifiers(values);
+    };
+
     return (
         <form className="space-y-8 p-1 overflow-hidden" onSubmit={submit}>
             <div className="space-y-8">
@@ -79,47 +104,49 @@ const PatientForm = ({model = null}) => {
                 </div>
                 <div className="col-span-3">
                     <div className="grid grid-cols-1 gap-y-4 gap-x-4 border-b border-passiveBorder pb-5">
-                        <div className="grid grid-cols-2 gap-x-6">
-                            <div className="col-span-1">
-                                <UIFormLabel htmlFor="name" className="!font-medium" label="Name"/>
-                                <UIFormInputText id="name" name="name" defaultValue={model?.name}
-                                                 error={errors?.name} required isFocused autoComplete="title"/>
-                            </div>
-                            <div className="col-span-1">
-                                <UIFormLabel htmlFor="surname" className="!font-medium" label="Surname"/>
-                                <UIFormInputText id="surname" name="surname" defaultValue={model?.surname}
-                                                 error={errors?.surname} required isFocused autoComplete="surname"/>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 gap-x-6 md:grid-cols-2">
+                        <div className="grid grid-cols-1 gap-x-3 gap-y-3">
                             <div>
-                                <UIFormLabel htmlFor="birthdate" className="!font-medium" label="Birth Date"/>
+                                <UIFormLabel htmlFor="name" label="Name"/>
+                                <UIFormInputText id="name" name="name" defaultValue={model?.name} error={errors?.name}
+                                                 required isFocused autoComplete="title"/>
+                            </div>
+                            <div>
+                                <UIFormLabel htmlFor="surname" label="Surname"/>
+                                <UIFormInputText id="surname" name="surname" defaultValue={model?.surname}
+                                                 error={errors?.surname} isFocused autoComplete="surname"/>
+                            </div>
+                            <div>
+                                <UIFormLabel htmlFor="middlename" label="Middle Name"/>
+                                <UIFormInputText id="middlename" name="middlename" defaultValue={model?.middlename}
+                                                 error={errors?.middlename} required isFocused
+                                                 autoComplete="middlename"/>
+                            </div>
+
+                            <div>
+                                <UIFormLabel htmlFor="birthdate" label="Birth Date"/>
                                 <UIFormInputDatePicker id="birthdate" name="birthdate" maxDate={new Date()}/>
                             </div>
                             <div>
-                                <UIFormLabel htmlFor="gender" className="!font-medium" label="Gender"/>
-                                <UIFormInputSelectableWithIcon
-                                    data={["MALE", "FEMALE"]}
-                                    selectedValue={selectedGender}
-                                    setSelectedValue={setSelectedGender}
-                                    error={errors?.gender}
+                                <UIFormLabel htmlFor="notificationTypes" label="Notification Type"/>
+                                <FormInputSelectableMultiple
+                                    data={notificationTypes}
+                                    onChange={(data) => setSelectedNotificationTypes(data)}
+                                    initialState={notificationTypes.filter(nt => selectedNotificationTypes.includes(nt.value))}
+                                    hasSelectAll={false}
+                                    error={errors?.notificationTypes}
+                                    disableSearch
                                 />
                             </div>
+                            <div>
+                                <UIFormLabel htmlFor="gender" label="Gender"/>
+                                <UIFormInputSelectableWithIcon data={["MALE", "FEMALE"]} selectedValue={selectedGender}
+                                                               setSelectedValue={setSelectedGender}
+                                                               error={errors?.gender}/>
+                            </div>
                         </div>
+
                         <div>
-                            <UIFormLabel htmlFor="notificationTypes" className="!font-medium" label="Notification Type"/>
-                            <FormInputSelectableMultiple
-                                data={notificationTypes}
-                                onChange={(data) => setSelectedNotificationTypes(data)}
-                                initialState={notificationTypes.filter(nt => selectedNotificationTypes.includes(nt.value))}
-                                hasSelectAll={false}
-                                error={errors?.notificationTypes}
-                                disableSearch
-                            />
-                        </div>
-                        <div>
-                            <UIFormLabel htmlFor="description" className="!font-medium" label="Description"/>
+                            <UIFormLabel htmlFor="description" label="Description"/>
                             <div className="mt-1">
                                 <UIFormInputTextArea
                                     id="description"
@@ -131,11 +158,22 @@ const PatientForm = ({model = null}) => {
                                 />
                             </div>
                         </div>
+
+                        <div className="grid grid-cols-1 gap-y-3">
+                            <UIFormInputKeyValue
+                                identifiers={identifiers}
+                                label="Identifiers"
+                                onChange={handleIdentifierChange}
+                                onAdd={handleAddIdentifier}
+                                onRemove={handleRemoveIdentifier}
+                            />
+                        </div>
+
+
                     </div>
-                    {model &&
-                        <PatientFormContacts contacts={contacts} setContacts={setContacts} addRowText="Add Contact"
-                                             handleSaveContact={handleSaveContact}/>
-                    }
+                    {model && <PatientFormContacts contacts={contacts} setContacts={setContacts}
+                                                   handleSaveContact={handleSaveContact}
+                                                   handleDeleteContact={handleDeleteContact}/>}
                 </div>
             </div>
 
@@ -146,6 +184,7 @@ const PatientForm = ({model = null}) => {
                     </div>
                 </div>
             </div>
+
         </form>
     );
 };

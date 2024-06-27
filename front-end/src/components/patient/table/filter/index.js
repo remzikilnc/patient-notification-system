@@ -144,8 +144,11 @@ export default function PatientTableFilter({filters, setFilters, modelsDefaultFi
                                         </UIFormInputSearchWithIcon>
                                     </fieldset>
                                     <fieldset>
+                                        <UIFormLabel className="!text-xs mb-1" htmlFor="gender">
+                                            Gender
+                                        </UIFormLabel>
                                         <UIFormInputSelectableWithIcon
-                                            label="Gender"
+                                            id="gender"
                                             data={["MALE", "FEMALE"]}
                                             selectedValue={filters.filter.gender}
                                             setSelectedValue={value => handleFilterChange("filter", "gender", value)}
