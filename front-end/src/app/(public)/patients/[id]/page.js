@@ -4,7 +4,7 @@ import PatientForm from "@/components/patient/form";
 
 async function Page({params}) {
     const response = await fetchServer({
-        endpoint: `/patients/${params.id}`,
+        endpoint: `/patients/${params.id}?contacts=true`,
     });
 
     const model = await response.json();
