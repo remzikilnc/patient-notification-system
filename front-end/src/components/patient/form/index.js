@@ -23,7 +23,8 @@ const PatientForm = ({model = null}) => {
     const [selectedGender, setSelectedGender] = useState(model?.gender || 'MALE');
     const [selectedNotificationTypes, setSelectedNotificationTypes] = useState(model?.notificationTypes || []);
     const [contacts, setContacts] = useState(model?.contacts || []);
-    const [identifiers, setIdentifiers] = useState([]);
+    const [identifiers, setIdentifiers] = useState(model.identifiers || []);
+
     const submit = async event => {
         event.preventDefault();
 
@@ -33,7 +34,7 @@ const PatientForm = ({model = null}) => {
             gender: selectedGender,
             birthdate: event.target.birthdate.value,
             notificationTypes: selectedNotificationTypes,
-            identifiers: []
+            identifiers: identifiers,
         };
 
         const commonParams = {
@@ -107,19 +108,37 @@ const PatientForm = ({model = null}) => {
                         <div className="grid grid-cols-1 gap-x-3 gap-y-3">
                             <div>
                                 <UIFormLabel htmlFor="name" label="Name"/>
-                                <UIFormInputText id="name" name="name" defaultValue={model?.name} error={errors?.name}
-                                                 required isFocused autoComplete="title"/>
+                                <UIFormInputText
+                                    id="name"
+                                    name="name"
+                                    defaultValue={model?.name}
+                                    error={errors?.name}
+                                    required
+                                    isFocused
+                                    autoComplete="name"
+                                />
                             </div>
                             <div>
                                 <UIFormLabel htmlFor="surname" label="Surname"/>
-                                <UIFormInputText id="surname" name="surname" defaultValue={model?.surname}
-                                                 error={errors?.surname} isFocused autoComplete="surname"/>
+                                <UIFormInputText
+                                    id="surname"
+                                    name="surname"
+                                    defaultValue={model?.surname}
+                                    error={errors?.surname}
+                                    isFocused
+                                    required
+                                    autoComplete="surname"
+                                />
                             </div>
                             <div>
                                 <UIFormLabel htmlFor="middlename" label="Middle Name"/>
-                                <UIFormInputText id="middlename" name="middlename" defaultValue={model?.middlename}
-                                                 error={errors?.middlename} required isFocused
-                                                 autoComplete="middlename"/>
+                                <UIFormInputText
+                                    id="middlename"
+                                    name="middlename"
+                                    defaultValue={model?.middlename}
+                                    error={errors?.middlename} isFocused
+                                    autoComplete="middlename"
+                                />
                             </div>
 
                             <div>
