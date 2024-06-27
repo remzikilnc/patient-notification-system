@@ -1,8 +1,10 @@
-package com.msparent.dto;
+package com.msparent.dto.patient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.msparent.model.Contact;
 import com.msparent.model.Gender;
+import com.msparent.model.Identifier;
 import com.msparent.model.NotificationType;
 
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +15,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -30,6 +31,9 @@ public class PatientRequest {
     @NotBlank(message = "Name cannot be blank")
     private String surname;
 
+
+    private String middlename;
+
     private Gender gender;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -37,7 +41,8 @@ public class PatientRequest {
 
     private List<NotificationType> notificationTypes;
 
-    private List<String> identifiers;
+    private List<Identifier> identifiers;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Contact> contacts;
 }

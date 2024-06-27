@@ -20,6 +20,7 @@ public class Patient {
     private Long id;
     private String name;
     private String surname;
+    private String middlename;
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
@@ -34,8 +35,8 @@ public class Patient {
 
     @ElementCollection
     @CollectionTable(name = "patient_identifiers", joinColumns = @JoinColumn(name = "patient_id"))
-    @Column(name = "identifier", nullable = true)
-    private List<String> identifiers;
+    private List<Identifier> identifiers;
+
 
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

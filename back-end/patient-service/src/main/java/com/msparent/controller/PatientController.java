@@ -82,6 +82,37 @@ public class PatientController {
         return patientMapper.mapToResponse(patient);
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public PatientResponse store(@Valid @RequestBody PatientRequest patientRequest) {
+        Patient patient = patientMapper.mapToEntity(new Patient(), patientRequest);
+        Patient savedPatient = patientService.createPatient(patient);
+        return patientMapper.mapToResponse(savedPatient);
+    }
+
+    @PutMapping("/{id}")
+    public PatientResponse update(@PathVariable Long id, @Valid @RequestBody PatientRequest patientRequest) {
+        Patient patient = patientService.getPatient(id);
+
+        if (patient == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
+        }
+
+        patient = patientMapper.mapToEntity(patient, patientRequest);
+        Patient updatedPatient = patientService.updatePatient(patient);
+
+        return patientMapper.mapToResponse(updatedPatient);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void destroy(@PathVariable Long id) {
+        if (!patientService.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
+        }
+        patientService.deletePatientById(id);
+    }
+
     @PostMapping("/{id}/contacts")
     @ResponseStatus(HttpStatus.CREATED)
     public ContactResponse storeContact(@PathVariable Long id, @Valid @RequestBody ContactRequest contactRequest) {
@@ -92,26 +123,48 @@ public class PatientController {
         }
 
         Contact contact = contactMapper.mapToEntity(new Contact(), contactRequest);
+        contact.setPatient(patient);
         Contact savedContact = contactService.createContact(contact);
         patientService.addContact(patient, savedContact);
 
         return contactMapper.mapToResponse(contact);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public PatientResponse store(@Valid @RequestBody PatientRequest patientRequest) {
-        Patient patient = patientMapper.mapToEntity(new Patient(), patientRequest);
-        Patient savedPatient = patientService.createPatient(patient);
-        return patientMapper.mapToResponse(savedPatient);
-    }
+    @PutMapping("/{id}/contacts/{contactId}")
+    public ContactResponse updateContact(@PathVariable Long id, @PathVariable Long contactId, @Valid @RequestBody ContactRequest contactRequest) {
+        Patient patient = patientService.getPatient(id);
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable Long id) {
-        if (!patientService.existsById(id)) {
+        if (patient == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
         }
-        patientService.deletePatientById(id);
+
+        Contact contact = contactService.getContact(contactId);
+
+        if (contact == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found");
+        }
+
+        contact = contactMapper.mapToEntity(contact, contactRequest);
+        Contact updatedContact = contactService.updateContact(contact);
+
+        return contactMapper.mapToResponse(updatedContact);
+    }
+
+    @DeleteMapping("/{id}/contacts/{contactId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void destroyContact(@PathVariable Long id, @PathVariable Long contactId) {
+        Patient patient = patientService.getPatient(id);
+
+        if (patient == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Patient not found");
+        }
+
+        Contact contact = contactService.getContact(contactId);
+
+        if (contact == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Contact not found");
+        }
+
+        contactService.deleteContact(contact);
     }
 }

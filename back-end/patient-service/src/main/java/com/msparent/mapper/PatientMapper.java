@@ -13,6 +13,7 @@ public class PatientMapper implements Mapper<PatientRequest, Patient, PatientRes
     @Override
     public Patient mapToEntity(Patient patient, PatientRequest request) {
         patient.setName(request.getName());
+        patient.setMiddlename(request.getMiddlename());
         patient.setSurname(request.getSurname());
         patient.setGender(request.getGender());
         patient.setBirthdate(request.getBirthdate());
@@ -27,6 +28,7 @@ public class PatientMapper implements Mapper<PatientRequest, Patient, PatientRes
         return PatientResponse.builder()
                 .id(patient.getId())
                 .name(patient.getName())
+                .middlename(patient.getMiddlename())
                 .surname(patient.getSurname())
                 .birthdate(patient.getBirthdate())
                 .age(patient.getAge())
@@ -40,6 +42,7 @@ public class PatientMapper implements Mapper<PatientRequest, Patient, PatientRes
         return PatientResponse.builder()
                 .id(patient.getId())
                 .name(patient.getName())
+                .middlename(patient.getMiddlename())
                 .surname(patient.getSurname())
                 .birthdate(patient.getBirthdate())
                 .age(patient.getAge())

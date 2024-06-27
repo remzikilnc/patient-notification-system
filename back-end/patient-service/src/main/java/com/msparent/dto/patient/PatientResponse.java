@@ -1,9 +1,13 @@
-package com.msparent.dto;
+package com.msparent.dto.patient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.msparent.model.Contact;
 import com.msparent.model.Gender;
+import com.msparent.model.Identifier;
 import com.msparent.model.NotificationType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +25,7 @@ public class PatientResponse {
     private Long id;
     private String name;
     private String surname;
+    private String middlename;
     private Gender gender;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -29,6 +34,9 @@ public class PatientResponse {
     private int age;
 
     private List<NotificationType> notificationTypes;
-    private List<String> identifiers;
+
+    private List<Identifier> identifiers;
+
     private List<Contact> contacts;
 }
+
