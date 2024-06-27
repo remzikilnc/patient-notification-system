@@ -8,48 +8,48 @@ const UITableCell = ({type, value, item, colId, endpoint, className, text = "Edi
                 <td className="whitespace-nowrap px-3 py-4 text-sm">
                     {endpoint ? (
                         <div className="flex items-center">
-                            <Link href={`${endpoint}/${value}`} className="text-sm text-gray-500 dark:text-themePassiveText">
+                            <Link href={`${endpoint}/${value}`} className="text-sm text-gray-600">
                                 {value}
                             </Link>
                         </div>
                     ) : (
                         <div className="flex items-center">
-                            <div className={`text-sm text-gray-500 dark:text-themePassiveText ${className}`}>{value}</div>
+                            <div className={`text-sm text-gray-600 ${className}`}>{value}</div>
                         </div>
                     )}
                 </td>
             );
         case "highlight":
             return (
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                     {Array.isArray(value) ? (
                         value.length > 0 ? (
-                            <span className={`inline-flex rounded-md text-center bg-themePrimary px-2 mx-0.5 text-xs font-semibold leading-5 text-themeActiveText ${className}`}>{value[0].name.charAt(0).toUpperCase() + value[0].name.slice(1)}</span>
+                            <span className={`inline-flex rounded-md text-center bg-primary px-2 mx-0.5 text-xs font-semibold leading-5 text-white ${className}`}>{value[0].name.charAt(0).toUpperCase() + value[0].name.slice(1)}</span>
                         ) : (
-                            <span className={`inline-flex rounded-md text-center bg-themePrimary px-2 mx-0.5 text-xs font-semibold leading-5 text-themeActiveText ${className}`}>N/A</span>
+                            <span className={`inline-flex rounded-md text-center bg-primary px-2 mx-0.5 text-xs font-semibold leading-5 text-white ${className}`}>N/A</span>
                         )
                     ) : (
-                        <span className={`inline-flex rounded-md text-center bg-themePrimary px-2 mx-0.5 text-xs font-semibold leading-5 text-themeActiveText ${className}`}>{value.charAt(0).toUpperCase() + value.slice(1)}</span>
+                        <span className={`inline-flex rounded-md text-center bg-primary px-2 mx-0.5 text-xs font-semibold leading-5 text-white ${className}`}>{value.charAt(0).toUpperCase() + value.slice(1)}</span>
                     )}
                 </td>
             );
         case "number":
             return (
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <div className={`text-gray-900 dark:text-themeActiveText ${className}`}>{value}</div>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
+                    <div className={`text-gray-600 ${className}`}>{value}</div>
                 </td>
             );
         case "date":
             return (
                 <td className="whitespace-nowrap px-3 py-4 text-sm">
                     <div className="flex items-center">
-                        <div className={`text-sm text-gray-500 dark:text-themePassiveText ${className}`}>{new Date(value).toLocaleDateString("tr-TR", {year: "numeric", month: "short", day: "numeric"})}</div>
+                        <div className={`text-sm text-gray-600 ${className}`}>{new Date(value).toLocaleDateString("tr-TR", {year: "numeric"})}</div>
                     </div>
                 </td>
             );
         case "boolean":
             return (
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                     {value ? (
                         <span className={`inline-flex rounded-md text-center bg-green-300 px-2 text-xs font-semibold leading-5 text-green-800 ${className}`}>Active</span>
                     ) : (
@@ -70,7 +70,7 @@ const UITableCell = ({type, value, item, colId, endpoint, className, text = "Edi
             return (
                 <td className="whitespace-nowrap px-3 py-4 text-sm">
                     <div className="flex items-center">
-                        <div className={`text-sm text-gray-500 dark:text-themePassiveText ${className}`}>{value}</div>
+                        <div className={`text-sm text-gray-600 dark:text-themePassiveText ${className}`}>{value}</div>
                     </div>
                 </td>
             );

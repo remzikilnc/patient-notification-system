@@ -5,7 +5,7 @@ import UIFormInputSelectableWithIcon from "@/components/ui/form/input/selectable
 export default function UITablePagination({paginationMeta, filters, setFilters}) {
     const selectableLimits = [1, 5, 10, 20, 50];
     const {current_page: currentPage, last_page: lastPageNumber} = paginationMeta;
-    const range = 3;
+    const range = 1;
 
     const firstPageInRange = Math.max(1, currentPage - range);
     const lastPageInRange = Math.min(lastPageNumber, currentPage + range);
@@ -68,32 +68,7 @@ export default function UITablePagination({paginationMeta, filters, setFilters})
                 </div>
 
                 <div className="hidden md:-mt-px md:flex justify-center">
-                    {firstPageInRange > 1 && (
-                        <>
-                            <button
-                                disabled={filters.pageNumber === 1}
-                                onClick={() => handlePageChange(1)}
-                                className={`inline-flex items-center border-t-2 px-4 pt-1 text-sm font-medium ${1 === currentPage ? "border-indigo-500 text-indigo-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}
-                            >
-                                1
-                            </button>
-                            {firstPageInRange > 2 && <span className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500">...</span>}
-                        </>
-                    )}
-
                     {pageButtons}
-
-                    {lastPageInRange < lastPageNumber && (
-                        <>
-                            {lastPageInRange < lastPageNumber - 1 && <span className="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500">...</span>}
-                            <button
-                                onClick={() => handlePageChange(lastPageNumber)}
-                                className={`inline-flex items-center border-t-2 px-4 pt-1 text-sm font-medium ${lastPageNumber === currentPage ? "border-indigo-500 text-indigo-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}
-                            >
-                                {lastPageNumber}
-                            </button>
-                        </>
-                    )}
                 </div>
 
                 <div className="-mt-px flex w-auto">
