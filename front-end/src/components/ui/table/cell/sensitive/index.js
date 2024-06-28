@@ -7,7 +7,7 @@ function SensitiveDataCell({ label, data, className }) {
         setIsVisible(!isVisible);
     };
 
-    const censorData = (data) => {
+    const censorData = data => {
         if (data === null || data === undefined || isVisible || data?.length <= 3) {
             return data;
         }
@@ -16,7 +16,7 @@ function SensitiveDataCell({ label, data, className }) {
 
     return (
         <td className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 cursor-pointer ${className || ''}`} onClick={toggleVisibility} title="Click to show/hide sensitive data">
-             {censorData(data)}
+            {censorData(data)}
         </td>
     );
 }

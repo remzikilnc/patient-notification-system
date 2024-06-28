@@ -1,9 +1,9 @@
-import React from "react";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 
-const UITableCell = ({type, value, item, colId, endpoint, className, text = "Edit"}) => {
+const UITableCell = ({ type, value, item, colId, endpoint, className, text = 'Edit' }) => {
     switch (type) {
-        case "text":
+        case 'text':
             return (
                 <td className="whitespace-nowrap px-3 py-4 text-sm">
                     {endpoint ? (
@@ -19,7 +19,7 @@ const UITableCell = ({type, value, item, colId, endpoint, className, text = "Edi
                     )}
                 </td>
             );
-        case "highlight":
+        case 'highlight':
             return (
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                     {Array.isArray(value) ? (
@@ -33,21 +33,21 @@ const UITableCell = ({type, value, item, colId, endpoint, className, text = "Edi
                     )}
                 </td>
             );
-        case "number":
+        case 'number':
             return (
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                     <div className={`text-gray-600 ${className}`}>{value}</div>
                 </td>
             );
-        case "date":
+        case 'date':
             return (
                 <td className="whitespace-nowrap px-3 py-4 text-sm">
                     <div className="flex items-center">
-                        <div className={`text-sm text-gray-600 ${className}`}>{new Date(value).toLocaleDateString("tr-TR", {year: "numeric"})}</div>
+                        <div className={`text-sm text-gray-600 ${className}`}>{new Date(value).toLocaleDateString('tr-TR', { year: 'numeric' })}</div>
                     </div>
                 </td>
             );
-        case "boolean":
+        case 'boolean':
             return (
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-600">
                     {value ? (
@@ -57,12 +57,14 @@ const UITableCell = ({type, value, item, colId, endpoint, className, text = "Edi
                     )}
                 </td>
             );
-        case "actions":
+        case 'actions':
             return (
                 <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                     <Link href={`${endpoint}/${item.id}`} className={`cursor-pointer px-2 py-1 mb-2 rounded font-thin text-sm hover:text-themeHoverText text-gray-200 truncate text-center bg-primary hover:bg-secondary ${className}`}>
                         {text}
-                        <span className="sr-only">{text} {item.name}</span>
+                        <span className="sr-only">
+                            {text} {item.name}
+                        </span>
                     </Link>
                 </td>
             );

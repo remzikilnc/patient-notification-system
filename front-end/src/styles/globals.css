@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-li, ol, ul {
+li,
+ol,
+ul {
   list-style-type: none;
 }

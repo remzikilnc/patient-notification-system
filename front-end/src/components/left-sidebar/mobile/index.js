@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import React, {Fragment, useState} from "react";
-import {Dialog, Transition} from "@headlessui/react";
-import {FiMenu} from "react-icons/fi";
-import {AiOutlineClose} from "react-icons/ai";
-import {Logo} from "@/components/logo";
+import React, { Fragment, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { FiMenu } from 'react-icons/fi';
+import { AiOutlineClose } from 'react-icons/ai';
+import { Logo } from '@/components/logo';
 
-export default function LeftSidebarMobile({children}) {
+export default function LeftSidebarMobile({ children }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
@@ -21,17 +21,13 @@ export default function LeftSidebarMobile({children}) {
                         <Transition.Child as={Fragment} enter="transition ease-in-out duration-300 transform" enterFrom="-translate-x-full" enterTo="translate-x-0" leave="transition ease-in-out duration-300 transform" leaveFrom="translate-x-0" leaveTo="-translate-x-full">
                             <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-primary pt-5 pb-4">
                                 <div className="flex flex-shrink-0 items-center justify-between px-2">
-                                    <Logo/>
-                                    <button type="button"
-                                            className="flex h-10 w-10 items-center justify-center rounded bg-white text-passiveText hover:text-activeText duration-150"
-                                            onClick={() => setSidebarOpen(false)}>
+                                    <Logo />
+                                    <button type="button" className="flex h-10 w-10 items-center justify-center rounded bg-white text-passiveText hover:text-activeText duration-150" onClick={() => setSidebarOpen(false)}>
                                         <span className="sr-only">Close sidebar</span>
-                                        <AiOutlineClose className="h-5 w-5 " aria-hidden="true"/>
+                                        <AiOutlineClose className="h-5 w-5 " aria-hidden="true" />
                                     </button>
                                 </div>
-                                <div className="mt-5 h-0 flex-1 overflow-y-auto px-2">
-                                    {children}
-                                </div>
+                                <div className="mt-5 h-0 flex-1 overflow-y-auto px-2">{children}</div>
                             </Dialog.Panel>
                         </Transition.Child>
                         <div className="w-14 flex-shrink-0"></div>

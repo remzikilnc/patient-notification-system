@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UITableNotFound = ({title = 'No match', Icon}) => {
+const UITableNotFound = ({ title = 'No match', Icon }) => {
     return (
         <tr>
             <td colSpan="8" className="py-6 text-gray-500 dark:text-themePassiveText">

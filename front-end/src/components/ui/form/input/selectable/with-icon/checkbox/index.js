@@ -41,7 +41,9 @@ export default function UIFormInputSelectableWithIconCheckbox({ options = 'down'
                         <div className="relative">
                             <ComboboxInput
                                 disabled={isChecked}
-                                className={`block w-full rounded-md !border-l-0 rounded-l-none ${options === 'up' ? 'rounded-t-none' : ''} border h-[40px] border-gray-300 bg-white transition duration-100 py-2 px-3 text-sm placeholder-gray-500 focus:border-primary focus:text-passiveText focus:outline-none focus:ring-0 sm:text-sm`}
+                                className={`block w-full rounded-md !border-l-0 rounded-l-none ${
+                                    options === 'up' ? 'rounded-t-none' : ''
+                                } border h-[40px] border-gray-300 bg-white transition duration-100 py-2 px-3 text-sm placeholder-gray-500 focus:border-primary focus:text-passiveText focus:outline-none focus:ring-0 sm:text-sm`}
                                 onChange={event => setQuery(event.target.value)}
                                 displayValue={item => item}
                             />

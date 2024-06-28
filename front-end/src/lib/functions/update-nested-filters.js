@@ -17,7 +17,7 @@ export const updateNestedFilters = ({ setFilters, category, field, value }) => {
 
             updatedFilters = {
                 ...prevFilters,
-                sort: {}
+                sort: {},
             };
 
             if (newSortDirection) {

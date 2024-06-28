@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 export async function GET(request) {
     try {
         const url = new URL(request.url);
-        const id = url.pathname.split("/").pop();
+        const id = url.pathname.split('/').pop();
         const endpoint = `/notifications/templates/${id}`;
         const backendResponse = await fetchServer({
             method: 'GET',
@@ -15,9 +15,6 @@ export async function GET(request) {
             status: backendResponse.status,
         });
     } catch (err) {
-        return NextResponse.json(
-            { error: 'Internal Server Error' },
-            { status: err.status || 500 }
-        );
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: err.status || 500 });
     }
 }

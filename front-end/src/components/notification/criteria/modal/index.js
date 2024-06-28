@@ -1,6 +1,6 @@
 'use client';
 
-import React, {  useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Switch } from '@headlessui/react';
 import UIButtonPrimary from '@/components/ui/button/primary';
 import UIFormLabel from '@/components/ui/form/label';
@@ -44,7 +44,6 @@ const NotificationCriteriaModal = ({ criteria = {}, errors, isOpen, setIsOpen, h
                                         <div className="col-span-1">
                                             <UIFormLabel htmlFor="maxAge" label="Maximum Age" />
                                             <UIFormInputWithCheckbox id="maxAge" type="number" min="0" max="150" name="maxAge" isFocused />
-
                                         </div>
                                     </div>
                                 </div>

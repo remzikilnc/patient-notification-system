@@ -1,5 +1,5 @@
-import React from "react";
-import UILoadingSkeleton from "@/components/ui/loading/skeleton";
+import React from 'react';
+import UILoadingSkeleton from '@/components/ui/loading/skeleton';
 const UITableLoading = () => {
     return (
         <>

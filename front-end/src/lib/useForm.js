@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import fetchServer from "@/lib/fetch-server";
+import fetchServer from '@/lib/fetch-server';
+
 const useForm = () => {
     const [errors, setErrors] = useState(null);
 
-    const handleSubmit = async ({ formData,formObj, endPoint, onSuccess, onError, method = "POST" }) => {
+    const handleSubmit = async ({ formData, formObj, endPoint, onSuccess, onError, method = 'POST' }) => {
         const body = formData ? JSON.stringify(Object.fromEntries(formData)) : JSON.stringify(formObj);
         try {
             const response = await fetchServer({
@@ -25,7 +26,7 @@ const useForm = () => {
                 return Promise.reject(formattedErrors);
             }
         } catch (error) {
-            const genericError = { defaultMessage: "An unexpected error occurred. Please try again later." };
+            const genericError = { defaultMessage: 'An unexpected error occurred. Please try again later.' };
             setErrors({ globalError: genericError.defaultMessage });
             onError({ globalError: genericError.defaultMessage });
             return Promise.reject(genericError);
