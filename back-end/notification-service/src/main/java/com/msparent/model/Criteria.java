@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @Builder
@@ -28,4 +30,7 @@ public class Criteria {
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
+
+    @OneToMany(mappedBy = "criteria", fetch = FetchType.LAZY)
+    private Set<TargetPatients> targetPatients;
 }

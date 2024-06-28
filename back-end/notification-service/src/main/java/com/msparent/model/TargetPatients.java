@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -16,19 +17,23 @@ import java.util.List;
 @NoArgsConstructor
 public class TargetPatients {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long patient_id;
-    private String patient_name;
-    private String patient_surname;
-    private String patient_email;
-    private String patient_phoneNumber;
-    private NotificationType patient_notificationType;
+    private Long patientId;
+    private String patientName;
+    private String patientSurname;
+    private String patientEmail;
+    private String patientPhoneNumber;
 
-    @OneToOne(fetch = FetchType.EAGER)
+
+    @ElementCollection(targetClass = NotificationType.class)
+    @CollectionTable(name = "patient_notification_types", joinColumns = @JoinColumn(name = "target_patient_id"))
+    @Column(name = "notification_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<NotificationType> notificationTypes;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "criteria_id")
     private Criteria criteria;
 }
-
-

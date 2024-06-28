@@ -19,7 +19,8 @@ public class Template {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String message;
+    private String html_message;
+    private String text_message;
 
     @ElementCollection(targetClass = NotificationType.class)
     @CollectionTable(name = "notification_types", joinColumns = @JoinColumn(name = "template_id"))
