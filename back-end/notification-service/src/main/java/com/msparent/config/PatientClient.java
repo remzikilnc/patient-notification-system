@@ -1,6 +1,6 @@
 package com.msparent.config;
 
-import com.msparent.model.patient.PatientDTO;
+import com.msparent.model.patient.Patient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface PatientClient {
 
     @GetMapping("/{id}")
-    PatientDTO getPatientById(@PathVariable("id") Long id);
+    Patient getPatientById(@PathVariable("id") Long id);
 }

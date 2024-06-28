@@ -1,10 +1,7 @@
 package com.msparent.service;
 
 import com.msparent.model.Criteria;
-import com.msparent.model.TargetPatients;
-import com.msparent.model.Template;
 import com.msparent.model.patient.Gender;
-import com.msparent.model.patient.PatientDTO;
 import com.msparent.repository.CriteriaRepository;
 import com.msparent.repository.TargetRepository;
 import com.msparent.repository.TemplateRepository;
@@ -42,26 +39,8 @@ public class CriteriaService {
     public void deleteCriteria(Criteria criteria) {
         criteriaRepository.delete(criteria);
     }
-ææ
-    public void checkIsCriteriaMet(PatientDTO patient) {
-       if (patient.getAge() > 20){
-           log.info("Patient: {}", patient);
 
-           Template template = Template.builder().message("Template 1").build();
-           templateRepository.save(template);
-
-
-           Criteria criteria = Criteria.builder().minAge(15).maxAge(100).notificationTemplate(template).build();
-           criteriaRepository.save(criteria);
-
-
-
-            TargetPatients targetPatients = TargetPatients.builder()
-                    .criteria(criteria)
-                    .patient_id(patient.getId())
-                    .build();
-
-            targetRepository.save(targetPatients);
-        }
+    public List<Criteria> checkIsCriteriaMet(Gender gender, int age) {
+        return criteriaRepository.checkIsCriteriaMet(gender, age);
     }
 }
