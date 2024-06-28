@@ -36,7 +36,7 @@ export default function UIFormInputTextAreaEditor(props) {
       await ContentEditor;
       setLoading(false);
     };
-    loadComponent();
+    loadComponent();æ
   }, []);
 
   if (loading) {

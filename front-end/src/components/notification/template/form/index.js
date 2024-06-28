@@ -9,6 +9,7 @@ import UIButtonPrimary from '@/components/ui/button/primary';
 import FormInputSelectableMultiple from '@/components/ui/form/input/selectable/multiple';
 import TemplateFormCriterias from '@/components/notification/template/form/criterias';
 import fetchServer from '@/lib/fetch-server';
+import UIFormInputTextAreaEditor from '@/components/ui/form/input/text/area/editor';
 
 const notificationTypes = [
     { label: 'SMS', value: 'SMS' },
@@ -20,6 +21,7 @@ const NotificationTemplateForm = ({ model = null }) => {
     const { handleSubmit, errors, setErrors } = useForm();
     const [selectedNotificationTypes, setSelectedNotificationTypes] = useState(model?.notificationTypes || []);
     const [criterias, setCriterias] = useState(model?.criterias || []);
+    const [message, setMessage] = useState(model?.message || '');
 
     const submit = async event => {
         event.preventDefault();
@@ -87,6 +89,10 @@ const NotificationTemplateForm = ({ model = null }) => {
                             <div>
                                 <UIFormLabel htmlFor="title" label="Title" />
                                 <UIFormInputText id="title" name="title" defaultValue={model?.title} error={errors?.title} required isFocused autoComplete="title" />
+                            </div>
+                            <div className="h-full flex flex-col pb-4">
+                                <UIFormLabel htmlFor="message" label="message" />
+                                <UIFormInputTextAreaEditor onChange={text => setMessage(text)} oldValue={message} className="rounded-md border !border-passiveBorder min-h-40" />
                             </div>
                             <div>
                                 <UIFormLabel htmlFor="notificationTypes" label="Notification Type" />
