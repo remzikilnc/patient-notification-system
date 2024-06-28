@@ -20,6 +20,7 @@ public class TemplateRequest {
     @NotNull(message = "message cannot be null")
     @NotBlank(message = "message cannot be blank")
     private String title;
-    private String message;
+    private String html_message;
+    private String text_message;
     private List<NotificationType> notificationTypes;
 }

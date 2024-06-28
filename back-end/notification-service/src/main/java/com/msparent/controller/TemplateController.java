@@ -22,12 +22,14 @@ public class TemplateController {
     private final TemplateMapper templateMapper;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<TemplateResponse> index() {
         List<Template> templates = templateService.getTemplates();
         return templateMapper.mapToResponse(templates);
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public TemplateResponse show(@PathVariable Long id, @RequestParam(value = "criterias", required = false, defaultValue = "false") boolean criterias) {
         Template template = templateService.getTemplate(id);
 
@@ -46,19 +48,22 @@ public class TemplateController {
     }
 
     @PutMapping("/{id}")
-    public TemplateResponse update(@PathVariable Long id, @RequestBody Template template) {
-        Template existingTemplate = templateService.getTemplate(id);
+    @ResponseStatus(HttpStatus.OK)
+    public TemplateResponse update(@PathVariable Long id, @RequestBody TemplateRequest templateRequest) {
+        Template template = templateService.getTemplate(id);
 
-        if (existingTemplate == null) {
+        if (template == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Template not found");
         }
 
-        template.setId(id);
+        template = templateMapper.mapToEntity(template, templateRequest);
         Template updatedTemplate = templateService.updateTemplate(template);
+
         return templateMapper.mapToResponse(updatedTemplate);
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         Template template = templateService.getTemplate(id);
 
