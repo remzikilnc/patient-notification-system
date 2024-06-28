@@ -26,6 +26,9 @@ public class Patient {
     private String name;
     private String surname;
     private String middlename;
+    private String email;
+    private String phoneNumber;
+    private String address;
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
@@ -36,14 +39,12 @@ public class Patient {
     @CollectionTable(name = "patient_notification_types", joinColumns = @JoinColumn(name = "patient_id"))
     @Column(name = "notification_type", nullable = false)
     @Enumerated(EnumType.STRING)
-    private List<NotificationType> notificationTypes;
+    private Set<NotificationType> notificationTypes;
 
     @Audited(targetAuditMode = RelationTargetAuditMode.AUDITED)
     @ElementCollection
     @CollectionTable(name = "patient_identifiers", joinColumns = @JoinColumn(name = "patient_id"))
     private Set<Identifier> identifiers;
-
-
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference

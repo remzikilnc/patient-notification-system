@@ -40,7 +40,7 @@ public class PatientRequest {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthdate;
 
-    private List<NotificationType> notificationTypes;
+    private Set<NotificationType> notificationTypes;
 
     private Set<Identifier> identifiers;
 

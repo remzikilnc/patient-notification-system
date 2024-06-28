@@ -27,19 +27,16 @@ public class PatientService {
 
 
     public Page<Patient> searchPatients(PatientSearchCriteria criteria, Pageable pageable) {
-        return patientRepository.searchCriteria(
-                criteria.getSearch(),
-                criteria.getName(),
-                criteria.getSurname(),
-                criteria.getAgeFrom(),
-                criteria.getAgeTo(),
-                criteria.getGender(),
-                pageable
-        );
+        return patientRepository.searchCriteria(criteria.getSearch(), criteria.getName(), criteria.getSurname(), criteria.getAgeFrom(), criteria.getAgeTo(), criteria.getGender(), pageable);
     }
+
     public Patient createPatient(Patient patient) {
         Patient savedPatient = patientRepository.save(patient);
-        sendPatientCreatedMessage(savedPatient.getId().toString());
+
+        if (savedPatient.getNotificationTypes() != null) {
+            sendPatientCreatedMessage(savedPatient.getId().toString());
+        }
+
         return savedPatient;
     }
 

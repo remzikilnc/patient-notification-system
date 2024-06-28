@@ -33,11 +33,8 @@ public class PatientResponse {
     private LocalDate birthdate;
 
     private int age;
-
-    private List<NotificationType> notificationTypes;
-
+    private Set<NotificationType> notificationTypes;
     private Set<Identifier> identifiers;
-
     private List<Contact> contacts;
 }
 
