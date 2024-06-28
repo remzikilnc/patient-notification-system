@@ -28,7 +28,7 @@ const NotificationTemplateForm = ({ model = null }) => {
 
         const formObj = {
             title: event.target.title.value,
-            message: event.target.message?.value,
+            message: message,
             notificationTypes: selectedNotificationTypes,
         };
 
@@ -91,7 +91,7 @@ const NotificationTemplateForm = ({ model = null }) => {
                                 <UIFormInputText id="title" name="title" defaultValue={model?.title} error={errors?.title} required isFocused autoComplete="title" />
                             </div>
                             <div className="h-full flex flex-col pb-4">
-                                <UIFormLabel htmlFor="message" label="message" />
+                                <UIFormLabel htmlFor="message" label="Message" />
                                 <UIFormInputTextAreaEditor onChange={text => setMessage(text)} oldValue={message} className="rounded-md border !border-passiveBorder min-h-40" />
                             </div>
                             <div>
