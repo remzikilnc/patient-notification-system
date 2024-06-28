@@ -3,7 +3,7 @@ bracketSpacing: true
 singleQuote: true
 
 overrides:
-  - files: "*.js"
+  - files: '*.js'
     options:
       printWidth: 300
       tabWidth: 4
