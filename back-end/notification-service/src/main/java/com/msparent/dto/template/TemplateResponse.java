@@ -1,6 +1,7 @@
 package com.msparent.dto.template;
 
 import com.msparent.model.Criteria;
+import com.msparent.model.patient.NotificationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class TemplateResponse {
     private Long id;
+    private String title;
     private String message;
-    private List<Criteria> criteria;
+    private List<Criteria> criterias;
+    private List<NotificationType> notificationTypes;
 }
 

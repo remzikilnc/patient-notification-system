@@ -42,7 +42,7 @@ public class CriteriaService {
     public void deleteCriteria(Criteria criteria) {
         criteriaRepository.delete(criteria);
     }
-
+ææ
     public void checkIsCriteriaMet(PatientDTO patient) {
        if (patient.getAge() > 20){
            log.info("Patient: {}", patient);

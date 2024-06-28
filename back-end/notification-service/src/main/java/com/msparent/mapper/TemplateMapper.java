@@ -13,6 +13,8 @@ public class TemplateMapper implements Mapper<TemplateRequest, Template, Templat
     @Override
     public Template mapToEntity(Template template, TemplateRequest request) {
         template.setMessage(request.getMessage());
+        template.setTitle(request.getTitle());
+        template.setNotificationTypes(request.getNotificationTypes());
         return template;
     }
     @Override
@@ -20,8 +22,20 @@ public class TemplateMapper implements Mapper<TemplateRequest, Template, Templat
         return TemplateResponse.builder()
                 .id(template.getId())
                 .message(template.getMessage())
-                .criteria(template.getCriteria())
+                .title(template.getTitle())
+                .notificationTypes(template.getNotificationTypes())
                 .build();
+    }
+
+    public TemplateResponse mapToResponseWithCriteria(Template template) {
+        return TemplateResponse.builder()
+                .id(template.getId())
+                .message(template.getMessage())
+                .title(template.getTitle())
+                .criterias(template.getCriterias())
+                .notificationTypes(template.getNotificationTypes())
+                .build();
+
     }
 
     @Override

@@ -28,19 +28,18 @@ public class TemplateController {
     }
 
     @GetMapping("/{id}")
-    public TemplateResponse show(@PathVariable Long id) {
+    public TemplateResponse show(@PathVariable Long id, @RequestParam(value = "criterias", required = false, defaultValue = "false") boolean criterias) {
         Template template = templateService.getTemplate(id);
 
-        if (template == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Template not found");
-        }
+        if (template == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Template not found");
+        if (criterias) return templateMapper.mapToResponseWithCriteria(template);
 
         return templateMapper.mapToResponse(template);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TemplateResponse store( @RequestBody TemplateRequest templateRequest) {
+    public TemplateResponse store(@RequestBody TemplateRequest templateRequest) {
         Template template = templateMapper.mapToEntity(new Template(), templateRequest);
         Template savedTemplate = templateService.createTemplate(template);
         return templateMapper.mapToResponse(savedTemplate);
