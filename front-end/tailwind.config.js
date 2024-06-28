@@ -23,5 +23,15 @@ module.exports = {
             },
         },
     },
-    plugins: [forms],
+    plugins: [forms, function ({addBase, theme}) {
+        addBase({
+            ':root': {
+                '--color-primary': theme('colors.primary'),
+                '--color-secondary': theme('colors.secondary'),
+                '--color-tertiary': theme('colors.tertiary'),
+                '--color-passiveBorder': theme('colors.passiveBorder'),
+            },
+        });
+    }
+    ],
 };

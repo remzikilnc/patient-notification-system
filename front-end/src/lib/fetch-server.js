@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation';
+
 async function fetchServer({ method = 'GET', endpoint = 'test', body = '', headers }) {
     try {
         const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_API_URL + endpoint.toString(), {
@@ -17,6 +19,9 @@ async function fetchServer({ method = 'GET', endpoint = 'test', body = '', heade
         return response;
     } catch (error) {
         if (error instanceof Response) {
+            if (error.status === 404) {
+                return notFound();
+            }
             return error;
         }
         throw new Error('Failed to fetch data from the server', { cause: error });
