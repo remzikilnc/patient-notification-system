@@ -2,8 +2,11 @@ package com.msparent.controller;
 
 import com.msparent.dto.criteria.CriteriaRequest;
 import com.msparent.dto.criteria.CriteriaResponse;
+import com.msparent.dto.template.TemplateRequest;
+import com.msparent.dto.template.TemplateResponse;
 import com.msparent.mapper.CriteriaMapper;
 import com.msparent.model.Criteria;
+import com.msparent.model.Template;
 import com.msparent.service.CriteriaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +37,7 @@ public class CriteriaController {
         Criteria criteria = criteriaService.getCriteria(id);
 
         if (criteria == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Template not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Criteria not found");
         }
 
         return criteriaMapper.mapToResponse(criteria);
@@ -42,31 +45,32 @@ public class CriteriaController {
 
     @PostMapping
     public CriteriaResponse create(@Valid @RequestBody CriteriaRequest criteriaRequest) {
-        Criteria template = criteriaMapper.mapToEntity(new Criteria(), criteriaRequest);
-        Criteria savedCriteria = criteriaService.createCriteria(template);
+        Criteria criteria = criteriaMapper.mapToEntity(new Criteria(), criteriaRequest);
+        Criteria savedCriteria = criteriaService.createCriteria(criteria);
         return criteriaMapper.mapToResponse(savedCriteria);
     }
 
     @PutMapping("/{id}")
-    public CriteriaResponse update(@PathVariable Long id, @RequestBody Criteria criteria) {
-        Criteria existingCriteria = criteriaService.getCriteria(id);
+    public CriteriaResponse update(@PathVariable Long id, @RequestBody CriteriaRequest criteriaRequest) {
+        Criteria criteria = criteriaService.getCriteria(id);
 
-        if (existingCriteria == null) {
+        if (criteria == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Criteria not found");
         }
 
+        criteria = criteriaMapper.mapToEntity(criteria, criteriaRequest);
         Criteria updatedCriteria = criteriaService.updateCriteria(criteria);
         return criteriaMapper.mapToResponse(updatedCriteria);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        Criteria template = criteriaService.getCriteria(id);
+        Criteria criteria = criteriaService.getCriteria(id);
 
-        if (template == null) {
+        if (criteria == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Criteria not found");
         }
 
-        criteriaService.deleteCriteria(template);
+        criteriaService.deleteCriteria(criteria);
     }
 }
