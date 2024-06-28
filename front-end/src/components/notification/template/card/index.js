@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import NotificationTemplateCardMenu from '@/components/notification/template/card/menu';
 import { IoMdMail } from 'react-icons/io';
