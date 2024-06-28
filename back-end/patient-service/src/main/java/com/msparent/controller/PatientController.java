@@ -1,5 +1,6 @@
 package com.msparent.controller;
 
+import com.msparent.dto.StatusResponse;
 import com.msparent.dto.contact.ContactRequest;
 import com.msparent.dto.contact.ContactResponse;
 import com.msparent.dto.patient.PatientRequest;
@@ -14,15 +15,15 @@ import com.msparent.service.ContactService;
 import com.msparent.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.data.domain.Page;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 @RestController
@@ -44,8 +45,13 @@ public class PatientController {
         Pageable pageable = PageRequest.of(pageNumber - 1, pageLimit);
         return patientService.searchPatients(search, pageable);
     }*/
+    @GetMapping("/ok")
+    public ResponseEntity<StatusResponse> ok() {
+        return ResponseEntity.ok(StatusResponse.builder().status("OK").message("Notification service is up and running").build());
+    }
 
     @GetMapping
+    @Cacheable(value = "patients", key = "#criteria")
     public ResponseWrapper<List<PatientResponse>> index(PatientSearchCriteria criteria) {
         Sort.Direction direction = Sort.Direction.fromString(criteria.getSort()[1]);
         Pageable pageable = PageRequest.of(criteria.getPageNumber() - 1, criteria.getPageLimit(), Sort.by(direction, criteria.getSort()[0]));
