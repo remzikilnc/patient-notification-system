@@ -135,11 +135,11 @@ const PatientForm = ({ model = null }) => {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                 <div>
                                     <UIFormLabel htmlFor="email" label="Email" />
-                                    <UIFormInputText type="email" id="email" name="email" defaultValue={model?.email} error={errors?.email} isFocused autoComplete="email" />
+                                    <UIFormInputText type="email" id="email" name="email" required={selectedNotificationTypes.includes('EMAIL')} defaultValue={model?.email} error={errors?.email} isFocused autoComplete="email" />
                                 </div>
                                 <div>
                                     <UIFormLabel htmlFor="phoneNumber" label="Phone Number" />
-                                    <UIFormInputText id="phoneNumber" name="phoneNumber" defaultValue={model?.phoneNumber} error={errors?.phoneNumber} isFocused autoComplete="phone" />
+                                    <UIFormInputText id="phoneNumber" name="phoneNumber" required={selectedNotificationTypes.includes('SMS')} defaultValue={model?.phoneNumber} error={errors?.phoneNumber} isFocused autoComplete="phone" />
                                 </div>
                                 <div>
                                     <UIFormLabel htmlFor="gender" label="Gender" />
