@@ -10,6 +10,7 @@ import FormInputSelectableMultiple from '@/components/ui/form/input/selectable/m
 import TemplateFormCriterias from '@/components/notification/template/form/criterias';
 import fetchServer from '@/lib/fetch-server';
 import UIFormInputTextAreaEditor from '@/components/ui/form/input/text/area/editor';
+import UIFormInputTextArea from '@/components/ui/form/input/text/area';
 
 const notificationTypes = [
     { label: 'SMS', value: 'SMS' },
@@ -21,14 +22,15 @@ const NotificationTemplateForm = ({ model = null }) => {
     const { handleSubmit, errors, setErrors } = useForm();
     const [selectedNotificationTypes, setSelectedNotificationTypes] = useState(model?.notificationTypes || []);
     const [criterias, setCriterias] = useState(model?.criterias || []);
-    const [message, setMessage] = useState(model?.message || '');
+    const [htmlMessage, setHtmlMessage] = useState(model?.html_message || '');
 
     const submit = async event => {
         event.preventDefault();
 
         const formObj = {
             title: event.target.title.value,
-            message: message,
+            html_message: htmlMessage,
+            text_message: event.target.text_message.value,
             notificationTypes: selectedNotificationTypes,
         };
 
@@ -37,6 +39,8 @@ const NotificationTemplateForm = ({ model = null }) => {
             onSuccess: data => {
                 if (!model) {
                     router.push(`/notifications/templates/${data?.id}`);
+                } else {
+                    event.target.text_message.value = data.text_message;
                 }
             },
             onError: errors => {},
@@ -44,10 +48,8 @@ const NotificationTemplateForm = ({ model = null }) => {
 
         if (model) {
             await handleSubmit({ ...commonParams, endPoint: `notifications/templates/${model.id}`, method: 'PUT' });
-            router.refresh();
         } else {
             await handleSubmit({ ...commonParams, endPoint: 'notifications/templates' });
-            router.refresh();
         }
     };
 
@@ -92,8 +94,14 @@ const NotificationTemplateForm = ({ model = null }) => {
                             </div>
                             <div className="h-full flex flex-col pb-4">
                                 <UIFormLabel htmlFor="message" label="Message" />
-                                <UIFormInputTextAreaEditor onChange={text => setMessage(text)} oldValue={message} className="rounded-md border !border-passiveBorder min-h-40" />
+                                <UIFormInputTextAreaEditor onChange={text => setHtmlMessage(text)} oldValue={htmlMessage} className="rounded-md border !border-passiveBorder min-h-40" />
                             </div>
+
+                            <div>
+                                <UIFormLabel htmlFor="text_message" label="Text Message" />
+                                <UIFormInputTextArea id="text_message" name="text_message" label="Text Message" defaultValue={model?.text_message} error={errors?.text_message} isFocused />
+                            </div>
+
                             <div>
                                 <UIFormLabel htmlFor="notificationTypes" label="Notification Type" />
                                 <FormInputSelectableMultiple
