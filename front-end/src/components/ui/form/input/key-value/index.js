@@ -25,7 +25,7 @@ const UIFormInputKeyValue = ({ identifiers, label, onChange, onAdd, onRemove }) 
                     </div>
                 </div>
             ))}
-            <UIButtonPrimary type="button" className="h-[40px] mt-2 justify-center !bg-black/20 text-activeText gap-x-0.5 !backdrop-blur-xl" onClick={onAdd}>
+            <UIButtonPrimary type="button" className="h-[40px] mt-2 justify-center text-activeText gap-x-0.5 !backdrop-blur-xl" onClick={onAdd}>
                 <IoAddOutline className="h-5 w-5" />
                 <span>NEW {label}</span>
             </UIButtonPrimary>
