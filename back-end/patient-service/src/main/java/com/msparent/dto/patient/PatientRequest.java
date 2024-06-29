@@ -34,6 +34,9 @@ public class PatientRequest {
 
     private String middlename;
     private Gender gender;
+    private String email;
+    private String phoneNumber;
+    private String address;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthdate;

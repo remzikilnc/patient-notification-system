@@ -17,6 +17,9 @@ public class PatientMapper implements Mapper<PatientRequest, Patient, PatientRes
         patient.setSurname(request.getSurname());
         patient.setGender(request.getGender());
         patient.setBirthdate(request.getBirthdate());
+        patient.setEmail(request.getEmail());
+        patient.setPhoneNumber(request.getPhoneNumber());
+        patient.setAddress(request.getAddress());
         patient.setNotificationTypes(request.getNotificationTypes());
         patient.setIdentifiers(request.getIdentifiers());
         patient.setContacts(request.getContacts());
@@ -31,6 +34,9 @@ public class PatientMapper implements Mapper<PatientRequest, Patient, PatientRes
                 .middlename(patient.getMiddlename())
                 .surname(patient.getSurname())
                 .birthdate(patient.getBirthdate())
+                .email(patient.getEmail())
+                .phoneNumber(patient.getPhoneNumber())
+                .address(patient.getAddress())
                 .age(patient.getAge())
                 .gender(patient.getGender())
                 .notificationTypes(patient.getNotificationTypes())
@@ -45,6 +51,9 @@ public class PatientMapper implements Mapper<PatientRequest, Patient, PatientRes
                 .middlename(patient.getMiddlename())
                 .surname(patient.getSurname())
                 .birthdate(patient.getBirthdate())
+                .email(patient.getEmail())
+                .phoneNumber(patient.getPhoneNumber())
+                .address(patient.getAddress())
                 .age(patient.getAge())
                 .gender(patient.getGender())
                 .notificationTypes(patient.getNotificationTypes())
