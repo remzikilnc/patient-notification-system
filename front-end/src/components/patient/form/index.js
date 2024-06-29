@@ -67,7 +67,7 @@ const PatientForm = ({ model = null }) => {
             })
                 .then(data => data.json())
                 .then(data => {
-                    setContacts(contacts.map(c => (c?.id === data?.id ? data : c)));
+                    data.status === 200 && setContacts(contacts.map(c => (c?.id === data?.id ? data : c)));
                 });
         } else {
             fetchServer({
@@ -77,7 +77,7 @@ const PatientForm = ({ model = null }) => {
             })
                 .then(data => data.json())
                 .then(data => {
-                    setContacts([...contacts, data]);
+                    data.status === 201 && setContacts([...contacts, data]);
                 });
         }
     };
