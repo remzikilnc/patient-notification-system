@@ -37,7 +37,7 @@ const NotificationTemplateForm = ({ model = null }) => {
         const commonParams = {
             formObj,
             onSuccess: data => {
-                if (!model) {
+                if (!model?.id) {
                     router.push(`/notifications/templates/${data?.id}`);
                 } else {
                     event.target.text_message.value = data.text_message;
@@ -46,7 +46,7 @@ const NotificationTemplateForm = ({ model = null }) => {
             onError: errors => {},
         };
 
-        if (model) {
+        if (model?.id) {
             await handleSubmit({ ...commonParams, endPoint: `notifications/templates/${model.id}`, method: 'PUT' });
         } else {
             await handleSubmit({ ...commonParams, endPoint: 'notifications/templates' });
@@ -115,14 +115,14 @@ const NotificationTemplateForm = ({ model = null }) => {
                             </div>
                         </div>
                     </div>
-                    {model && <TemplateFormCriterias criterias={criterias} handleDeleteCriteria={handleDeleteCriteria} handleCreateCriteria={handleCreateCriteria} />}
+                    {model?.id && <TemplateFormCriterias criterias={criterias} handleDeleteCriteria={handleDeleteCriteria} handleCreateCriteria={handleCreateCriteria} />}
                 </div>
             </div>
 
             <div className="pt-5">
                 <div className="flex justify-end">
                     <div className="flex items-center gap-4">
-                        <UIButtonPrimary>{model ? 'Update' : 'Create'}</UIButtonPrimary>
+                        <UIButtonPrimary>{model?.id ? 'Update' : 'Create'}</UIButtonPrimary>
                     </div>
                 </div>
             </div>
