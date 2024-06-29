@@ -2,6 +2,7 @@ package com.msparent.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.msparent.model.patient.Gender;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,8 +26,11 @@ public class Criteria {
     @JsonBackReference
     private Template notificationTemplate;
 
-    private int minAge;
-    private int maxAge;
+    @Nullable
+    private Integer minAge;
+
+    @Nullable
+    private Integer maxAge;
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender;

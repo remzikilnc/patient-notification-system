@@ -24,7 +24,7 @@ export default function UIFormInputSelectableWithIconCheckbox({ options = 'down'
     const filteredData = query === '' ? data : data.filter(filterDataItem);
 
     useEffect(() => {
-        if (isChecked) {
+        if (!isChecked) {
             setSelectedValue('');
         }
     }, [isChecked]);
@@ -32,7 +32,7 @@ export default function UIFormInputSelectableWithIconCheckbox({ options = 'down'
     return (
         <Fragment>
             <div className="flex relative flex-wrap items-stretch w-full group">
-                <div className="border border-passiveBorder flex items-center justify-center px-3 first:rounded-l-md last:rounded-r-md group-focus-within:border-primary ring-primary transition duration-100">
+                <div className={`${isChecked ? 'border-primary' : ''} border border-passiveBorder flex items-center justify-center px-3 first:rounded-l-md last:rounded-r-md group-focus-within:border-primary ring-primary transition duration-100`}>
                     <UIFormCheckbox isChecked={isChecked} setIsChecked={setIsChecked} />
                 </div>
                 <div className="flex-1 w-full">
@@ -40,14 +40,14 @@ export default function UIFormInputSelectableWithIconCheckbox({ options = 'down'
                         {label && <Combobox.Label className="block text-xs font-thin text-theme dark:text-themePassiveText mb-1">{label}</Combobox.Label>}
                         <div className="relative">
                             <ComboboxInput
-                                disabled={isChecked}
+                                disabled={!isChecked}
                                 className={`block w-full rounded-md !border-l-0 rounded-l-none ${
                                     options === 'up' ? 'rounded-t-none' : ''
-                                } border h-[40px] border-gray-300 bg-white transition duration-100 py-2 px-3 text-sm placeholder-gray-500 focus:border-primary focus:text-passiveText focus:outline-none focus:ring-0 sm:text-sm`}
+                                } ${isChecked ? 'border-primary' : ''} border h-[40px] border-gray-300 bg-white transition duration-100 py-2 px-3 text-sm placeholder-gray-500 focus:border-primary focus:text-passiveText focus:outline-none focus:ring-0 sm:text-sm`}
                                 onChange={event => setQuery(event.target.value)}
                                 displayValue={item => item}
                             />
-                            <ComboboxButton disabled={isChecked} className="absolute inset-y-0 right-0 group flex items-center rounded-r-md px-2 focus:outline-none">
+                            <ComboboxButton disabled={!isChecked} className="absolute inset-y-0 right-0 group flex items-center rounded-r-md px-2 focus:outline-none">
                                 <PiCaretUpDownLight className="h-5 w-5 text-gray-400 " aria-hidden="true" />
                             </ComboboxButton>
 

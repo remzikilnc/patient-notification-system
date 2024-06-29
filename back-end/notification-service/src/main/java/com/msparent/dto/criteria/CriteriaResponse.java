@@ -18,8 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CriteriaResponse {
     private Long id;
-    private int minAge;
-    private int maxAge;
+    private Integer minAge;
+    private Integer maxAge;
     private Gender gender;
     private Template notificationTemplate;
 }

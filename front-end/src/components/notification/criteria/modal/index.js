@@ -16,7 +16,7 @@ const NotificationCriteriaModal = ({ criteria = {}, errors, isOpen, setIsOpen, h
         const formData = new FormData(formRef.current);
         const criteriaData = Object.fromEntries(formData.entries());
         criteriaData.id = criteria?.id;
-        criteriaData.gender = selectedGender;
+        criteriaData.gender = selectedGender === '' ? null : selectedGender;
         handleCreateCriteria(criteriaData);
         setIsOpen(false);
     };
