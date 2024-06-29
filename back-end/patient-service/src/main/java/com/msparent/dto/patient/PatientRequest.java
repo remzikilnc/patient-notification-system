@@ -32,16 +32,13 @@ public class PatientRequest {
     @NotBlank(message = "Name cannot be blank")
     private String surname;
 
-
     private String middlename;
-
     private Gender gender;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthdate;
 
     private Set<NotificationType> notificationTypes;
-
     private Set<Identifier> identifiers;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

@@ -47,7 +47,7 @@ public class PatientController {
     }*/
     @GetMapping("/ok")
     public ResponseEntity<StatusResponse> ok() {
-        return ResponseEntity.ok(StatusResponse.builder().status("OK").message("Notification service is up and running").build());
+        return ResponseEntity.ok(StatusResponse.builder().status("OK").message("Patient service is up and running").build());
     }
 
     @GetMapping

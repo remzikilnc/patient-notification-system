@@ -1,4 +1,4 @@
-package com.msparent.model;
+package com.msparent.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

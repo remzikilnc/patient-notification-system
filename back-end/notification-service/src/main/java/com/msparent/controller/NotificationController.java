@@ -1,6 +1,6 @@
 package com.msparent.controller;
 
-import com.msparent.model.StatusResponse;
+import com.msparent.dto.StatusResponse;
 import com.msparent.service.NotificationService;
 import org.springframework.http.ResponseEntity;
 import lombok.RequiredArgsConstructor;
