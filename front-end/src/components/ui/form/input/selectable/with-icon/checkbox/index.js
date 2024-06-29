@@ -7,9 +7,9 @@ import { BsCheck2 } from 'react-icons/bs';
 import UIFormInputError from '@/components/ui/form/input/error';
 import UIFormCheckbox from '@/components/ui/form/input/checkbox';
 
-export default function UIFormInputSelectableWithIconCheckbox({ options = 'down', data, error, label, selectedValue, setSelectedValue }) {
+export default function UIFormInputSelectableWithIconCheckbox({ options = 'down', data, error, label, selectedValue = null, setSelectedValue }) {
     const [query, setQuery] = useState('');
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(selectedValue !== null);
 
     const filterDataItem = item => {
         if (typeof item === 'number') {
@@ -25,7 +25,7 @@ export default function UIFormInputSelectableWithIconCheckbox({ options = 'down'
 
     useEffect(() => {
         if (!isChecked) {
-            setSelectedValue('');
+            setSelectedValue(null);
         }
     }, [isChecked]);
 

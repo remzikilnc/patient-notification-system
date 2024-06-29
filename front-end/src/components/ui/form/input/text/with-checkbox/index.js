@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import UIFormInputText from '@/components/ui/form/input/text';
 import UIFormCheckbox from '@/components/ui/form/input/checkbox';
 
-const UIFormInputWithCheckbox = ({ type = 'text', className = '', defaultValue = '', isFocused = false, error, ...props }) => {
-    const [isChecked, setIsChecked] = useState(true);
+const UIFormInputWithCheckbox = ({ type = 'text', className = '', defaultValue = null, isFocused = false, error, ...props }) => {
+    const [isChecked, setIsChecked] = useState(defaultValue !== null);
     return (
         <div className="flex relative flex-wrap items-stretch w-full group">
             <div className={`${isChecked ? 'border-primary' : ''} border border-passiveBorder flex items-center justify-center px-3 first:rounded-l-md last:rounded-r-md group-focus-within:border-primary ring-primary transition duration-100`}>

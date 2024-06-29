@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Switch } from '@headlessui/react';
 import UIButtonPrimary from '@/components/ui/button/primary';
 import UIFormLabel from '@/components/ui/form/label';
@@ -9,17 +9,21 @@ import UIFormInputSelectableWithIconCheckbox from '@/components/ui/form/input/se
 
 const NotificationCriteriaModal = ({ criteria = {}, errors, isOpen, setIsOpen, handleCreateCriteria }) => {
     const formRef = useRef();
-    const [selectedGender, setSelectedGender] = useState(criteria?.gender || []);
+    const [selectedGender, setSelectedGender] = useState(null);
 
     const submit = e => {
         e.preventDefault();
         const formData = new FormData(formRef.current);
         const criteriaData = Object.fromEntries(formData.entries());
         criteriaData.id = criteria?.id;
-        criteriaData.gender = selectedGender === '' ? null : selectedGender;
+        criteriaData.gender = selectedGender;
         handleCreateCriteria(criteriaData);
         setIsOpen(false);
     };
+
+    useEffect(() => {
+        setSelectedGender(criteria?.gender);
+    }, [criteria]);
     return (
         <>
             <Dialog open={isOpen} as="div" className="relative z-50 focus:outline-none" onClose={() => setIsOpen(false)}>
@@ -39,11 +43,11 @@ const NotificationCriteriaModal = ({ criteria = {}, errors, isOpen, setIsOpen, h
                                         </div>
                                         <div className="col-span-1">
                                             <UIFormLabel htmlFor="minAge" label="Minimum Age" />
-                                            <UIFormInputWithCheckbox id="minAge" type="number" min="0" max="150" name="minAge" isFocused />
+                                            <UIFormInputWithCheckbox id="minAge" type="number" min="0" defaultValue={criteria?.minAge} max="150" name="minAge" isFocused />
                                         </div>
                                         <div className="col-span-1">
                                             <UIFormLabel htmlFor="maxAge" label="Maximum Age" />
-                                            <UIFormInputWithCheckbox id="maxAge" type="number" min="0" max="150" name="maxAge" isFocused />
+                                            <UIFormInputWithCheckbox id="maxAge" type="number" defaultValue={criteria?.maxAge} min="0" max="150" name="maxAge" isFocused />
                                         </div>
                                     </div>
                                 </div>
