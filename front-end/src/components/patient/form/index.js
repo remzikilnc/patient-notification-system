@@ -159,7 +159,7 @@ const PatientForm = ({ model = null }) => {
                             </div>
                             <div>
                                 <UIFormLabel htmlFor="birthdate" label="Birth Date" />
-                                <UIFormInputDatePicker id="birthdate" name="birthdate" maxDate={new Date()} />
+                                <UIFormInputDatePicker id="birthdate" name="birthdate" initialDate={model?.birthdate} maxDate={new Date()} />
                             </div>
                         </div>
 
