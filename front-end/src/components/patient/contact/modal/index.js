@@ -23,7 +23,6 @@ const PatientContactModal = ({ contact = {}, errors, isOpen, setIsOpen, handleSa
 
     return (
         <>
-            æ
             <Dialog open={isOpen} as="div" className="relative z-50 focus:outline-none" onClose={() => setIsOpen(false)}>
                 <DialogBackdrop className="fixed inset-0 bg-black/30" />
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
