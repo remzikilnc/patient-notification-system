@@ -22,15 +22,15 @@ const NotificationTemplateForm = ({ model = null }) => {
     const { handleSubmit, errors, setErrors } = useForm();
     const [selectedNotificationTypes, setSelectedNotificationTypes] = useState(model?.notificationTypes || []);
     const [criterias, setCriterias] = useState(model?.criterias || []);
-    const [htmlMessage, setHtmlMessage] = useState(model?.html_message || '');
+    const [htmlMessage, setHtmlMessage] = useState(model?.htmlMessage || '');
 
     const submit = async event => {
         event.preventDefault();
 
         const formObj = {
             title: event.target.title.value,
-            html_message: htmlMessage,
-            text_message: event.target.text_message.value,
+            htmlMessage: htmlMessage,
+            textMessage: event.target.textMessage.value,
             notificationTypes: selectedNotificationTypes,
         };
 
@@ -40,7 +40,7 @@ const NotificationTemplateForm = ({ model = null }) => {
                 if (!model?.id) {
                     router.push(`/notifications/templates/${data?.id}`);
                 } else {
-                    event.target.text_message.value = data.text_message;
+                    event.target.textMessage.value = data.textMessage;
                 }
             },
             onError: errors => {},
@@ -98,8 +98,8 @@ const NotificationTemplateForm = ({ model = null }) => {
                             </div>
 
                             <div>
-                                <UIFormLabel htmlFor="text_message" label="Text Message" />
-                                <UIFormInputTextArea id="text_message" name="text_message" label="Text Message" defaultValue={model?.text_message} error={errors?.text_message} isFocused />
+                                <UIFormLabel htmlFor="textMessage" label="Text Message" />
+                                <UIFormInputTextArea id="textMessage" name="textMessage" label="Text Message" defaultValue={model?.text_message} error={errors?.text_message} isFocused />
                             </div>
 
                             <div>

@@ -33,6 +33,11 @@ const PatientForm = ({ model = null }) => {
         const formObj = {
             name: event.target.name.value,
             surname: event.target.surname.value,
+            middlename: event.target.middlename.value,
+            email: event.target.email.value,
+            phoneNumber: event.target.phoneNumber.value,
+            address: event.target.address.value,
+            description: event.target.description.value,
             gender: selectedGender,
             birthdate: event.target.birthdate.value,
             notificationTypes: selectedNotificationTypes,
@@ -65,9 +70,9 @@ const PatientForm = ({ model = null }) => {
                 endpoint: `/patients/${model.id}/contacts/${contact.id}`,
                 body: JSON.stringify(contact),
             })
-                .then(data => data.json())
-                .then(data => {
-                    data.status === 200 && setContacts(contacts.map(c => (c?.id === data?.id ? data : c)));
+                .then(res => res.json())
+                .then((data, test) => {
+                    setContacts(contacts.map(c => (c?.id === data?.id ? data : c)));
                 });
         } else {
             fetchServer({
@@ -77,7 +82,7 @@ const PatientForm = ({ model = null }) => {
             })
                 .then(data => data.json())
                 .then(data => {
-                    data.status === 201 && setContacts([...contacts, data]);
+                    if (data?.id) setContacts([...contacts, data]);
                 });
         }
     };
