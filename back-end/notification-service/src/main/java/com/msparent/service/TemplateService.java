@@ -14,8 +14,6 @@ import java.util.List;
 public class TemplateService {
 
     private final TemplateRepository templateRepository;
-    private final CriteriaRepository criteriaRepository;
-
 
     public List<Template> getTemplates() {
         return templateRepository.findAll();
@@ -37,17 +35,16 @@ public class TemplateService {
 
 
     public void deleteTemplate(Template template) {
-        criteriaRepository.deleteAll(template.getCriterias());
         templateRepository.delete(template);
     }
 
     private void setTextMessageFromHtml(Template template) {
-        if (template.getText_message() == null || template.getText_message().isEmpty()) {
-            if (template.getHtml_message() != null && !template.getHtml_message().isEmpty()) {
-                String textMessage = Jsoup.parse(template.getHtml_message()).text();
-                template.setText_message(textMessage);
+        if (template.getTextMessage() == null || template.getTextMessage().isEmpty()) {
+            if (template.getHtmlMessage() != null && !template.getHtmlMessage().isEmpty()) {
+                String textMessage = Jsoup.parse(template.getHtmlMessage()).text();
+                template.setTextMessage(textMessage);
             } else {
-                template.setText_message(null);
+                template.setTextMessage(null);
             }
         }
     }

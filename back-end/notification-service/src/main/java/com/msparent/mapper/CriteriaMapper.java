@@ -18,6 +18,18 @@ public class CriteriaMapper implements Mapper<CriteriaRequest, Criteria, Criteri
         criteria.setNotificationTemplate(request.getNotificationTemplate());
         return criteria;
     }
+
+    public CriteriaResponse mapToResponseWithTargets(Criteria criteria) {
+        return CriteriaResponse.builder()
+                .id(criteria.getId())
+                .maxAge(criteria.getMaxAge())
+                .minAge(criteria.getMinAge())
+                .gender(criteria.getGender())
+                .notificationTemplate(criteria.getNotificationTemplate())
+                .targetPatients(criteria.getTargetPatients())
+                .build();
+    }
+
     @Override
     public CriteriaResponse mapToResponse(Criteria criteria) {
         return CriteriaResponse.builder()

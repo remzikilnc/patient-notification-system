@@ -1,10 +1,8 @@
 package com.msparent.dto.criteria;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.msparent.model.Criteria;
+import com.msparent.model.TargetPatients;
 import com.msparent.model.Template;
 import com.msparent.model.patient.Gender;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,12 +12,13 @@ import java.util.List;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class CriteriaResponse {
     private Long id;
     private Integer minAge;
     private Integer maxAge;
     private Gender gender;
     private Template notificationTemplate;
+    private List<TargetPatients> targetPatients;
 }

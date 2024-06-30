@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 public class TemplateMapper implements Mapper<TemplateRequest, Template, TemplateResponse> {
     @Override
     public Template mapToEntity(Template template, TemplateRequest request) {
-        template.setHtml_message(request.getHtml_message());
+        template.setHtmlMessage(request.getHtmlMessage());
+        template.setTextMessage(request.getTextMessage());
         template.setTitle(request.getTitle());
         template.setNotificationTypes(request.getNotificationTypes());
         return template;
@@ -21,8 +22,8 @@ public class TemplateMapper implements Mapper<TemplateRequest, Template, Templat
     public TemplateResponse mapToResponse(Template template) {
         return TemplateResponse.builder()
                 .id(template.getId())
-                .html_message(template.getHtml_message())
-                .text_message(template.getText_message())
+                .htmlMessage(template.getHtmlMessage())
+                .textMessage(template.getTextMessage())
                 .title(template.getTitle())
                 .notificationTypes(template.getNotificationTypes())
                 .build();
@@ -31,8 +32,8 @@ public class TemplateMapper implements Mapper<TemplateRequest, Template, Templat
     public TemplateResponse mapToResponseWithCriteria(Template template) {
         return TemplateResponse.builder()
                 .id(template.getId())
-                .html_message(template.getHtml_message())
-                .text_message(template.getText_message())
+                .htmlMessage(template.getHtmlMessage())
+                .textMessage(template.getTextMessage())
                 .title(template.getTitle())
                 .criterias(template.getCriterias())
                 .notificationTypes(template.getNotificationTypes())

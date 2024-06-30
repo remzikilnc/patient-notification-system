@@ -16,8 +16,8 @@ import java.util.List;
 public class TemplateResponse {
     private Long id;
     private String title;
-    private String html_message;
-    private String text_message;
+    private String htmlMessage;
+    private String textMessage;
     private List<Criteria> criterias;
     private List<NotificationType> notificationTypes;
 }

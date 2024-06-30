@@ -2,14 +2,12 @@ package com.msparent.controller;
 
 import com.msparent.dto.criteria.CriteriaRequest;
 import com.msparent.dto.criteria.CriteriaResponse;
-import com.msparent.dto.template.TemplateRequest;
-import com.msparent.dto.template.TemplateResponse;
 import com.msparent.mapper.CriteriaMapper;
 import com.msparent.model.Criteria;
-import com.msparent.model.Template;
 import com.msparent.service.CriteriaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,11 +31,15 @@ public class CriteriaController {
 
 
     @GetMapping("/{id}")
-    public CriteriaResponse show(@PathVariable Long id) {
+    public CriteriaResponse show(@PathVariable Long id, @RequestParam(value = "targets", required = false, defaultValue = "false") boolean targets){
         Criteria criteria = criteriaService.getCriteria(id);
 
         if (criteria == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Criteria not found");
+        }
+
+        if (targets) {
+            return criteriaMapper.mapToResponseWithTargets(criteria);
         }
 
         return criteriaMapper.mapToResponse(criteria);
