@@ -5,7 +5,7 @@ const useForm = () => {
   const [errors, setErrors] = useState(null);
 
   const handleSubmit = async ({event, formObj, endPoint, onSuccess, onError, method = "POST"}) => {
-    event.preventDefault();
+    event?.preventDefault();
     let data = {};
 
     if (event) {

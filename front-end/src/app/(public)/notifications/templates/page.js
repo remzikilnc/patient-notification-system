@@ -1,22 +1,30 @@
-import React from "react";
+"use client";
+
+import React, { useState } from 'react';
 import NotificationTemplateCard from "@/components/notification/template/card";
-import {getNotificationsTemplates} from "@/actions/notifications/templates";
 import UIButtonPrimary from "@/components/ui/button/primary";
 import Link from "next/link";
 import {LuLayoutTemplate} from "react-icons/lu";
+import { useFetchData } from '@/lib/useFetchData';
+import UIButtonRefresh from '@/components/ui/button/refresh';
 
-async function Page() {
-  const data = await getNotificationsTemplates();
+export default function Page() {
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const { data, revalidate} = useFetchData("notifications/templates");
   return (
-    <div>
+    <div className="relative">
       <title>PN | Notification | Templates</title>
-      <div className="mb-4 gap-1 flex flex-col">
-        <h1 className="text-2xl font-semibold text-activeText">Notification Templates</h1>
-        <p className="text-passiveText text-sm">Create manage and send notifications using templates</p>
-        <p className="text-passiveText text-xs">You can send notification hover on the template and click on the send button</p>
+      <UIButtonRefresh type="button" className="absolute right-0 top-0" disabled={isButtonDisabled} onClick={() => revalidate(setIsButtonDisabled)}>Refresh</UIButtonRefresh>
+      <div>
+        <div className="mb-4 gap-1 flex flex-col">
+          <h1 className="text-2xl font-semibold text-activeText">Notification Templates</h1>
+          <p className="text-passiveText text-sm">Create manage and send notifications using templates</p>
+          <p className="text-passiveText text-xs">You can send notification hover on the template and click on the send button</p>
+        </div>
       </div>
-      <div className={`grid gap-10 bg-white grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 ${data.length === 1 ? "xl:grid-cols-1" : data.length === 2 ? "xl:grid-cols-2" : "xl:grid-cols-3"}`}>
-        {data.length > 0 ? (
+      <div
+        className={`grid gap-10 bg-white grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 ${data?.length === 1 ? "xl:grid-cols-1" : data?.length === 2 ? "xl:grid-cols-2" : "xl:grid-cols-3"}`}>
+        {data?.length > 0 ? (
           <NotificationTemplateCard data={data} />
         ) : (
           <div className="flex justify-center col-span-3 p-12 flex-col items-center h-64 overflow-hidden  w-full">
@@ -40,5 +48,3 @@ async function Page() {
     </div>
   );
 }
-
-export default Page;

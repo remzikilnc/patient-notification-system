@@ -22,7 +22,7 @@ const notificationTypes = [
 
 const NotificationTemplateForm = ({model = null}) => {
   const router = useRouter();
-  const {handleSubmit, errors, setErrors} = useForm();
+  const {handleSubmit, errors} = useForm();
   const [selectedNotificationTypes, setSelectedNotificationTypes] = useState(model?.notificationTypes || []);
   const [criterias, setCriterias] = useState(model?.criterias || []);
   const [htmlMessage, setHtmlMessage] = useState(model?.htmlMessage || "");
@@ -61,15 +61,25 @@ const NotificationTemplateForm = ({model = null}) => {
         formObj: {...criteria, notificationTemplate: {id: model.id}},
         endPoint: `notifications/criterias/${criteria.id}`,
         method: "PUT",
-        onSuccess: data => setCriterias(criterias.map(c => (c?.id === data?.id ? data : c))),
-        onError: errors => console.error(errors),
+        onSuccess: data => {
+          if (data?.id) {
+            alertSuccess("Criteria updated successfully.");
+            setCriterias(criterias.map(c => (c?.id === data?.id ? data : c)));
+          }
+        },
+        onError: errors => alertError(errors?.message),
       });
     } else {
       await handleSubmit({
         formObj: {...criteria, notificationTemplate: {id: model.id}},
         endPoint: `notifications/criterias`,
-        onSuccess: data => setCriterias([...criterias, data]),
-        onError: errors => console.error(errors),
+        onSuccess: data => {
+          if (data?.id) {
+            alertSuccess("Criteria created successfully.");
+            setCriterias([...criterias, data]);
+          }
+        },
+        onError: errors => alertError(errors?.message),
       });
     }
   };
@@ -78,18 +88,30 @@ const NotificationTemplateForm = ({model = null}) => {
     fetchServer({
       method: "DELETE",
       endpoint: `/notifications/criterias/${criteria.id}`,
-    }).then(res => (res.ok ? setCriterias(criterias.filter(c => c.id !== criteria.id)) : console.error(res)));
+    }).then(res => {
+      if (res.ok) {
+        alertSuccess("Criteria deleted successfully.");
+        setCriterias(criterias.filter(c => c?.id !== criteria.id));
+      } else {
+        alertError("An error occurred. Please try again later.");
+      }
+    });
   };
 
   const handleDeleteTemplate = () => {
     fetchServer({
       method: "DELETE",
       endpoint: `/notifications/templates/${model.id}`,
-    }).then(res => (res.ok ? router.push("/notifications/templates") : console.error(res)));
+    }).then(res => {
+      if (res.ok) {
+        alertSuccess("Template deleted successfully.");
+        router.push("/notifications/templates");
+      }
+    });
   };
 
   return (
-    <UIFormLayout isEdit={model?.id} modelName={model?.title} modelType="template" submit={submit} handleDelete={handleDeleteTemplate}>
+    <UIFormLayout isEdit={model?.id} disabled={isFormDisabled} modelName={model?.title} modelType="template" submit={submit} handleDelete={handleDeleteTemplate}>
       <Fragment>
         <div className="grid grid-cols-1 gap-x-3 gap-y-3">
           <div>

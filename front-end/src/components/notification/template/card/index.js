@@ -43,7 +43,7 @@ const NotificationTemplateCard = ({data}) => {
               <Link href={`/notifications/templates/${template.id}`}>
                 <div className="flex flex-col gap-2">
                   <div>
-                    <div className="text-base truncate font-semibold text-default-900 capitalize mb-1">{template.title}</div>
+                    <div className="text-base truncate font-semibold text-default-900 capitalize mb-1 min-h-6">{template.title}</div>
                     <div className="text-xs  text-passiveText font-medium  lg:h-[32px] line-clamp-2">{template.textMessage}</div>
                   </div>
                 </div>

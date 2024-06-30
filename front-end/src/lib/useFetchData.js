@@ -5,6 +5,7 @@ import useSWR from "swr";
 import {addParametersToApiURL} from "@/lib/functions/addParametersToApiURL";
 import fetchServer from "@/lib/fetch-server";
 import {debounce} from "@/lib/functions/debounce";
+import { disableButton } from '@/lib/functions/disableButton';
 
 export const useFetchData = (endpoint, defaultFilters = {}) => {
   const [filters, setFilters] = useState(defaultFilters);
@@ -17,6 +18,11 @@ export const useFetchData = (endpoint, defaultFilters = {}) => {
     const res = await fetchServer({method: "GET", endpoint: url});
     return await res.json();
   };
+
+  const revalidate = (btn) => {
+    disableButton(btn);
+    mutate();
+  }
 
   const {
     data: fetchedData,
@@ -38,5 +44,5 @@ export const useFetchData = (endpoint, defaultFilters = {}) => {
     }
   }, [fetchedData]);
 
-  return {filters, setFilters, data, error, mutate};
+  return {filters, setFilters, data, error, mutate, revalidate:(btn) => revalidate(btn)};
 };
