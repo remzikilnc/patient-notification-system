@@ -1,6 +1,8 @@
-package com.msparent.service;
+package com.msparent.service.notification;
 
-public interface NotificationService  {
-    void sendNotification();
+import com.msparent.model.Criteria;
+import com.msparent.model.Template;
 
+public interface NotificationService {
+    void sendNotifications(Template template, Criteria criteria);
 }
