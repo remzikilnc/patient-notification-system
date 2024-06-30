@@ -9,7 +9,7 @@ const UIFormLayout = ({ submit, isEdit, modelName, modelType, handleDelete, chil
                 <div className="flex gap-x-0.5 px-0.5 ">
                     <h3 className="text-xl flex-1  font-semibold dark:text-themeHoverText truncate">{isEdit ? `Edit ${modelName ?? ''}` : 'Create Template'}</h3>
                     {isEdit && (
-                        <UIButtonDanger onClick={handleDelete} className="ml-auto flex gap-x-1  px-4 truncate !py-2">
+                        <UIButtonDanger type="button" onClick={handleDelete} className="ml-auto flex gap-x-1  px-4 truncate !py-2">
                             Delete<span className="lg:inline truncate hidden">This {modelType}</span>
                         </UIButtonDanger>
                     )}
