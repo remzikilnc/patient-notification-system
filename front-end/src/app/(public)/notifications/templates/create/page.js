@@ -3,8 +3,8 @@ import NotificationTemplateForm from '@/components/notification/template/form';
 
 const exampleModel = {
   "title": "Test Template Age 10 - 30, Gender = MALE",
-  "html_message": "<p>Test Template Age 10 - 30, Gender = MALE</p>",
-  "text_message": "Test Template Age 10 - 30, Gender = MALE",
+  "htmlMessage": "<p>Test Template Age 10 - 30, Gender = MALE</p>",
+  "textMessage": "Test Template Age 10 - 30, Gender = MALE",
   "notificationTypes": [
     "SMS",
     "EMAIL"

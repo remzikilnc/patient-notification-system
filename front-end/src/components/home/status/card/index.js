@@ -1,7 +1,7 @@
 import React from 'react';
 import { VscDebugRestart } from 'react-icons/vsc';
 
-const HomeStatusCard = ({ status, title,message, Icon, onClick }) => {
+const UIButtonCard = ({ status, title,message, Icon, onClick }) => {
     return (
         <button
             onClick={onClick}
@@ -21,11 +21,11 @@ const HomeStatusCard = ({ status, title,message, Icon, onClick }) => {
             <p className="text-white text xs font-semibold capitalize relative z-10">{message}</p>
             <div className="flex gap-x-1">
                 <span className="text-sm font-semibold bg-white rounded-md p-1 px-2">
-                    Status: <span className="text-success uppercase">Ok</span>
+                    Status: <span className="text-success uppercase">{status ? 'OK' : 'ERROR'}</span>
                 </span>
             </div>
         </button>
     );
 };
 
-export default HomeStatusCard;
+export default UIButtonCard;

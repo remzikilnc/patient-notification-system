@@ -11,6 +11,7 @@ import TemplateFormCriterias from '@/components/notification/template/form/crite
 import fetchServer from '@/lib/fetch-server';
 import UIFormInputTextAreaEditor from '@/components/ui/form/input/text/area/editor';
 import UIFormInputTextArea from '@/components/ui/form/input/text/area';
+import UIFormInputError from '@/components/ui/form/input/error';
 
 const notificationTypes = [
     { label: 'SMS', value: 'SMS' },
@@ -40,7 +41,7 @@ const NotificationTemplateForm = ({ model = null }) => {
                 if (!model?.id) {
                     router.push(`/notifications/templates/${data?.id}`);
                 } else {
-                    event.target.textMessage.value = data.textMessage;
+                    router.refresh();
                 }
             },
             onError: errors => {},
@@ -52,6 +53,8 @@ const NotificationTemplateForm = ({ model = null }) => {
             await handleSubmit({ ...commonParams, endPoint: 'notifications/templates' });
         }
     };
+
+    console.log(errors)
 
     const handleCreateCriteria = async criteria => {
         if (criteria.id) {
@@ -95,11 +98,12 @@ const NotificationTemplateForm = ({ model = null }) => {
                             <div className="h-full flex flex-col pb-4">
                                 <UIFormLabel htmlFor="message" label="Message" />
                                 <UIFormInputTextAreaEditor onChange={text => setHtmlMessage(text)} oldValue={htmlMessage} className="rounded-md border !border-passiveBorder min-h-40" />
+                                {errors?.htmlMessage && <UIFormInputError className="mt-2" message={errors?.htmlMessage} />}
                             </div>
 
                             <div>
                                 <UIFormLabel htmlFor="textMessage" label="Text Message" />
-                                <UIFormInputTextArea id="textMessage" name="textMessage" label="Text Message" defaultValue={model?.text_message} error={errors?.text_message} isFocused />
+                                <UIFormInputTextArea id="textMessage" name="textMessage" label="Text Message" defaultValue={model?.textMessage} error={errors?.textMessage} isFocused />
                             </div>
 
                             <div>

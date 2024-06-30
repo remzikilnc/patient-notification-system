@@ -1,11 +1,11 @@
 'use client';
 
 import { MdHealthAndSafety } from 'react-icons/md';
-import HomeStatusCard from '@/components/home/status/card';
 import { BiHealth } from 'react-icons/bi';
 import React, { Fragment, useEffect, useState } from 'react';
 import fetchServer from '@/lib/fetch-server';
 import UILoadingSkeleton from '@/components/ui/loading/skeleton';
+import UIButtonCard from '@/components/ui/button/card';
 
 const fetchPatientsInfo = async () => {
     const res = await fetchServer({ endpoint: '/patients/ok', cache: 'no-store' });
@@ -58,14 +58,14 @@ export default function Page() {
                 </Fragment>
               ) : (
                 <Fragment>
-                    <HomeStatusCard
+                    <UIButtonCard
                       onClick={handlePatientSystemClick}
                       status={patientsInfo?.status === 'OK'}
                       message={patientsInfo?.message}
                       Icon={BiHealth}
                       title="Patient System"
                     />
-                    <HomeStatusCard
+                    <UIButtonCard
                       onClick={handleNotificationSystemClick}
                       status={notificationsInfo?.status === 'OK'}
                       message={notificationsInfo?.message}

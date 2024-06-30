@@ -39,10 +39,10 @@ const NotificationTemplateCard = ({ data }) => {
                 </div>
                 <div className="p-4 pt-0">
                     <Link href={`/notifications/templates/${template.id}`}>
-                        <div className="flex gap-2">
+                        <div className="flex flex-col gap-2">
                             <div>
-                                <div className="text-base font-semibold text-default-900 capitalize mb-1">{template.title}</div>
-                                <div className="text-xs font-medium text-default-600 transition-all duration-75 lg:h-[32px] overflow-hidden line-clamp-2">{template.message}</div>
+                                <div className="text-base truncate font-semibold text-default-900 capitalize mb-1">{template.title}</div>
+                                <div className="text-xs  text-passiveText font-medium  lg:h-[32px] line-clamp-2">{template.textMessage}</div>
                             </div>
                         </div>
                     </Link>
