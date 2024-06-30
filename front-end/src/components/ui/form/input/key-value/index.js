@@ -11,12 +11,12 @@ const UIFormInputKeyValue = ({ identifiers, label, onChange, onAdd, onRemove }) 
             {identifiers.map((identifier, index) => (
                 <div key={index} className="grid grid-cols-12 gap-x-2">
                     <div className="flex flex-col col-span-5">
-                        <UIFormLabel className="!font-medium" label={`${label} Type`} />
-                        <UIFormInputText className="flex " type="text" name="type" value={identifier.type} onChange={event => onChange(index, event)} />
+                        <UIFormLabel className="!font-medium" htmlFor={`${label}_Type_${index}`} label={`${label} Type`} />
+                        <UIFormInputText id={`${label}_Type_${index}`} className="flex" type="text" value={identifier.type} onChange={event => onChange(index, event)} />
                     </div>
                     <div className="flex flex-col col-span-5 xl:col-span-6">
-                        <UIFormLabel className="!font-medium" label={`${label} Value`} />
-                        <UIFormInputText type="text" name="value" value={identifier.value} onChange={event => onChange(index, event)} />
+                        <UIFormLabel className="!font-medium" htmlFor={`${label}_Value_${index}`} label={`${label} Value`} />
+                        <UIFormInputText type="text" id={`${label}_Value_${index}`} value={identifier.value} onChange={event => onChange(index, event)} />
                     </div>
                     <div className="col-span-2 xl:col-span-1 items-end justify-center flex">
                         <UIButtonDanger type="button" className="h-[40px] w-full justify-center" onClick={() => onRemove(index)}>

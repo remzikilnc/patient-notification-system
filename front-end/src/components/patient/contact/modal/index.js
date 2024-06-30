@@ -100,7 +100,7 @@ const PatientContactModal = ({ contact = {}, errors, isOpen, setIsOpen, handleSa
 
                             <div className="mt-4 flex justify-end">
                                 <div className="flex gap-x-2">
-                                    <UIButtonPrimary type="button" className="!bg-gray-800 hover:!bg-gray-700" onClick={submit}>
+                                    <UIButtonPrimary type="button" className="!bg-gray-800 hover:!bg-gray-700">
                                         Close
                                     </UIButtonPrimary>
                                     <UIButtonPrimary onClick={submit}>{contact.id ? 'Update' : 'Create'} Contact</UIButtonPrimary>

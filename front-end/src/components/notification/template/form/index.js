@@ -5,15 +5,15 @@ import { useRouter } from 'next/navigation';
 import useForm from '@/lib/useForm';
 import UIFormLabel from '@/components/ui/form/label';
 import UIFormInputText from '@/components/ui/form/input/text';
-import UIButtonPrimary from '@/components/ui/button/primary';
 import FormInputSelectableMultiple from '@/components/ui/form/input/selectable/multiple';
 import TemplateFormCriterias from '@/components/notification/template/form/criterias';
 import fetchServer from '@/lib/fetch-server';
 import UIFormInputTextAreaEditor from '@/components/ui/form/input/text/area/editor';
 import UIFormInputTextArea from '@/components/ui/form/input/text/area';
 import UIFormInputError from '@/components/ui/form/input/error';
-import UIButtonDanger from '@/components/ui/button/danger';
 import UIFormLayout from '@/components/ui/form/layout';
+import { alertError, alertSuccess } from '@/lib/functions/toastAlerts';
+import { disableButton } from '@/lib/functions/disableButton';
 
 const notificationTypes = [
     { label: 'SMS', value: 'SMS' },
@@ -26,34 +26,33 @@ const NotificationTemplateForm = ({ model = null }) => {
     const [selectedNotificationTypes, setSelectedNotificationTypes] = useState(model?.notificationTypes || []);
     const [criterias, setCriterias] = useState(model?.criterias || []);
     const [htmlMessage, setHtmlMessage] = useState(model?.htmlMessage || '');
+    const [isFormDisabled, setIsFormDisabled] = useState(false);
 
     const submit = async event => {
-        event.preventDefault();
-
-        const formObj = {
-            title: event.target.title.value,
-            htmlMessage: htmlMessage,
-            textMessage: event.target.textMessage.value,
-            notificationTypes: selectedNotificationTypes,
-        };
+        disableButton(setIsFormDisabled);
 
         const commonParams = {
-            formObj,
+            event,
+            formObj: {
+                htmlMessage: htmlMessage,
+                notificationTypes: selectedNotificationTypes,
+            },
             onSuccess: data => {
                 if (!model?.id) {
+                    alertSuccess('Template created successfully.');
                     router.push(`/notifications/templates/${data?.id}`);
                 } else {
+                    alertSuccess('Template updated successfully.');
                     router.refresh();
                 }
             },
-            onError: errors => {},
+            onError: errors => {
+                alertError('An error occurred. Please try again later.');
+            },
         };
 
-        if (model?.id) {
-            await handleSubmit({ ...commonParams, endPoint: `notifications/templates/${model.id}`, method: 'PUT' });
-        } else {
-            await handleSubmit({ ...commonParams, endPoint: 'notifications/templates' });
-        }
+        const endPoint = model?.id ? `notifications/templates/${model.id}` : "notifications/templates";
+        await handleSubmit({...commonParams, endPoint, method: model?.id ? "PUT" : "POST"});
     };
 
     const handleCreateCriteria = async criteria => {

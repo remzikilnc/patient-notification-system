@@ -33,11 +33,6 @@ const navigations = [
         icon: <GoRelFilePath className="flex-shrink-0 h-6 w-6" />,
         subMenu: [
             {
-                title: 'Dashboard',
-                href: '/notifications',
-                activePathName: '/notifications',
-            },
-            {
                 subMenuTitle: 'Templates',
                 listClassName: 'my-2',
             },
