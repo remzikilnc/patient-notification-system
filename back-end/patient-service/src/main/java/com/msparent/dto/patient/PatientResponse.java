@@ -32,6 +32,10 @@ public class PatientResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate birthdate;
 
+    private String email;
+    private String phoneNumber;
+    private String address;
+
     private int age;
     private Set<NotificationType> notificationTypes;
     private Set<Identifier> identifiers;
