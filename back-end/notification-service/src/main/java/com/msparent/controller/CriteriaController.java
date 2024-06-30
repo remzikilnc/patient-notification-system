@@ -52,7 +52,7 @@ public class CriteriaController {
     }
 
     @PutMapping("/{id}")
-    public CriteriaResponse update(@PathVariable Long id, @RequestBody CriteriaRequest criteriaRequest) {
+    public CriteriaResponse update(@PathVariable Long id,@Valid @RequestBody CriteriaRequest criteriaRequest) {
         Criteria criteria = criteriaService.getCriteria(id);
 
         if (criteria == null) {

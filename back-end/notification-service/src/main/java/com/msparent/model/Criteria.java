@@ -1,7 +1,6 @@
 package com.msparent.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.msparent.model.patient.Gender;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -38,6 +37,5 @@ public class Criteria {
     private Gender gender;
 
     @OneToMany(mappedBy = "criteria", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonIgnore
     private List<TargetPatients> targetPatients;
 }

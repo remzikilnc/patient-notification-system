@@ -23,10 +23,10 @@ public class Template {
     private Long id;
     private String title;
 
-    @Size(max = 1000)
+    @Size(max = 4000)
     private String htmlMessage;
 
-    @Size(max = 1000)
+    @Size(max = 4000)
     private String textMessage;
 
     @ElementCollection(targetClass = NotificationType.class)

@@ -2,6 +2,7 @@ package com.msparent.mapper;
 
 import com.msparent.dto.template.TemplateRequest;
 import com.msparent.dto.template.TemplateResponse;
+import com.msparent.model.Criteria;
 import com.msparent.model.Template;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,11 @@ public class TemplateMapper implements Mapper<TemplateRequest, Template, Templat
         template.setTextMessage(request.getTextMessage());
         template.setTitle(request.getTitle());
         template.setNotificationTypes(request.getNotificationTypes());
+        List<Criteria> criterias = request.getCriterias();
+        if (criterias != null) {
+            criterias.forEach(criteria -> criteria.setNotificationTemplate(template));
+            template.setCriterias(criterias);
+        }
         return template;
     }
     @Override
