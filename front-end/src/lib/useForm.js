@@ -36,7 +36,7 @@ const useForm = () => {
 
   function formatErrors(errors) {
     const errorMap = {};
-    errors.forEach(error => {
+    errors?.forEach(error => {
       errorMap[error.field] = error.defaultMessage;
     });
     return errorMap;

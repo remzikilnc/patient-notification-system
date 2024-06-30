@@ -8,13 +8,10 @@ import {MdSms} from "react-icons/md";
 import fetchServer from "@/lib/fetch-server";
 import UIButtonPrimary from "@/components/ui/button/primary";
 
-const NotificationTemplateCard = ({data}) => {
+const NotificationTemplateCard = ({data, handleSendNotificationClick}) => {
   const [template, setTemplate] = useState(data);
   const handleDeleteClick = async id => {
-    const res = await fetchServer({
-      endpoint: `/notifications/templates/${id}`,
-      method: "DELETE",
-    });
+    const res = await deleteModel(id);
     res.status === 204 && setTemplate(template.filter(template => template.id !== id));
   };
 
@@ -53,6 +50,7 @@ const NotificationTemplateCard = ({data}) => {
         </div>
         <UIButtonPrimary
           type="button"
+          onClick={() => handleSendNotificationClick(template)}
           className="w-full absolute bg-success justify-center opacity-0 group-hover:opacity-100 rounded-md rounded-t-none duration-300 py-2 !ring-1 md:ring-2 transition-transform transform md:group-hover:-translate-y-5 translate-y-[-80%] group-hover:-translate-y-1 focus:-translate-y-1 focus:opacity-100 md:focus:-translate-y-5"
         >
           Send Notification
@@ -63,3 +61,7 @@ const NotificationTemplateCard = ({data}) => {
 };
 
 export default NotificationTemplateCard;
+
+async function deleteModel(modalId) {
+  return fetchServer({method: "DELETE", endpoint: `/notifications/templates/${modalId}`});
+}
