@@ -6,6 +6,8 @@ import { BiHealth } from 'react-icons/bi';
 import React, { Fragment, useEffect, useState } from 'react';
 import fetchServer from '@/lib/fetch-server';
 import UILoadingSkeleton from '@/components/ui/loading/skeleton';
+import { alertSuccess } from '@/lib/functions/toastAlerts';
+import { disableButton } from '@/lib/functions/disableButton';
 
 const fetchPatientsInfo = async () => {
     const res = await fetchServer({ endpoint: '/patients/ok', cache: 'no-store' });
@@ -42,12 +44,15 @@ export default function Page() {
     const handleNotificationSystemClick = async () => {
         const notificationsResponse = await fetchNotificationsInfo();
         setNotificationsInfo(notificationsResponse);
+        alertSuccess('Notifications system has been successfully checked')
     }
 
     const handlePatientSystemClick = async () => {
         const patientsResponse = await fetchPatientsInfo();
         setPatientsInfo(patientsResponse);
+        alertSuccess('Patients system has been successfully checked')
     }
+
     return (
       <div>
           <title>PN | Dashboard</title>

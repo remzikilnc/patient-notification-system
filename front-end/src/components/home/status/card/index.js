@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { VscDebugRestart } from 'react-icons/vsc';
+import { disableButton } from '@/lib/functions/disableButton';
 
 const UIButtonCard = ({ status, title,message, Icon, onClick }) => {
+    const [disabled, setDisabled] = useState(false);
+    const handleClick = () => {
+        disableButton(setDisabled);
+        onClick();
+    }
     return (
         <button
-            onClick={onClick}
+            onClick={handleClick}
+            disabled={disabled}
             type="button"
             className={`${
                 status ? 'bg-success' : 'bg-danger'
-            } shadow-xl hover:bg-primary group justify-center rounded-md whitespace-nowrap h-full text-sm font-medium transition-all flex flex-col gap-3 p-4 overflow-hidden items-start relative before:absolute before:left-1/2 before:-translate-x-1/2 before:bottom-1 before:h-[2px] before:w-9 before:bg-primary/50 before:hidden`}
+            } ${disabled ? '!bg-darkPassiveText' : ''} shadow-xl hover:bg-primary group justify-center rounded-md whitespace-nowrap h-full text-sm font-medium transition-all flex flex-col gap-3 p-4 overflow-hidden items-start relative before:absolute before:left-1/2 before:-translate-x-1/2 before:bottom-1 before:h-[2px] before:w-9 before:bg-primary/50 before:hidden`}
         >
-            <span className={`h-10 w-10 rounded-full absolute -top-3 -right-3 z-10 ring-8 ${status ? 'bg-green-200 ring-green-100' : 'bg-red-700 animate-ping group-hover:animate-none duration-150 transition-all ring-red-500'} group-hover:bg-primary group-hover:ring-white`}></span>
+            <span className={`${disabled ? '!bg-darkPassiveText' : ''} h-10 w-10 rounded-full absolute -top-3 -right-3 z-10 ring-8 ${status ? 'bg-green-200 ring-green-100' : 'bg-red-700 animate-ping group-hover:animate-none duration-150 transition-all ring-red-500'} group-hover:bg-primary group-hover:ring-white`}></span>
             <span className="absolute top-4 right-4 group-hover:hidden inline-flex">
                 <Icon className="h-16 w-16 text-black/10 rotate-45 " />
             </span>
