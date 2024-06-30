@@ -10,6 +10,8 @@ module.exports = {
                 primary: '#1a1f8f',
                 secondary: '#1f26be',
                 tertiary: '#077ac2',
+                success: '#5ecc66',
+                danger: '#ff4d4f',
 
                 /*Text*/
                 passiveText: '#282828',
@@ -20,6 +22,7 @@ module.exports = {
                 /*Border*/
                 primaryBorder: '#252a98',
                 passiveBorder: '#dedede',
+
             },
         },
     },
