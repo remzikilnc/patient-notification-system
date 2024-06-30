@@ -41,7 +41,7 @@ public class TemplateController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TemplateResponse store(@RequestBody TemplateRequest templateRequest) {
+    public TemplateResponse store(@Valid @RequestBody TemplateRequest templateRequest) {
         Template template = templateMapper.mapToEntity(new Template(), templateRequest);
         Template savedTemplate = templateService.createTemplate(template);
         return templateMapper.mapToResponse(savedTemplate);
@@ -49,7 +49,7 @@ public class TemplateController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TemplateResponse update(@PathVariable Long id, @RequestBody TemplateRequest templateRequest) {
+    public TemplateResponse update(@Valid @PathVariable Long id, @RequestBody TemplateRequest templateRequest) {
         Template template = templateService.getTemplate(id);
 
         if (template == null) {

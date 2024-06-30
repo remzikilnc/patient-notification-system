@@ -18,13 +18,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TemplateRequest {
-    @NotNull(message = "message cannot be null")
-    @NotBlank(message = "message cannot be blank")
+    @NotNull(message = "Title cannot be null")
+    @NotBlank(message = "Title cannot be blank")
+    @Size(max = 255, min = 2, message = "Title must be between 2 and 255 characters")
     private String title;
 
-    @Size(max = 1000)
+    @Size(max = 1000, message = "Message must be less than 1000 characters")
     private String htmlMessage;
-    @Size(max = 1000)
+    @Size(max = 1000, message = "Text message must be less than 1000 characters")
     private String textMessage;
     private List<NotificationType> notificationTypes;
 }
