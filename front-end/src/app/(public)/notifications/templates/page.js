@@ -9,6 +9,7 @@ async function Page() {
     const data = await getNotificationsTemplates();
     return (
         <div>
+          <title>PN | Notification | Templates</title>
             <div className="grid gap-8 md:bg-white bg-body grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                 {data.length > 0 ? (
                     <NotificationTemplateCard data={data} />

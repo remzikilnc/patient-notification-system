@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PatientForm from '@/components/patient/form';
 
 const exampleModel = {
@@ -26,9 +26,12 @@ const exampleModel = {
 }
 async function Page() {
     return (
+      <Fragment>
+        <title>PN | Patient | Create</title>
         <section className="text-themePassiveText grid gap-y-4">
-            <PatientForm model={exampleModel} />
+          <PatientForm model={exampleModel} />
         </section>
+      </Fragment>
     );
 }
 

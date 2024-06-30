@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import NotificationTemplateForm from '@/components/notification/template/form';
 import fetchServer from '@/lib/fetch-server';
 
@@ -9,9 +9,13 @@ async function Page({ params }) {
 
     const model = await response.json();
     return (
-        <section className="text-themePassiveText grid gap-y-4">
-            <NotificationTemplateForm model={model} />
-        </section>
+      <Fragment>
+          <title>PN | Notification | Template | Edit</title>
+          <section className="text-themePassiveText grid gap-y-4">
+              <NotificationTemplateForm model={model} />
+          </section>
+      </Fragment>
+
     );
 }
 

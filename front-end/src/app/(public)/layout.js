@@ -57,6 +57,7 @@ const navigations = [
 const Layout = ({ children }) => {
     return (
         <Fragment>
+            <title>PN | Patient Notification</title>
             <header className="flex justify-between items-center w-full h-16 bg-white border-b md:border-none">
                 <LeftSidebarMobile>
                     <LeftSidebarNavigations navigations={navigations} />

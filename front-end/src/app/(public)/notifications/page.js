@@ -1,11 +1,13 @@
 import React from 'react';
+import NotificationSendCard from '@/components/notification/dashboard/send-card';
 
 const Page = () => {
-  return (
-    <div>
-      <h1>Dashboard</h1>
-    </div>
-  );
+    return (
+        <section>
+            <title>PN | Notification | Dashboard</title>
+            <NotificationSendCard />
+        </section>
+    );
 };
 
 export default Page;
