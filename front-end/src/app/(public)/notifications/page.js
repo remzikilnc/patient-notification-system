@@ -1,13 +1,14 @@
 import React from 'react';
 import NotificationSendCard from '@/components/notification/dashboard/send-card';
+import { getNotificationsTemplates } from '@/actions/notifications/templates';
 
-const Page = () => {
+export default async function Page() {
+  const data = await getNotificationsTemplates();
     return (
         <section>
             <title>PN | Notification | Dashboard</title>
-            <NotificationSendCard />
+            <NotificationSendCard data={data} />
         </section>
     );
-};
+}
 
-export default Page;

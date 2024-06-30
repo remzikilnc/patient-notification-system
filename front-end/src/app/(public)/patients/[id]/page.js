@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import fetchServer from '@/lib/fetch-server';
 import PatientForm from '@/components/patient/form';
 
-async function Page({ params }) {
+export default async function Page({ params }) {
     const response = await fetchServer({
         endpoint: `/patients/${params.id}?contacts=true`,
     });
@@ -17,5 +17,3 @@ async function Page({ params }) {
       </Fragment>
     );
 }
-
-export default Page;

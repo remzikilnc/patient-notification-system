@@ -24,7 +24,7 @@ const exampleModel = {
   ],
   description: 'This is a test model from frontend for adding fast patient model.',
 }
-async function Page() {
+export default async function Page() {
     return (
       <Fragment>
         <title>PN | Patient | Create</title>
@@ -35,4 +35,3 @@ async function Page() {
     );
 }
 
-export default Page;

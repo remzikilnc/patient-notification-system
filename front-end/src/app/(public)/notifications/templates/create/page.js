@@ -8,7 +8,7 @@ const exampleModel = {
     notificationTypes: ['SMS', 'EMAIL'],
 };
 
-async function Page() {
+export default async function Page() {
     return (
         <Fragment>
             <title>PN | Notification | Template | Create</title>
@@ -18,5 +18,3 @@ async function Page() {
         </Fragment>
     );
 }
-
-export default Page;

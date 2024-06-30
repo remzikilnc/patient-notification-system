@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import NotificationTemplateForm from '@/components/notification/template/form';
 import fetchServer from '@/lib/fetch-server';
 
-async function Page({ params }) {
+export default async function Page({ params }) {
     const response = await fetchServer({
         endpoint: `/notifications/templates/${params.id}?criterias=true`,
     });
@@ -18,5 +18,3 @@ async function Page({ params }) {
 
     );
 }
-
-export default Page;

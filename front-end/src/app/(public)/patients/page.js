@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PatientTable from '@/components/patient/table';
 
-const Page = () => {
+export default async function Page() {
     return (
         <Fragment>
             <title>PN | Patients</title>
@@ -15,5 +15,3 @@ const Page = () => {
         </Fragment>
     );
 };
-
-export default Page;

@@ -54,8 +54,6 @@ const NotificationTemplateForm = ({ model = null }) => {
         }
     };
 
-    console.log(errors)
-
     const handleCreateCriteria = async criteria => {
         if (criteria.id) {
             await handleSubmit({
