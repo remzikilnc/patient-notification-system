@@ -9,8 +9,13 @@ async function Page() {
     const data = await getNotificationsTemplates();
     return (
         <div>
-          <title>PN | Notification | Templates</title>
-            <div className="grid gap-8 md:bg-white bg-body grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+            <title>PN | Notification | Templates</title>
+            <div className="mb-4 gap-1 flex flex-col">
+                <h1 className="text-2xl font-semibold text-activeText">Notification Templates</h1>
+                <p className="text-passiveText text-sm">Create manage and send notifications using templates</p>
+                <p className="text-passiveText text-xs">You can send notification hover on the template and click on the send button</p>
+            </div>
+            <div className={`grid gap-10 bg-white grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 ${data.length === 1 ? 'xl:grid-cols-1' : data.length === 2 ? 'xl:grid-cols-2' : 'xl:grid-cols-3'}`}>
                 {data.length > 0 ? (
                     <NotificationTemplateCard data={data} />
                 ) : (

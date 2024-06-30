@@ -8,7 +8,7 @@ import Link from 'next/link';
 const NotificationTemplateCardMenu = ({ id, handleDeleteClick }) => {
     return (
         <Menu>
-            <MenuButton className="inline-flex items-center justify-center text-sm font-semibold ring-offset-background focus-visible:outline-none focus-visible:ring-0 disabled:opacity-50 whitespace-nowrap disabled:pointer-events-none data-[open]:scale-105 flex-none h-8 w-8 bg-white rounded-md border border-passiveBorder border-opacity-70 hover:scale-105 transition-all duration-200">
+            <MenuButton className="inline-flex z-10 items-center justify-center text-sm font-semibold ring-offset-background focus-visible:outline-none focus-visible:ring-0 disabled:opacity-50 whitespace-nowrap disabled:pointer-events-none data-[open]:scale-105 flex-none h-8 w-8 bg-white rounded-md border border-passiveBorder border-opacity-70 hover:scale-105 transition-all duration-200">
                 <PiDotsThreeOutlineFill className="h-4 w-4" />
             </MenuButton>
 
