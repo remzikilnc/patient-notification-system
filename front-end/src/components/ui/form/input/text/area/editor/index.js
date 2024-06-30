@@ -8,7 +8,7 @@ const ContentEditor = dynamic(
   async () => {
     const {default: RQ} = await import("react-quill");
 
-    return ({forwardedRef, onChange, oldValue,className, ...props}) => {
+    return ({forwardedRef, onChange, oldValue, className, ...props}) => {
       const editorRef = forwardedRef || useRef(null);
 
       const modules = useMemo(

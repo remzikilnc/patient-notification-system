@@ -1,10 +1,10 @@
 arrowParens: avoid
-bracketSpacing: true
-singleQuote: true
+bracketSpacing: false
+singleQuote: false
 
 overrides:
-  - files: '*.js'
+  - files: "*.js"
     options:
       printWidth: 300
-      tabWidth: 4
-      singleQuote: true
+      tabWidth: 2
+      singleQuote: false

@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, {useState} from "react";
 
-function SensitiveDataCell({ label, data, className }) {
-    const [isVisible, setIsVisible] = useState(false);
+function SensitiveDataCell({label, data, className}) {
+  const [isVisible, setIsVisible] = useState(false);
 
-    const toggleVisibility = () => {
-        setIsVisible(!isVisible);
-    };
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
-    const censorData = data => {
-        if (data === null || data === undefined || isVisible || data?.length <= 3) {
-            return data;
-        }
-        return `${data?.substring(0, 3)}${'******'}`;
-    };
+  const censorData = data => {
+    if (data === null || data === undefined || isVisible || data?.length <= 3) {
+      return data;
+    }
+    return `${data?.substring(0, 3)}${"******"}`;
+  };
 
-    return (
-        <td className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 cursor-pointer ${className || ''}`} onClick={toggleVisibility} title="Click to show/hide sensitive data">
-            {censorData(data)}
-        </td>
-    );
+  return (
+    <td className={`whitespace-nowrap px-3 py-4 text-sm text-gray-500 cursor-pointer ${className || ""}`} onClick={toggleVisibility} title="Click to show/hide sensitive data">
+      {censorData(data)}
+    </td>
+  );
 }
 
 export default SensitiveDataCell;

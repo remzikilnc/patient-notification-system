@@ -14,7 +14,7 @@ import FormInputSelectableMultiple from "@/components/ui/form/input/selectable/m
 import UIFormInputKeyValue from "@/components/ui/form/input/key-value";
 import UIFormLayout from "@/components/ui/form/layout";
 import {alertError, alertSuccess} from "@/lib/functions/toastAlerts";
-import { disableButton } from '@/lib/functions/disableButton';
+import {disableButton} from "@/lib/functions/disableButton";
 
 const notificationTypes = [
   {label: "SMS", value: "SMS"},
@@ -37,7 +37,7 @@ const PatientForm = ({model = null}) => {
       formObj: {
         gender: selectedGender,
         notificationTypes: selectedNotificationTypes,
-        identifiers: identifiers
+        identifiers: identifiers,
       },
       onSuccess: data => {
         if (!model?.id) {
@@ -65,7 +65,7 @@ const PatientForm = ({model = null}) => {
         body: JSON.stringify(contact),
       })
         .then(res => res.json())
-        .then((data) => {
+        .then(data => {
           if (data.errors) {
             alertError(data.message || "An error occurred. Please try again later.");
             return;
@@ -85,7 +85,7 @@ const PatientForm = ({model = null}) => {
             alertError(data.message || "An error occurred. Please try again later.");
             return;
           }
-          if (data?.id){
+          if (data?.id) {
             alertSuccess("Contact created successfully.");
             setContacts([...contacts, data]);
           }
@@ -131,7 +131,7 @@ const PatientForm = ({model = null}) => {
   };
 
   return (
-    <UIFormLayout isEdit={model?.id} disabled={isFormDisabled} modelName={model?.name + ' ' + model?.surname} modelType="Patient" submit={submit} handleDelete={handleDeletePatient}>
+    <UIFormLayout isEdit={model?.id} disabled={isFormDisabled} modelName={model?.name + " " + model?.surname} modelType="Patient" submit={submit} handleDelete={handleDeletePatient}>
       <Fragment>
         <div className="grid grid-cols-1 gap-x-3 gap-y-3">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
