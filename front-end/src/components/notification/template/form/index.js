@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useForm from '@/lib/useForm';
 import UIFormLabel from '@/components/ui/form/label';
@@ -12,6 +12,8 @@ import fetchServer from '@/lib/fetch-server';
 import UIFormInputTextAreaEditor from '@/components/ui/form/input/text/area/editor';
 import UIFormInputTextArea from '@/components/ui/form/input/text/area';
 import UIFormInputError from '@/components/ui/form/input/error';
+import UIButtonDanger from '@/components/ui/button/danger';
+import UIFormLayout from '@/components/ui/form/layout';
 
 const notificationTypes = [
     { label: 'SMS', value: 'SMS' },
@@ -80,55 +82,40 @@ const NotificationTemplateForm = ({ model = null }) => {
         }).then(res => (res.ok ? setCriterias(criterias.filter(c => c.id !== criteria.id)) : console.error(res)));
     };
 
+    const handleDeleteTemplate = () => {
+        fetchServer({
+            method: 'DELETE',
+            endpoint: `/notifications/templates/${model.id}`,
+        }).then(res => (res.ok ? router.push('/notifications/templates') : console.error(res)));
+    };
+
     return (
-        <form className="space-y-8 p-1 overflow-hidden" onSubmit={submit}>
-            <div className="space-y-8">
-                <div>
-                    <h3 className="text-xl font-semibold dark:text-themeHoverText">{model ? `Edit ${model?.title ?? ''}` : 'Create Template'}</h3>
-                </div>
-                <div className="col-span-3">
-                    <div className="grid grid-cols-1 gap-y-4 gap-x-4 border-b border-passiveBorder pb-5">
-                        <div className="grid grid-cols-1 gap-x-3 gap-y-3">
-                            <div>
-                                <UIFormLabel htmlFor="title" label="Title" />
-                                <UIFormInputText id="title" name="title" defaultValue={model?.title} error={errors?.title} required isFocused autoComplete="title" />
-                            </div>
-                            <div className="h-full flex flex-col pb-4">
-                                <UIFormLabel htmlFor="message" label="Message" />
-                                <UIFormInputTextAreaEditor onChange={text => setHtmlMessage(text)} oldValue={htmlMessage} className="rounded-md border !border-passiveBorder min-h-40" />
-                                {errors?.htmlMessage && <UIFormInputError className="mt-2" message={errors?.htmlMessage} />}
-                            </div>
-
-                            <div>
-                                <UIFormLabel htmlFor="textMessage" label="Text Message" />
-                                <UIFormInputTextArea id="textMessage" name="textMessage" label="Text Message" defaultValue={model?.textMessage} error={errors?.textMessage} isFocused />
-                            </div>
-
-                            <div>
-                                <UIFormLabel htmlFor="notificationTypes" label="Notification Type" />
-                                <FormInputSelectableMultiple
-                                    data={notificationTypes}
-                                    onChange={data => setSelectedNotificationTypes(data)}
-                                    initialState={notificationTypes.filter(nt => selectedNotificationTypes.includes(nt.value))}
-                                    hasSelectAll={false}
-                                    error={errors?.notificationTypes}
-                                    disableSearch
-                                />
-                            </div>
-                        </div>
+        <UIFormLayout  isEdit={model?.id} modelName={model?.title} modelType="template" submit={submit} handleDelete={handleDeleteTemplate}>
+            <Fragment>
+                <div className="grid grid-cols-1 gap-x-3 gap-y-3">
+                    <div>
+                        <UIFormLabel htmlFor="title" label="Title" />
+                        <UIFormInputText id="title" name="title" defaultValue={model?.title} error={errors?.title} required isFocused autoComplete="title" />
                     </div>
-                    {model?.id && <TemplateFormCriterias criterias={criterias} handleDeleteCriteria={handleDeleteCriteria} handleCreateCriteria={handleCreateCriteria} />}
-                </div>
-            </div>
+                    <div className="h-full flex flex-col pb-4">
+                        <UIFormLabel htmlFor="message" label="Message" />
+                        <UIFormInputTextAreaEditor onChange={text => setHtmlMessage(text)} oldValue={htmlMessage} className="rounded-md border !border-passiveBorder min-h-40" />
+                        {errors?.htmlMessage && <UIFormInputError className="mt-2" message={errors?.htmlMessage} />}
+                    </div>
 
-            <div className="pt-5">
-                <div className="flex justify-end">
-                    <div className="flex items-center gap-4">
-                        <UIButtonPrimary>{model?.id ? 'Update' : 'Create'}</UIButtonPrimary>
+                    <div>
+                        <UIFormLabel htmlFor="textMessage" label="Text Message" />
+                        <UIFormInputTextArea id="textMessage" name="textMessage" label="Text Message" defaultValue={model?.textMessage} error={errors?.textMessage} isFocused />
+                    </div>
+
+                    <div>
+                        <UIFormLabel htmlFor="notificationTypes" label="Notification Type" />
+                        <FormInputSelectableMultiple data={notificationTypes} onChange={data => setSelectedNotificationTypes(data)} initialState={notificationTypes.filter(nt => selectedNotificationTypes.includes(nt.value))} hasSelectAll={false} error={errors?.notificationTypes} disableSearch />
                     </div>
                 </div>
-            </div>
-        </form>
+                {model?.id && <TemplateFormCriterias criterias={criterias} handleDeleteCriteria={handleDeleteCriteria} handleCreateCriteria={handleCreateCriteria} />}
+            </Fragment>
+        </UIFormLayout>
     );
 };
 export default NotificationTemplateForm;

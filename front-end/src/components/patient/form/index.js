@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useForm from '@/lib/useForm';
 import UIFormLabel from '@/components/ui/form/label';
@@ -13,6 +13,8 @@ import PatientFormContacts from '@/components/patient/form/contacts';
 import fetchServer from '@/lib/fetch-server';
 import FormInputSelectableMultiple from '@/components/ui/form/input/selectable/multiple';
 import UIFormInputKeyValue from '@/components/ui/form/input/key-value';
+import UIButtonDanger from '@/components/ui/button/danger';
+import UIFormLayout from '@/components/ui/form/layout';
 
 const notificationTypes = [
     { label: 'SMS', value: 'SMS' },
@@ -110,90 +112,75 @@ const PatientForm = ({ model = null }) => {
         setIdentifiers(values);
     };
 
+    const handleDeletePatient = () => {
+        fetchServer({
+            method: 'DELETE',
+            endpoint: `/patients/${model.id}`,
+        }).then(res => (res.ok ? router.push('/patients') : console.error(res)));
+    };
+
     return (
-        <form className="space-y-8 p-1 overflow-hidden" onSubmit={submit}>
-            <div className="space-y-8">
+        <UIFormLayout isEdit={model?.id} modelName={model?.name + model?.surname} modelType="patient" submit={submit} handleDelete={handleDeletePatient}>
+            <Fragment>
+                <div className="grid grid-cols-1 gap-x-3 gap-y-3">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <UIFormLabel htmlFor="name" label="Name" />
+                            <UIFormInputText id="name" name="name" defaultValue={model?.name} error={errors?.name} isFocused autoComplete="name" />
+                        </div>
+                        <div>
+                            <UIFormLabel htmlFor="middlename" label="Middle Name" />
+                            <UIFormInputText id="middlename" name="middlename" defaultValue={model?.middlename} error={errors?.middlename} isFocused autoComplete="middlename" />
+                        </div>
+                        <div>
+                            <UIFormLabel htmlFor="surname" label="Surname" />
+                            <UIFormInputText id="surname" name="surname" defaultValue={model?.surname} error={errors?.surname} isFocused required autoComplete="surname" />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-1 gap-3">
+                        <UIFormInputKeyValue identifiers={identifiers} label="Identifiers" onChange={handleIdentifierChange} onAdd={handleAddIdentifier} onRemove={handleRemoveIdentifier} />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <UIFormLabel htmlFor="email" label="Email" />
+                            <UIFormInputText type="email" id="email" name="email" required={selectedNotificationTypes.includes('EMAIL')} defaultValue={model?.email} error={errors?.email} isFocused autoComplete="email" />
+                        </div>
+                        <div>
+                            <UIFormLabel htmlFor="phoneNumber" label="Phone Number" />
+                            <UIFormInputText id="phoneNumber" name="phoneNumber" required={selectedNotificationTypes.includes('SMS')} defaultValue={model?.phoneNumber} error={errors?.phoneNumber} isFocused autoComplete="phone" />
+                        </div>
+                        <div>
+                            <UIFormLabel htmlFor="gender" label="Gender" />
+                            <UIFormInputSelectableWithIcon data={['MALE', 'FEMALE']} selectedValue={selectedGender} setSelectedValue={setSelectedGender} error={errors?.gender} />
+                        </div>
+                    </div>
+                    <div>
+                        <UIFormLabel htmlFor="notificationTypes" label="Notification Type" />
+                        <FormInputSelectableMultiple data={notificationTypes} onChange={data => setSelectedNotificationTypes(data)} initialState={notificationTypes.filter(nt => selectedNotificationTypes.includes(nt.value))} hasSelectAll={false} error={errors?.notificationTypes} disableSearch />
+                    </div>
+                    <div>
+                        <UIFormLabel htmlFor="birthdate" label="Birth Date" />
+                        <UIFormInputDatePicker id="birthdate" name="birthdate" initialDate={model?.birthdate} maxDate={new Date()} />
+                    </div>
+                </div>
+
                 <div>
-                    <h3 className="text-xl font-semibold dark:text-themeHoverText">{model?.id ? `Edit ${model.name} ${model.surname}` : 'Create Patient'}</h3>
-                </div>
-                <div className="col-span-3">
-                    <div className="grid grid-cols-1 gap-y-4 gap-x-4 border-b border-passiveBorder pb-5">
-                        <div className="grid grid-cols-1 gap-x-3 gap-y-3">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <div>
-                                    <UIFormLabel htmlFor="name" label="Name" />
-                                    <UIFormInputText id="name" name="name" defaultValue={model?.name} error={errors?.name} isFocused autoComplete="name" />
-                                </div>
-                                <div>
-                                    <UIFormLabel htmlFor="middlename" label="Middle Name" />
-                                    <UIFormInputText id="middlename" name="middlename" defaultValue={model?.middlename} error={errors?.middlename} isFocused autoComplete="middlename" />
-                                </div>
-                                <div>
-                                    <UIFormLabel htmlFor="surname" label="Surname" />
-                                    <UIFormInputText id="surname" name="surname" defaultValue={model?.surname} error={errors?.surname} isFocused required autoComplete="surname" />
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-1 gap-3">
-                                <UIFormInputKeyValue identifiers={identifiers} label="Identifiers" onChange={handleIdentifierChange} onAdd={handleAddIdentifier} onRemove={handleRemoveIdentifier} />
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                <div>
-                                    <UIFormLabel htmlFor="email" label="Email" />
-                                    <UIFormInputText type="email" id="email" name="email" required={selectedNotificationTypes.includes('EMAIL')} defaultValue={model?.email} error={errors?.email} isFocused autoComplete="email" />
-                                </div>
-                                <div>
-                                    <UIFormLabel htmlFor="phoneNumber" label="Phone Number" />
-                                    <UIFormInputText id="phoneNumber" name="phoneNumber" required={selectedNotificationTypes.includes('SMS')} defaultValue={model?.phoneNumber} error={errors?.phoneNumber} isFocused autoComplete="phone" />
-                                </div>
-                                <div>
-                                    <UIFormLabel htmlFor="gender" label="Gender" />
-                                    <UIFormInputSelectableWithIcon data={['MALE', 'FEMALE']} selectedValue={selectedGender} setSelectedValue={setSelectedGender} error={errors?.gender} />
-                                </div>
-                            </div>
-                            <div>
-                                <UIFormLabel htmlFor="notificationTypes" label="Notification Type" />
-                                <FormInputSelectableMultiple
-                                    data={notificationTypes}
-                                    onChange={data => setSelectedNotificationTypes(data)}
-                                    initialState={notificationTypes.filter(nt => selectedNotificationTypes.includes(nt.value))}
-                                    hasSelectAll={false}
-                                    error={errors?.notificationTypes}
-                                    disableSearch
-                                />
-                            </div>
-                            <div>
-                                <UIFormLabel htmlFor="birthdate" label="Birth Date" />
-                                <UIFormInputDatePicker id="birthdate" name="birthdate" initialDate={model?.birthdate} maxDate={new Date()} />
-                            </div>
-                        </div>
-
-                        <div>
-                            <UIFormLabel htmlFor="address" label="Adress" />
-                            <div className="mt-1">
-                                <UIFormInputTextArea id="address" name="address" defaultValue={model?.address} error={errors?.address} rows={3} />
-                            </div>
-                        </div>
-
-                        <div>
-                            <UIFormLabel htmlFor="description" label="Description" />
-                            <div className="mt-1">
-                                <UIFormInputTextArea id="description" name="description" defaultValue={model?.description} error={errors?.description} rows={3} desc="Write a few sentences about this patient." />
-                            </div>
-                        </div>
-                    </div>
-                    {model?.id && <PatientFormContacts contacts={contacts} setContacts={setContacts} handleSaveContact={handleSaveContact} handleDeleteContact={handleDeleteContact} />}
-                </div>
-            </div>
-
-            <div className="pt-5">
-                <div className="flex justify-end">
-                    <div className="flex items-center gap-4">
-                        <UIButtonPrimary>{model?.id ? 'Update' : 'Create'}</UIButtonPrimary>
+                    <UIFormLabel htmlFor="address" label="Adress" />
+                    <div className="mt-1">
+                        <UIFormInputTextArea id="address" name="address" defaultValue={model?.address} error={errors?.address} rows={3} />
                     </div>
                 </div>
-            </div>
-        </form>
+
+                <div>
+                    <UIFormLabel htmlFor="description" label="Description" />
+                    <div className="mt-1">
+                        <UIFormInputTextArea id="description" name="description" defaultValue={model?.description} error={errors?.description} rows={3} desc="Write a few sentences about this patient." />
+                    </div>
+                </div>
+                {model?.id && <PatientFormContacts contacts={contacts} setContacts={setContacts} handleSaveContact={handleSaveContact} handleDeleteContact={handleDeleteContact} />}
+            </Fragment>
+        </UIFormLayout>
     );
 };
 
