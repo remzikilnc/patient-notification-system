@@ -37,6 +37,8 @@ public class PatientService {
             sendPatientCreatedMessage(savedPatient.getId().toString());
         }
 
+        //we can handle with PostPersist & PostUpdate
+
         return savedPatient;
     }
 
@@ -56,7 +58,6 @@ public class PatientService {
         return patientRepository.existsById(id);
     }
 
-    @Transactional
     public void addContact(Patient patient, Contact savedContact) {
         patient.getContacts().add(savedContact);
         patientRepository.save(patient);

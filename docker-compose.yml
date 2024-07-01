@@ -1,0 +1,108 @@
+version: '3.7'
+
+services:
+  mysql-patient:
+    image: mysql:8.0.33
+    environment:
+      MYSQL_DATABASE: 'pns_patient'
+      MYSQL_ROOT_PASSWORD: 'pw'
+    ports:
+      - 3306:3306
+    volumes:
+      -  mysql-patient-data:/var/lib/mysql
+    networks:
+      - microservice-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 1s
+      timeout: 3s
+      retries: 5
+
+  postgres-notification:
+    image: postgres
+    environment:
+      POSTGRES_DB: 'pns_notification'
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: 'pw'
+    ports:
+      - 5432:5432
+    networks:
+      - microservice-network
+    expose:
+      - "5432"
+    volumes:
+      -  postgres-data:/var/lib/postgresql/data
+
+  discovery-server:
+    build:
+      context: ./back-end/discovery-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - microservice-network
+
+  api-gateway:
+    build:
+      context: ./back-end/api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8889:8889"
+    networks:
+      - microservice-network
+    depends_on:
+      - discovery-server
+
+  notification-service:
+    build:
+      context: ./back-end/notification-service
+      dockerfile: Dockerfile
+    ports:
+      - "8762:8762"
+    networks:
+      - microservice-network
+    depends_on:
+      - discovery-server
+      - postgres-notification
+
+  patient-service:
+    build:
+      context: ./back-end/patient-service
+      dockerfile: Dockerfile
+    ports:
+      - "8763:8763"
+    networks:
+      - microservice-network
+    depends_on:
+      mysql-patient:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: "rabbitmq"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    ports:
+      - "5672:5672"  # AMQP
+      - "15672:15672"  # Management
+    networks:
+      - microservice-network
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  microservice-network:
+    driver: bridge
+
+volumes:
+  mysql-patient-data:
+  postgres-data:
+  rabbitmq-data:
