@@ -64,6 +64,7 @@ services:
     depends_on:
       - discovery-server
       - postgres-notification
+      - rabbitmq
 
   patient-service:
     build:
