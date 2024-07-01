@@ -36,7 +36,7 @@ export default function UIFormInputSelectableWithIcon({options = "down", data, e
           </ComboboxButton>
 
           {filteredData.length > 0 && (
-            <ComboboxOptions className={`absolute z-10 ${options === "up" ? "bottom-full" : ""} group mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm`}>
+            <ComboboxOptions className={`absolute z-50 ${options === "up" ? "bottom-full" : ""} group mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm`}>
               {filteredData.map((item, index) => (
                 <ComboboxOption key={index} value={item} className="group flex justify-between cursor-default select-none items-center gap-2 py-1.5 px-3 data-[focus]:bg-primary data-[selected]:bg-primary data-[selected]:text-white data-[focus]:text-white">
                   <span>{item}</span>

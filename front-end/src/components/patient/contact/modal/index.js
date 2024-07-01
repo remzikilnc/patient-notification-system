@@ -77,12 +77,6 @@ const PatientContactModal = ({contact = {}, errors, isOpen, setIsOpen, handleSav
                       <UIFormLabel htmlFor="relationship" className="!font-medium" label="Relationship" />
                       <UIFormInputText id="relationship" name="relationship" defaultValue={contact?.relationship} error={errors?.relationship} required isFocused autoComplete="relationship" />
                     </div>
-                  </div>
-                  <div className="grid md:grid-cols-2 grid-cols-1 gap-y-3 md:gap-y-0 gap-x-6">
-                    <div className="col-span-1">
-                      <UIFormLabel htmlFor="contactType" className="!font-medium" label="Contact Type" />
-                      <UIFormInputText id="contactType" name="contactType" defaultValue={contact?.contactType} error={errors?.contactType} required isFocused autoComplete="contactType" />
-                    </div>
                     <div className="col-span-1">
                       <UIFormLabel htmlFor="contactMethod" className="!font-medium" label="Contact Method" />
                       <UIFormInputText id="contactMethod" name="contactMethod" defaultValue={contact?.contactMethod} error={errors?.contactMethod} isFocused autoComplete="contactMethod" />
@@ -100,7 +94,7 @@ const PatientContactModal = ({contact = {}, errors, isOpen, setIsOpen, handleSav
 
               <div className="mt-4 flex justify-end">
                 <div className="flex gap-x-2">
-                  <UIButtonPrimary type="button" className="!bg-gray-800 hover:!bg-gray-700">
+                  <UIButtonPrimary onClick={setIsOpen(false)} type="button" className="!bg-gray-800 hover:!bg-gray-700">
                     Close
                   </UIButtonPrimary>
                   <UIButtonPrimary onClick={submit}>{contact.id ? "Update" : "Create"} Contact</UIButtonPrimary>

@@ -12,6 +12,7 @@ import {BsHash} from "react-icons/bs";
 import {BiRename} from "react-icons/bi";
 import UIButtonSortWithOptions from "@/components/ui/button/sort-with-options";
 import UIFormInputSelectableWithIcon from "@/components/ui/form/input/selectable/with-icon";
+import { MdDateRange } from 'react-icons/md';
 
 export default function PatientTableFilter({filters, setFilters, modelsDefaultFilterValues}) {
   const resetFilters = () => {
@@ -66,7 +67,7 @@ export default function PatientTableFilter({filters, setFilters, modelsDefaultFi
             </div>
           </div>
           <Transition enter="transition ease-out duration-200" enterFrom="opacity-0 translate-y-1" enterTo="opacity-100 translate-y-0" leave="transition ease-in duration-150" leaveFrom="opacity-100 translate-y-0" leaveTo="opacity-0 translate-y-1">
-            <Popover.Panel className="my-2 absolute bg-white dark:bg-themeDarker dark:border-themeBorderGray border-gray-300 border-01 p-4 rounded shadow-2xl origin-top-right right-0">
+            <Popover.Panel className="my-2 absolute drop-shadow-2xl bg-white dark:bg-themeDarker dark:border-themeBorderGray border-gray-300 border-01 p-4 rounded shadow-2xl origin-top-right right-0">
               <div className="flex flex-row flex-nowrap w-full mb-2 justify-between">
                 <span className="dark:text-themePassiveText text-gray-800 flex items-center text-sm">Filters</span>
                 <button onClick={resetFilters}>
@@ -104,6 +105,20 @@ export default function PatientTableFilter({filters, setFilters, modelsDefaultFi
                       Gender
                     </UIFormLabel>
                     <UIFormInputSelectableWithIcon id="gender" data={["MALE", "FEMALE"]} selectedValue={filters.filter.gender} setSelectedValue={value => handleFilterChange("filter", "gender", value)} />
+                  </Field>
+                  <Field>
+                    <UIFormLabel className="!text-xs mb-1" htmlFor="search-minAge">
+                      Minimum Age
+                    </UIFormLabel>
+                    <UIFormInputSearchWithIcon type="number" id="search-ageFrom" name="search-minAge" value={filters.filter.ageFrom} Icon={MdDateRange } placeholder="Minimum Age" handleChange={e => handleFilterChange("filter", "ageFrom", e.target.value)}>
+                    </UIFormInputSearchWithIcon>
+                  </Field>
+                  <Field>
+                    <UIFormLabel className="!text-xs mb-1" htmlFor="search-ageTo">
+                      Maximum Age
+                    </UIFormLabel>
+                    <UIFormInputSearchWithIcon type="number" id="search-ageTo" name="search-ageTo" value={filters.filter.ageTo} Icon={MdDateRange } placeholder="Maximum Age" handleChange={e => handleFilterChange("filter", "ageTo", e.target.value)}>
+                    </UIFormInputSearchWithIcon>
                   </Field>
                 </Fieldset>
               </div>

@@ -80,7 +80,7 @@ const modelsDefaultFilterValues = {
     gender: "",
   },
   sort: {
-    id: "asc",
+    id: "desc",
   },
   pageNumber: 1,
   pageLimit: 10,
@@ -88,7 +88,7 @@ const modelsDefaultFilterValues = {
 
 const tableColumns = [
   {id: "id", label: "ID", sortable: true, type: "text"},
-  {id: "name", label: "Name", sortable: true, type: "text"},
+  {id: "name", label: "Name", sortable: false, type: "text"},
   {id: "surname", label: "Surname", sortable: true, type: "text"},
   {id: "birthdate", label: "Birth Date", sortable: true, type: "date"},
   {id: "age", label: "Age", sortable: false, type: "number"},
