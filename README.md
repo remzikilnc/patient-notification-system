@@ -29,7 +29,7 @@ The Patient Notification System is designed to manage patient registrations and 
   - Built using Java Spring Boot and utilizes Netflix Eureka for service discovery.
   - Inter-service communication is managed via RabbitMQ, which listens to messages and processes them accordingly.
   - When a patient is created in the Patient Service, RabbitMQ dispatches the message to the Notification Service, which listens to the queue and assigns the patient to criteria that match predefined criterias.
-  - The system comprises four services: two main services (Patient Service and Notification Service) and two additional services (API Gateway and Template Service).
+  - The system comprises four services: two main services (Patient Service and Notification Service) and two additional services (API Gateway and Discovery Service).
   - The API Gateway currently provides a common endpoint for APIs.
   - The Notification Service is built using the Strategy Pattern, dynamically creating and using the necessary notification service based on the template.
   - Currently, only email notifications are supported.
@@ -47,7 +47,7 @@ The Patient Notification System is designed to manage patient registrations and 
 - **Frontend**: Nextjs - TailwindCSS - SWR - Headless UI
 
 ## Installation
-- Needs Docker, Node.js, and npm installed on your machine.
+- Needs Docker, Maven, Node.js, and npm installed on your machine.
 - Ports 3000, 5672, 8763, 8762, 8761, 8889, 5432, 3306 should be available.
 ```bash
 # Open Terminal
