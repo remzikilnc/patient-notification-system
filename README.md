@@ -43,7 +43,7 @@ The Patient Notification System is designed to manage patient registrations and 
     ![Patiend List Table](https://i.hizliresim.com/opsm2gu.png)
 
 ## Tech Stack
-- **Backend**: Java Spring Boot - Netflix Eureka - RabbitMQ - Spring Cloud - Spring Data JPA - Lombok
+- **Backend**: Java Spring Boot - Maven - Netflix Eureka - RabbitMQ - Spring Cloud - Spring Data JPA - Lombok
 - **Frontend**: Nextjs - TailwindCSS - SWR - Headless UI
 
 ## Installation
@@ -105,7 +105,7 @@ The Patient Service is responsible for managing patient information, including r
 
 
 
-### Endpoints (For more information, check PostgreSQL Collection)
+### Endpoints (For more information, check Postman Collection)
 
 ``
 API Prefix: api/v1
@@ -147,7 +147,7 @@ The Notification Service is designed to handle various notification-related func
 #### Notification Edit, Create / Edit Delete Criteria
 ![Notification Edit - Create](https://i.hizliresim.com/aj9w1aj.png)
 
-### Endpoints (For more information, check PostgreSQL Collection)
+### Endpoints (For more information, check Postman Collection)
 
 ``
 API Prefix: api/v1
