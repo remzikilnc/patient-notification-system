@@ -8,44 +8,68 @@ The Patient Notification System is designed to manage patient registrations and 
 
 - [Introduction](#introduction)
 - [Backend and Frontend Overview](#backend-and-frontend-overview)
+- [Installation](#installation)
 - [Tech Stack](#tech-stack)
 - [Patient Service](#patient-service)
-    - [Features](#features)
-    - [Database Structure](#database-structure)
-    - [Frontend](#frontend)
-    - [Endpoints](#endpoints)
+  - [Features](#features)
+  - [Database Structure](#database-structure)
+  - [Frontend](#frontend)
+  - [Endpoints](#endpoints)
 - [Notification Service](#notification-service)
-    - [Features](#features-1)
-    - [Database Structure](#database-structure-1)
-    - [Frontend](#frontend-1)
-    - [Endpoints](#endpoints-1)
+  - [Features](#features-1)
+  - [Database Structure](#database-structure-1)
+  - [Frontend](#frontend-1)
+  - [Endpoints](#endpoints-1)
 - [Dependencies](#dependencies)
 
 
 ### Backend and Frontend Overview:
 
 - **Backend**:
-    - Built using Java Spring Boot and utilizes Netflix Eureka for service discovery.
-    - Inter-service communication is managed via RabbitMQ, which listens to messages and processes them accordingly.
-    - When a patient is created in the Patient Service, RabbitMQ dispatches the message to the Notification Service, which listens to the queue and assigns the patient to criteria that match predefined criterias.
-    - The system comprises four services: two main services (Patient Service and Notification Service) and two additional services (API Gateway and Template Service).
-    - The API Gateway currently provides a common endpoint for APIs.
-    - The Notification Service is built using the Strategy Pattern, dynamically creating and using the necessary notification service based on the template.
-    - Currently, only email notifications are supported.
+  - Built using Java Spring Boot and utilizes Netflix Eureka for service discovery.
+  - Inter-service communication is managed via RabbitMQ, which listens to messages and processes them accordingly.
+  - When a patient is created in the Patient Service, RabbitMQ dispatches the message to the Notification Service, which listens to the queue and assigns the patient to criteria that match predefined criterias.
+  - The system comprises four services: two main services (Patient Service and Notification Service) and two additional services (API Gateway and Template Service).
+  - The API Gateway currently provides a common endpoint for APIs.
+  - The Notification Service is built using the Strategy Pattern, dynamically creating and using the necessary notification service based on the template.
+  - Currently, only email notifications are supported.
 
 - **Frontend**:
-    - Built using Next.js and styled with TailwindCSS.
-    - Modals are implemented using Headless UI.
-    - Caching and data fetching are managed using the SWR library.
-  
+  - Built using Next.js and styled with TailwindCSS.
+  - Modals are implemented using Headless UI.
+  - Caching and data fetching are managed using the SWR library.
+
 - - **Dashboard**:
-  ![Patiend List Table](https://i.hizliresim.com/opsm2gu.png)
+    ![Patiend List Table](https://i.hizliresim.com/opsm2gu.png)
 
 ## Tech Stack
-- **Backend**: Java Spring Boot - Netflix Eureka - RabbitMQ
-- **Frontend**: Nextjs
-- **Frontend**: Nextjs
-- **Database**: MySQL
+- **Backend**: Java Spring Boot - Netflix Eureka - RabbitMQ - Spring Cloud - Spring Data JPA - Lombok
+- **Frontend**: Nextjs - TailwindCSS - SWR - Headless UI
+
+## Installation
+- Needs Docker, Node.js, and npm installed on your machine.
+- Ports 3000, 5672, 8763, 8762, 8761, 8889, 5432, 3306 should be available.
+```bash
+# Open Terminal
+# Clone the repository
+git clone https://github.com/remzikilnc/patient-notification-system.git
+# Change directory to patient-service/back-end
+cd back-end
+# Build the project
+mvn clean install
+# Run the project via Docker
+docker-compose up
+# Open New Terminal to run the front-end
+# change directory to notification-service/front-end
+cd ../notification-service/front-end
+# Install dependencies
+npm i
+# Run the project
+npm run dev
+# Open http://localhost:3000 to view it in the browser.
+```
+
+
 
 ## Patient Service
 The Patient Service is responsible for managing patient information, including registration, demographic details, and notification preferences. It includes the following main features:
@@ -81,11 +105,11 @@ The Patient Service is responsible for managing patient information, including r
 
 
 
-### Endpoints (For more information, check Postman Collection)
+### Endpoints (For more information, check PostgreSQL Collection)
 
-```http
-  API Prefix: api/v1
-```
+``
+API Prefix: api/v1
+``
 
 | Endpoint                    | Type     | Description                             |
 | :-------------------------- | :------- | :-------------------------------------- |
@@ -123,7 +147,11 @@ The Notification Service is designed to handle various notification-related func
 #### Notification Edit, Create / Edit Delete Criteria
 ![Notification Edit - Create](https://i.hizliresim.com/aj9w1aj.png)
 
-### Endpoints (For more information, check Postman Collection)
+### Endpoints (For more information, check PostgreSQL Collection)
+
+``
+API Prefix: api/v1
+``
 
 | Endpoint                                      | Type    | Description                                            |
 |-----------------------------------------------|---------|--------------------------------------------------------|
@@ -146,8 +174,8 @@ The Notification Service is designed to handle various notification-related func
 
 ## Dependencies
 
-- Java Spring Boot, Maven, RabbitMQ
-- Nextjs (and js libraries)
+- Java Spring Boot, Maven, RabbitMQ, Netflix Eureka, Spring Cloud, Spring Data JPA, Lombok
+- Nextjs, TailwindCSS, SWR, Headless UI
 - RDBMS (e.g., PostgreSQL for Patient Service, MySQL for Notification Service, Or Both MySQL)
 
 
