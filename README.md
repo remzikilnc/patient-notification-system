@@ -40,7 +40,7 @@ The Patient Notification System is designed to manage patient registrations and 
   - Caching and data fetching are managed using the SWR library.
 
 - - **Dashboard**:
-    ![Patiend List Table](https://i.hizliresim.com/opsm2gu.png)
+    ![Patiend List Table](https://i.hizliresim.com/9r45j3u.png)
 
 ## Tech Stack
 - **Backend**: Java Spring Boot - Maven - Netflix Eureka - RabbitMQ - Spring Cloud - Spring Data JPA - Lombok
@@ -142,7 +142,7 @@ The Notification Service is designed to handle various notification-related func
 ### Frontend
 
 #### Notification List, Send
-![Notification List](https://i.hizliresim.com/4mfelq3.png)
+![Notification List](https://i.hizliresim.com/2r2z8lr.png)
 
 #### Notification Edit, Create / Edit Delete Criteria
 ![Notification Edit - Create](https://i.hizliresim.com/aj9w1aj.png)
