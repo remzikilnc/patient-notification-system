@@ -10,7 +10,6 @@ export const Logo = ({className}) => {
       </div>
       <Link className=" flex items-center gap-x-0.5" href="/">
         <span className="font-semibold text-2xl leading-3 text-white">PN System</span>
-        <span className="text-xs text-white/80 mb-1">Tiga</span>
       </Link>
     </div>
   );

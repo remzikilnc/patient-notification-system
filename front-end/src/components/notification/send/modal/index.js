@@ -51,7 +51,6 @@ const NotificationSendModal = ({template, isOpen, setIsOpen, sendedData, handleC
                 <div className="flex flex-shrink-0 items-center gap-x-1.5 bg-white rounded-xl">
                   <div className="flex items-center mb-0.5">
                     <span className="font-semibold text-sm leading-3 text-primary">PN System</span>
-                    <span className="text-xs text-primary/80 mb-1">Tiga</span>
                   </div>
                   <MdHtml className="h-12 w-12 text-primary ml-auto" />
                 </div>
@@ -66,7 +65,6 @@ const NotificationSendModal = ({template, isOpen, setIsOpen, sendedData, handleC
                 <div className="flex flex-shrink-0 items-center gap-x-1.5 bg-white rounded-xl">
                   <div className="flex items-center mb-0.5">
                     <span className="font-semibold text-sm leading-3 text-primary">PN System</span>
-                    <span className="text-xs text-primary/80 mb-1">Tiga</span>
                   </div>
                   <CiText className="h-8 w-8 text-primary ml-auto" />
                 </div>
